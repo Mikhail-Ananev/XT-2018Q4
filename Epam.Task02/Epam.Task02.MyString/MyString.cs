@@ -30,7 +30,6 @@ namespace MyString
             this.charArray = str.ToCharArray();
         }
 
-
         public int Capacity { get; private set; }
 
         public int MyLength { get; private set; }
@@ -42,24 +41,6 @@ namespace MyString
             {
                 this.charArray[index] = value;
             }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder(MyLength);
-            for (int i = 0; i < MyLength; i++)
-            {
-                sb.Append(this.charArray[i]);
-            }
-            return sb.ToString();
-        }
-
-        public static MyString operator +(MyString str1, MyString str2)
-        {
-            char[] newStr1 = MyStringToCharArray(str1);
-            char[] newStr2 = MyStringToCharArray(str2);
-            newStr1 = Concat(newStr1, newStr2);
-            return CharArrayToMyString(newStr1);
         }
 
         public static void Show(MyString charArray)
@@ -80,6 +61,14 @@ namespace MyString
             }
 
             Console.WriteLine();
+        }
+
+        public static MyString operator +(MyString str1, MyString str2)
+        {
+            char[] newStr1 = MyStringToCharArray(str1);
+            char[] newStr2 = MyStringToCharArray(str2);
+            newStr1 = Concat(newStr1, newStr2);
+            return CharArrayToMyString(newStr1);
         }
 
         public static char[] Concat(char[] charArray1, char[] charArray2)
@@ -206,6 +195,17 @@ namespace MyString
             }
 
             return -1;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder(this.MyLength);
+            for (int i = 0; i < this.MyLength; i++)
+            {
+                sb.Append(this.charArray[i]);
+            }
+
+            return sb.ToString();
         }
 
         public char[] Append(params char[] add)

@@ -22,12 +22,14 @@ namespace MyString
             MyString.Show(charString);
             charString = MyString.Concat("Concat01".ToCharArray(), "Concat02".ToCharArray(), "Concat03".ToCharArray());
             MyString.Show(charString);
+            Console.WriteLine();
             myString = MyString.CharArrayToMyString(charString);
             Console.WriteLine("Result convertation char array to myString:");
             MyString.Show(myString);
             charString = MyString.MyStringToCharArray(myString);
             Console.WriteLine("Result convertation myString to char array:");
             MyString.Show(charString);
+            Console.WriteLine();
             Console.WriteLine("\"This text\" and \"this text\" equals: {0}", MyString.MyEqual("This text".ToCharArray(), "this text".ToCharArray()));
             Console.WriteLine("\"This text\" and \"This text\" equals: {0}", MyString.MyEqual("This text".ToCharArray(), "This text".ToCharArray()));
             Console.WriteLine();
@@ -35,9 +37,11 @@ namespace MyString
             MyString.Show(charString);
             Console.WriteLine($"First index 'i':{MyString.FirstIndex(charString, 'i')}{Environment.NewLine}" +
                               $"Last index 'y':{MyString.LastIndex(charString, 'y')}");
-            //myString = "Concat with";
-            Console.WriteLine(myString);
+            Console.WriteLine();
+            myString = MyString.CharArrayToMyString("Concat with ".ToCharArray());
             MyString myString2 = new MyString("'+' operator".ToCharArray());
+            myString = myString + myString2;
+            Console.WriteLine(myString);
         }
     }
 }
