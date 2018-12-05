@@ -23,9 +23,17 @@ namespace MyString
             this.charArray = charArray;
         }
 
-        public int Capacity { get; set; }
+        public MyString(string str)
+        {
+            this.MyLength = str.Length;
+            this.Capacity = str.Length;
+            this.charArray = str.ToCharArray();
+        }
 
-        public int MyLength { get; set; }
+
+        public int Capacity { get; private set; }
+
+        public int MyLength { get; private set; }
 
         public char this[int index]
         {
@@ -34,6 +42,24 @@ namespace MyString
             {
                 this.charArray[index] = value;
             }
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder(MyLength);
+            for (int i = 0; i < MyLength; i++)
+            {
+                sb.Append(this.charArray[i]);
+            }
+            return sb.ToString();
+        }
+
+        public static MyString operator +(MyString str1, MyString str2)
+        {
+            char[] newStr1 = MyStringToCharArray(str1);
+            char[] newStr2 = MyStringToCharArray(str2);
+            newStr1 = Concat(newStr1, newStr2);
+            return CharArrayToMyString(newStr1);
         }
 
         public static void Show(MyString charArray)

@@ -10,7 +10,7 @@ namespace MyString
     {
         protected static void Main(string[] args)
         {
-            MyString myString = new MyString("First string".ToCharArray());
+            MyString myString = new MyString("First string");
             MyString.Show(myString);
             Console.WriteLine($"myString.Capacity: {myString.Capacity}{Environment.NewLine}" +
                 $"myString.MyLength: {myString.MyLength}{Environment.NewLine}");
@@ -35,6 +35,9 @@ namespace MyString
             MyString.Show(charString);
             Console.WriteLine($"First index 'i':{MyString.FirstIndex(charString, 'i')}{Environment.NewLine}" +
                               $"Last index 'y':{MyString.LastIndex(charString, 'y')}");
+            //myString = "Concat with";
+            Console.WriteLine(myString);
+            MyString myString2 = new MyString("'+' operator".ToCharArray());
         }
     }
 }
