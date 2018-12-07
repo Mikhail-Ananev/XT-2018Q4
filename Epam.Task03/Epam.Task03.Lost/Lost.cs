@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Epam.Task03.Lost
 {
-    class Lost : IEnumerable<int>
+    public class Lost : IEnumerable<int>
     {
         private int[] arrData;
+
         public Lost()
         {
-            arrData = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            this.arrData = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         }
 
         public Lost(int k)
@@ -20,17 +21,17 @@ namespace Epam.Task03.Lost
             {
                 throw new ArgumentException("Incorrect input", nameof(k));
             }
-            arrData = new int[k];
+
+            this.arrData = new int[k];
             for (int i = 0; i < k; i++)
             {
-                arrData[i] = i;
+                this.arrData[i] = i;
             }
         }
 
-
         public IEnumerator<int> GetEnumerator()
         {
-            return new GetLostEnumerator(arrData);
+            return new GetLostEnumerator(this.arrData);
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()

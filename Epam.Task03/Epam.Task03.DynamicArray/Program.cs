@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace Epam.Task03.DynamicArray
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        protected static void Main(string[] args)
         {
+            var dynamic = new DynamicArray<int>(1);
+            Console.WriteLine(dynamic.Capacity);
+            dynamic.Add(76);
+            Console.WriteLine(dynamic.Capacity);
+            dynamic.Add(76);
+            Console.WriteLine(dynamic.Capacity);
         }
     }
 }

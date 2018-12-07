@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Epam.Task03.Lost
 {
-    class GetLostEnumerator : IEnumerator<int>
+    public class GetLostEnumerator : IEnumerator<int>
     {
         private static long n;
         private int currentIndex = -1;
@@ -16,11 +16,12 @@ namespace Epam.Task03.Lost
         {
             this.sourceArr = arr;
         }
+
         public int Current
         {
             get
             {
-                return sourceArr[currentIndex * n];
+                return this.sourceArr[this.currentIndex * n];
             }
         }
 
@@ -35,14 +36,14 @@ namespace Epam.Task03.Lost
 
         public bool MoveNext()
         {
-            ++currentIndex;
-            if (currentIndex == 0)
+            ++this.currentIndex;
+            if (this.currentIndex == 0)
             {
                 if (n == 0)
                 {
                     n++;
                 }
-                else if (n < long.MaxValue >> 1)
+                else if (n < (long.MaxValue >> 1))
                 {
                     n = n << 1;
                 }
@@ -52,7 +53,7 @@ namespace Epam.Task03.Lost
 
         public void Reset()
         {
-            currentIndex = -1;
+            this.currentIndex = -1;
         }
     }
 }

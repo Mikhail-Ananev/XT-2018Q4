@@ -39,6 +39,10 @@ namespace MyString
             get => this.charArray[index];
             set
             {
+                if (index >= this.MyLength)
+                {
+                    throw new ArgumentOutOfRangeException("Index more than array range!", nameof(index));
+                }
                 this.charArray[index] = value;
             }
         }

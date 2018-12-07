@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace Epam.Task03.WordFrequency
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        protected static void Main(string[] args)
         {
-            //Console.WriteLine("Input text:");
-            string inputText =  "These brothers bathe with those brothers " + 
-                                "Those brothers bathe with these brothers " +
-                                "If these brothers didn’t bathe with those brothers " + 
-                                "Would those brothers bathe with these brothers ".ToLower();
+            string inputText = "These brothers bathe with those brothers " +
+                               "Those brothers bathe with these brothers " +
+                               "If these brothers didn’t bathe with those brothers " +
+                               "Would those brothers bathe with these brothers ".ToLower();
             char[] separator = { '.', ' ' };
             Dictionary<string, int> dictionary = new Dictionary<string, int>(StringComparer.InvariantCultureIgnoreCase);
             int count = 0;
@@ -30,6 +29,7 @@ namespace Epam.Task03.WordFrequency
                     count++;
                 }
             }
+
             Console.WriteLine(inputText);
             Console.WriteLine($"Words count: {count}");
             foreach (var s in dictionary)
