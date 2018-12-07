@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.AverageStringLength
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("Input string:");
             string str = Console.ReadLine();
@@ -24,7 +24,7 @@ namespace Epam.Task01.AverageStringLength
                 case 0:
                     return 0;
                 case 1:
-                    if (Char.IsLetter(s[0]))
+                    if (char.IsLetter(s[0]))
                     {
                         return 1;
                     }
@@ -34,25 +34,29 @@ namespace Epam.Task01.AverageStringLength
                     {
                         if (i < s.Length - 1)
                         {
-                            if (i == 0 && Char.IsLetter(s[i]))
+                            if (i == 0 && char.IsLetter(s[i]))
                             {
                                 sumWords++;
                             }
-                            if (!Char.IsLetter(s[i]) && Char.IsLetter(s[i+1]))
+
+                            if (!char.IsLetter(s[i]) && char.IsLetter(s[i + 1]))
                             {
                                 sumWords++;
                             }
-                            if (Char.IsLetter(s[i]))
+
+                            if (char.IsLetter(s[i]))
                             {
                                 sumSymbols++;
                             }
                         }
-                        if (i == s.Length - 1 && Char.IsLetter(s[i]))
+
+                        if (i == s.Length - 1 && char.IsLetter(s[i]))
                         {
                             sumSymbols++;
                         }
                     }
-                        return sumSymbols / sumWords;
+
+                    return sumSymbols / sumWords;
             }
         }
     }

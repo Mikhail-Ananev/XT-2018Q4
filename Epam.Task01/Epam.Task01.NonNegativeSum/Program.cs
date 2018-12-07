@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.NonNegativeSum
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             int[] array = new int[15];
 
@@ -17,7 +17,6 @@ namespace Epam.Task01.NonNegativeSum
 
             Console.WriteLine("Sum of positive numbers in array is: {0}", NonNegativeSum(array));
         }
-
 
         public static void CreateArray(int[] arr)
         {
@@ -34,6 +33,7 @@ namespace Epam.Task01.NonNegativeSum
             {
                 Console.Write("{0,-5}", arr[i]);
             }
+
             Console.WriteLine();
         }
 
@@ -47,6 +47,7 @@ namespace Epam.Task01.NonNegativeSum
                     sum += arr[i];
                 }
             }
+
             return sum;
         }
     }

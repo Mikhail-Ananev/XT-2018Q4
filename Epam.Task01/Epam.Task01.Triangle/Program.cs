@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.Triangle
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("Input positive integer:");
 
-            bool result = Int32.TryParse(Console.ReadLine(), out int n);
+            bool result = int.TryParse(Console.ReadLine(), out int n);
 
             if (result && n > 0)
             {
@@ -32,6 +32,7 @@ namespace Epam.Task01.Triangle
                 {
                     Console.Write('*');
                 }
+
                 Console.WriteLine();
             }
         }

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.AnotherTriangle
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("Input positive integer:");
 
-            bool result = Int32.TryParse(Console.ReadLine(), out int n);
+            bool result = int.TryParse(Console.ReadLine(), out int n);
 
             if (result && n > 0)
             {
@@ -23,6 +23,7 @@ namespace Epam.Task01.AnotherTriangle
                 Console.WriteLine("Invalid input.");
             }
         }
+
         public static void DrawAnotherTriangle(int n)
         {
             for (int i = 0; i < n; i++)
@@ -38,6 +39,7 @@ namespace Epam.Task01.AnotherTriangle
                         Console.Write(' ');
                     }
                 }
+
                 Console.WriteLine();
             }
         }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Epam.Task01.NoPositive
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            int[,,] array = new int[5,5,2];
+            int[,,] array = new int[5, 5, 2];
 
             CreateArray(array);
             Console.WriteLine("Original array:");
@@ -20,13 +20,28 @@ namespace Epam.Task01.NoPositive
             ShowArray(array);
         }
 
+        public static void CreateArray(int[,,] arr)
+        {
+            var rnd = new Random();
+            for (int k = 0; k < arr.GetLength(2); k++)
+            {
+                for (int i = 0; i < arr.GetLength(1); i++)
+                {
+                    for (int j = 0; j < arr.GetLength(0); j++)
+                    {
+                        arr[j, i, k] = rnd.Next(-999, 999);
+                    }
+                }
+            }
+        }
+
         private static void NoPositiveArray(int[,,] arr)
         {
-            for (int k = 0; k < 2; k++)
+            for (int k = 0; k < arr.GetLength(2); k++)
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < arr.GetLength(1); i++)
                 {
-                    for (int j = 0; j < 5; j++)
+                    for (int j = 0; j < arr.GetLength(0); j++)
                     {
                         if (arr[j, i, k] > 0)
                         {
@@ -39,37 +54,20 @@ namespace Epam.Task01.NoPositive
 
         private static void ShowArray(int[,,] arr)
         {
-            for (int k = 0; k < 2; k++)
+            for (int k = 0; k < arr.GetLength(2); k++)
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < arr.GetLength(1); i++)
                 {
-                    for (int j = 0; j < 5; j++)
+                    for (int j = 0; j < arr.GetLength(0); j++)
                     {
-                        Console.Write("{0,5}", arr[j,i,k]);
+                        Console.Write("{0,5}", arr[j, i, k]);
                     }
+
                     Console.WriteLine();
                 }
+
                 Console.WriteLine();
                 Console.WriteLine();
-            }
-        }
-
-        public static void CreateArray(int[,,] arr)
-        {
-            var rnd = new Random();
-            //foreach (int item in arr)
-            //{
-
-            //}
-            for (int k = 0; k < 2; k++)
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        arr[j,i,k] = rnd.Next(-999, 999);
-                    }
-                }
             }
         }
     }
