@@ -17,6 +17,11 @@ namespace Epam.Task03.Lost
             this.sourceArr = arr;
         }
 
+        object System.Collections.IEnumerator.Current
+        {
+            get { return this.Current; }
+        }
+        
         public int Current
         {
             get
@@ -29,11 +34,6 @@ namespace Epam.Task03.Lost
         {
         }
 
-        object System.Collections.IEnumerator.Current
-        {
-            get { return this.Current; }
-        }
-
         public bool MoveNext()
         {
             ++this.currentIndex;
@@ -43,12 +43,13 @@ namespace Epam.Task03.Lost
                 {
                     n++;
                 }
-                else if (n < (long.MaxValue >> 1))
+                else if (n < long.MaxValue / 2)
                 {
                     n = n << 1;
                 }
             }
-            return (currentIndex * n != sourceArr.Length && currentIndex * n < sourceArr.Length);
+
+            return this.currentIndex * n != this.sourceArr.Length && this.currentIndex * n < this.sourceArr.Length;
         }
 
         public void Reset()

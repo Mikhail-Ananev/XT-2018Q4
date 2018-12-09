@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Epam.Task03.DynamicArray
 {
-    class CycledDynamicArray<T> : DynamicArray<T>
+    public class CycledDynamicArray<T> : DynamicArray<T>
     {
         public CycledDynamicArray() : base()
         {
         }
 
-        public CycledDynamicArray(int capacity): base(capacity)
+        public CycledDynamicArray(int capacity) : base(capacity)
         {
         }
 
-        public CycledDynamicArray(IEnumerable<T> collection): base(collection)
+        public CycledDynamicArray(IEnumerable<T> collection) : base(collection)
         {
         }
 
@@ -24,12 +24,11 @@ namespace Epam.Task03.DynamicArray
         {
             while (true)
             {
-                for (int i = 0; i < base.Length; i++)
+                for (int i = 0; i < this.Length; i++)
                 {
-                    yield return base.dynArray[i];
+                    yield return this.DynArray[i];
                 }
             }
         }
-
     }
 }

@@ -9,30 +9,31 @@ namespace Epam.Task03.DynamicArray
 {
     public class DynamicArray<T> : IEnumerable, IEnumerable<T>, ICloneable
     {
-        internal T[] dynArray;
         private int capacity;
 
         public DynamicArray()
         {
-            this.dynArray = new T[8];
+            this.DynArray = new T[8];
             this.Capacity = 8;
             this.Length = 0;
         }
 
         public DynamicArray(int capacity)
         {
-            this.dynArray = new T[capacity];
+            this.DynArray = new T[capacity];
             this.Capacity = capacity;
             this.Length = 0;
         }
 
         public DynamicArray(IEnumerable<T> collection)
         {
-            this.dynArray = new T[collection.Count()];
-            this.dynArray = collection.ToArray<T>();
+            this.DynArray = new T[collection.Count()];
+            this.DynArray = collection.ToArray<T>();
             this.Capacity = collection.Count();
             this.Length = collection.Count();
         }
+
+        public T[] DynArray { get; private set; }
 
         public int Capacity
         {
@@ -44,10 +45,10 @@ namespace Epam.Task03.DynamicArray
                     throw new ArgumentException("Capacity must be positive!");
                 }
 
-                capacity = value;
+                this.capacity = value;
                 if (value == 0)
                 {
-                    this.dynArray = null;
+                    this.DynArray = null;
                     this.capacity = value;
                     this.Length = value;
                 }
@@ -55,8 +56,8 @@ namespace Epam.Task03.DynamicArray
                 if (value > this.capacity)
                 {
                     T[] newArray = new T[value];
-                    Copy(newArray);
-                    this.dynArray = newArray;
+                    this.Copy(newArray);
+                    this.DynArray = newArray;
                     this.capacity = value;
                 }
 
@@ -68,8 +69,8 @@ namespace Epam.Task03.DynamicArray
                     }
 
                     T[] newArray = new T[value];
-                    Copy(newArray);
-                    this.dynArray = newArray;
+                    this.Copy(newArray);
+                    this.DynArray = newArray;
                     this.capacity = value;
                 }
             }
@@ -88,11 +89,12 @@ namespace Epam.Task03.DynamicArray
 
                 if (index < 0)
                 {
-                    return this.dynArray[this.Length + index];
+                    return this.DynArray[this.Length + index];
                 }
 
-                return this.dynArray[index];
-            } 
+                return this.DynArray[index];
+            }
+
             set
             {
                 if (!this.IndexValidation(index))
@@ -100,14 +102,14 @@ namespace Epam.Task03.DynamicArray
                     throw new ArgumentOutOfRangeException("Index more than array range!", nameof(index));
                 }
 
-                this.dynArray[index] = value;
+                this.DynArray[index] = value;
             }
         }
 
         public void Add(T add)
         {
-            CheckAndIncreaseCapacityToAdd();
-            this.dynArray[this.Length] = add;
+            this.CheckAndIncreaseCapacityToAdd();
+            this.DynArray[this.Length] = add;
             this.Length++;
         }
 
@@ -130,33 +132,21 @@ namespace Epam.Task03.DynamicArray
                 return false;
             }
 
-            CheckAndIncreaseCapacityToAdd();
+            this.CheckAndIncreaseCapacityToAdd();
             for (int i = this.Length; i > index; i--)
             {
-                this.dynArray[i] = this.dynArray[i - 1];
+                this.DynArray[i] = this.DynArray[i - 1];
             }
 
-            this.dynArray[index] = add;
+            this.DynArray[index] = add;
             this.Length++;
             return true;
         }
 
         public bool Remove(T item)
         {
-            int index = FindIndex(item);
-            //if (index < 0)
-            //{
-            //    return false;
-            //}
-
-            //for (int i = index; i < this.Length - 1; i++)
-            //{
-            //    this.dynArray[i] = this.dynArray[i + 1];
-            //}
-
-            //this.Length--;
-            //this.dynArray[this.Length] = default(T);
-            return RemoveByIndex(index);
+            int index = this.FindIndex(item);
+            return this.RemoveByIndex(index);
         }
 
         public bool RemoveByIndex(int index)
@@ -168,33 +158,48 @@ namespace Epam.Task03.DynamicArray
 
             for (int i = index; i < this.Length - 1; i++)
             {
-                this.dynArray[i] = this.dynArray[i + 1];
+                this.DynArray[i] = this.DynArray[i + 1];
             }
 
             this.Length--;
-            this.dynArray[this.Length] = default(T);
+            this.DynArray[this.Length] = default(T);
             return true;
         }
 
-
         public int FindIndex(T item)
         {
-            for (int i = 0; i < Length; i++)
+            for (int i = 0; i < this.Length; i++)
             {
-                if (this.dynArray[i].Equals(item))
+                if (this.DynArray[i].Equals(item))
                 {
                     return i;
                 }
             }
+
             return -1;
         }
 
         public T[] ToArray()
         {
             T[] toArray = new T[this.Length];
-            Copy(toArray);
+            this.Copy(toArray);
             return toArray;
         }
+
+        public object Clone()
+        {
+            return new DynamicArray<T>(this);
+        }
+
+        public virtual IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < this.Length; i++)
+            {
+                yield return this.DynArray[i];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         private void CheckAndIncreaseCapacityToAdd()
         {
@@ -208,7 +213,7 @@ namespace Epam.Task03.DynamicArray
         {
             T[] newArr = new T[this.Capacity * n];
             this.Copy(newArr);
-            this.dynArray = newArr;
+            this.DynArray = newArr;
             this.Capacity *= n;
         }
 
@@ -216,7 +221,7 @@ namespace Epam.Task03.DynamicArray
         {
             for (int i = 0; i < this.Length; i++)
             {
-                newArr[i] = this.dynArray[i];
+                newArr[i] = this.DynArray[i];
             }
         }
 
@@ -224,7 +229,7 @@ namespace Epam.Task03.DynamicArray
         {
             foreach (var item in collection)
             {
-                this.dynArray[this.Length] = item;
+                this.DynArray[this.Length] = item;
                 this.Length++;
             }
         }
@@ -241,27 +246,12 @@ namespace Epam.Task03.DynamicArray
                 return true;
             }
 
-            if (this.Length + index < 0 )
+            if (this.Length + index < 0)
             {
                 return false;
             }
 
             return true;
-        }
-
-        public virtual IEnumerator<T> GetEnumerator()
-        {
-            for (int i = 0; i < this.Length; i++)
-            {
-                yield return this.dynArray[i];
-            }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        public object Clone()
-        {
-            return new DynamicArray<T>(this);
         }
     }
 }
