@@ -6,13 +6,27 @@ using System.Threading.Tasks;
 
 namespace Sequence
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Show(int n)
+        {
+            for (int i = 1; i <= n; i++)
+            {
+                Console.Write(i);
+                if (i < n)
+                {
+                    Console.Write(", ");
+                }
+            }
+
+            Console.WriteLine();
+        }
+
+        protected static void Main(string[] args)
         {
             Console.WriteLine("Enter a positive integer:");
             int x;
-            bool result = Int32.TryParse(Console.ReadLine(), out x);
+            bool result = int.TryParse(Console.ReadLine(), out x);
 
             if (result && x > 0)
             {
@@ -22,20 +36,6 @@ namespace Sequence
             {
                 Console.WriteLine("Invalid value entered.");
             }
-        }
-
-        public static void Show(int n)
-        {
-
-            for (int i = 1; i <= n; i++)
-            {
-                Console.Write(i);
-                if (i < n)
-                {
-                    Console.Write(", ");
-                }
-            }
-            Console.WriteLine();
         }
     }
 }
