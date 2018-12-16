@@ -8,7 +8,7 @@ namespace ToIntOrNotToInt
 {
     public class MyDigitMethod
     {
-        public Dictionary<char, int> DigitSymbols = new Dictionary<char, int>
+        private Dictionary<char, int> digitSymbols = new Dictionary<char, int>
             {
                 { '.', 0 },
                 { '+', 0 },
@@ -28,25 +28,25 @@ namespace ToIntOrNotToInt
 
         public bool IsDigit(string inputStr)
         {
-            ZeroDigitCollection();
+            this.ZeroDigitCollection();
             if (inputStr == null)
             {
                 return false;
             }
 
             string str = this.ChangeCommaAndE(inputStr);
-            if (!InputControl(str, this.DigitSymbols))
+            if (!this.InputControl(str, this.digitSymbols))
             {
                 return false;
             }
 
-            if (!LightAnalysis(str))
+            if (!this.LightAnalysis(str))
             {
                 return false;
             }
 
-            string transformStr = TransformStr(str, this.DigitSymbols);
-            if (LastStepAnalysis(transformStr))
+            string transformStr = this.TransformStr(str, this.digitSymbols);
+            if (this.LastStepAnalysis(transformStr))
             {
                 return true;
             }
@@ -58,10 +58,10 @@ namespace ToIntOrNotToInt
 
         private void ZeroDigitCollection()
         {
-            var keys = this.DigitSymbols.Keys;
+            var keys = this.digitSymbols.Keys.ToArray();
             foreach (var item in keys)
             {
-                this.DigitSymbols[item] = 0;
+                this.digitSymbols[item] = 0;
             }
         }
 
@@ -69,7 +69,7 @@ namespace ToIntOrNotToInt
         {
             char[] inputArray = inputStr.ToCharArray();
             int index = Array.IndexOf(inputArray, 'e');
-            if (this.DigitSymbols['e'] == 1)
+            if (this.digitSymbols['e'] == 1)
             {
                 if (Array.IndexOf(inputArray, 'e') == inputArray.Length)
                 {
@@ -77,7 +77,7 @@ namespace ToIntOrNotToInt
                 }
 
                 int degree;
-                if (this.DigitSymbols['-'] == 1)
+                if (this.digitSymbols['-'] == 1)
                 {
                     if (Array.IndexOf(inputArray, '-') == inputArray.Length)
                     {
@@ -93,7 +93,7 @@ namespace ToIntOrNotToInt
 
                 if (degree < 0)
                 {
-                    if (this.DigitSymbols['.'] == 1)
+                    if (this.digitSymbols['.'] == 1)
                     {
                         if (Array.IndexOf(inputArray, 'e') - Array.IndexOf(inputArray, '.') != 1)
                         {
@@ -126,7 +126,7 @@ namespace ToIntOrNotToInt
 
                 if (degree > 0)
                 {
-                    if (this.DigitSymbols['.'] == 1)
+                    if (this.digitSymbols['.'] == 1)
                     {
                         if (Array.IndexOf(inputArray, 'e') - Array.IndexOf(inputArray, '.') - 1 > degree)
                         {
@@ -140,7 +140,7 @@ namespace ToIntOrNotToInt
                 }
             }
 
-            if (this.DigitSymbols['.'] == 1)
+            if (this.digitSymbols['.'] == 1)
             {
                 if (Array.IndexOf(inputArray, '.') != inputArray.Length - 1)
                 {
@@ -237,29 +237,29 @@ namespace ToIntOrNotToInt
 
         private bool LightAnalysis(string inputStr)
         {
-            bool notDigit = this.DigitSymbols['.'] > 1 ||
-                this.DigitSymbols['-'] > 1 ||
-                this.DigitSymbols['+'] > 2 ||
-                this.DigitSymbols['e'] > 1;
-            bool numberExist = this.DigitSymbols['0'] +
-                this.DigitSymbols['1'] +
-                this.DigitSymbols['2'] +
-                this.DigitSymbols['3'] +
-                this.DigitSymbols['4'] +
-                this.DigitSymbols['5'] +
-                this.DigitSymbols['6'] +
-                this.DigitSymbols['7'] +
-                this.DigitSymbols['8'] +
-                this.DigitSymbols['9'] > 0;
-            bool numberExistWithoutZero = this.DigitSymbols['1'] +
-                this.DigitSymbols['2'] +
-                this.DigitSymbols['3'] +
-                this.DigitSymbols['4'] +
-                this.DigitSymbols['5'] +
-                this.DigitSymbols['6'] +
-                this.DigitSymbols['7'] +
-                this.DigitSymbols['8'] +
-                this.DigitSymbols['9'] == 0;
+            bool notDigit = this.digitSymbols['.'] > 1 ||
+                this.digitSymbols['-'] > 1 ||
+                this.digitSymbols['+'] > 2 ||
+                this.digitSymbols['e'] > 1;
+            bool numberExist = this.digitSymbols['0'] +
+                this.digitSymbols['1'] +
+                this.digitSymbols['2'] +
+                this.digitSymbols['3'] +
+                this.digitSymbols['4'] +
+                this.digitSymbols['5'] +
+                this.digitSymbols['6'] +
+                this.digitSymbols['7'] +
+                this.digitSymbols['8'] +
+                this.digitSymbols['9'] > 0;
+            bool numberExistWithoutZero = this.digitSymbols['1'] +
+                this.digitSymbols['2'] +
+                this.digitSymbols['3'] +
+                this.digitSymbols['4'] +
+                this.digitSymbols['5'] +
+                this.digitSymbols['6'] +
+                this.digitSymbols['7'] +
+                this.digitSymbols['8'] +
+                this.digitSymbols['9'] == 0;
 
             if (notDigit || !numberExist)
             {
@@ -267,9 +267,9 @@ namespace ToIntOrNotToInt
             }
 
             char[] str = inputStr.ToCharArray();
-            if (this.DigitSymbols['+'] == 2)
+            if (this.digitSymbols['+'] == 2)
             {
-                if (this.DigitSymbols['e'] == 0)
+                if (this.digitSymbols['e'] == 0)
                 {
                     return false;
                 }
@@ -289,11 +289,11 @@ namespace ToIntOrNotToInt
                 }
             }
 
-            if (this.DigitSymbols['+'] == 1)
+            if (this.digitSymbols['+'] == 1)
             {
                 if (str[0] != '+')
                 {
-                    if (this.DigitSymbols['e'] == 0)
+                    if (this.digitSymbols['e'] == 0)
                     {
                         return false;
                     }
@@ -307,9 +307,9 @@ namespace ToIntOrNotToInt
                 }
             }
 
-            if (this.DigitSymbols['-'] == 1)
+            if (this.digitSymbols['-'] == 1)
             {
-                if (this.DigitSymbols['e'] == 0)
+                if (this.digitSymbols['e'] == 0)
                 {
                     return false;
                 }
@@ -322,16 +322,16 @@ namespace ToIntOrNotToInt
                 }
             }
 
-            if (this.DigitSymbols['.'] == 1)
+            if (this.digitSymbols['.'] == 1)
             {
-                if (this.DigitSymbols['e'] == 1 &&
+                if (this.digitSymbols['e'] == 1 &&
                     Array.IndexOf(str, 'e') - Array.IndexOf(str, '.') < 0)
                 {
                     return false;
                 }
             }
 
-            if (this.DigitSymbols['e'] == 1)
+            if (this.digitSymbols['e'] == 1)
             {
                 if (str[0] == 'e' || str[str.Length - 1] == 'e')
                 {
@@ -416,9 +416,9 @@ namespace ToIntOrNotToInt
 
                 if (digitSymbols['e'] == 1)
                 {
-                    int eIndex = Array.IndexOf(inputStr.ToCharArray(), 'e');
-                    str.Append(inputStr[eIndex]);
-                    i = eIndex + 1;
+                    int indexE = Array.IndexOf(inputStr.ToCharArray(), 'e');
+                    str.Append(inputStr[indexE]);
+                    i = indexE + 1;
                     if (inputStr[i] == '+')
                     {
                         i++;

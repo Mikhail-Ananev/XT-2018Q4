@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{28670E6A-B3F1-485A-ABA9-507D50B5E99E}</ProjectGuid>
+    <ProjectGuid>{D4464224-A4ED-4418-8ADE-F9A9B3DD755A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Epam.Task04.CustomSort</RootNamespace>
-    <AssemblyName>Epam.Task04.CustomSort</AssemblyName>
+    <RootNamespace>Epam.Task04.SortingUnit</RootNamespace>
+    <AssemblyName>Epam.Task04.SortingUnit</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,13 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArraySort.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SortMethod.cs" />
+    <Compile Include="SortInThread.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Epam.Task04.CustomSort\Epam.Task04.CustomSort.csproj">
+      <Project>{28670e6a-b3f1-485a-aba9-507d50b5e99e}</Project>
+      <Name>Epam.Task04.CustomSort</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

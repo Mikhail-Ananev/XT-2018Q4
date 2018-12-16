@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{28670E6A-B3F1-485A-ABA9-507D50B5E99E}</ProjectGuid>
+    <ProjectGuid>{F530CA4C-1645-48F5-A57E-DCCE44E6A26F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Epam.Task04.CustomSort</RootNamespace>
-    <AssemblyName>Epam.Task04.CustomSort</AssemblyName>
+    <RootNamespace>ISeekYou</RootNamespace>
+    <AssemblyName>ISeekYou</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,10 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArraySort.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SortMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -8,6 +8,12 @@ namespace Epam.Task04.CustomSort
 {
     public class Program
     {
+        public static void SortDone()
+        {
+            Console.WriteLine("Sorting finished!");
+            Console.WriteLine();
+        }
+
         protected static void Main(string[] args)
         {
             string[] testArray = new[]
@@ -21,21 +27,13 @@ namespace Epam.Task04.CustomSort
                 "Федоров",
                 "Пушкин",
             };
-            var test1 = new ArraySort<string>(testArray, SortMethod.CompareByLength);
-            test1.Sort();
-            for (int t = 0; t < testArray.Length; t++)
-            {
-                Console.WriteLine(testArray[t]);
-            }
-
-            Console.WriteLine();
+            var test1 = new SortInThread<string>(testArray, SortMethod.CompareByLength);
+            test1.EndSort += SortDone;
+            test1.RunThread();
             Console.WriteLine("New sorting method:");
-            var test2 = new ArraySort<string>(testArray, SortMethod.CompareByChar);
-            test2.Sort();
-            for (int t = 0; t < testArray.Length; t++)
-            {
-                Console.WriteLine(testArray[t]);
-            }
+            var test2 = new SortInThread<string>(testArray, SortMethod.CompareByChar);
+            test2.EndSort += SortDone;
+            test2.RunThread();
         }
     }
 }
