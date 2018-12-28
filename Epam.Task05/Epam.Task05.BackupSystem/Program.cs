@@ -35,7 +35,7 @@ namespace Epam.Task05.BackupSystem
                             DateTime recoveryDate = new DateTime();
                             Console.WriteLine("Input recovery data (format dd.MM.yyyy hh:mm):");
                             recoveryDate = DateTime.Parse(Console.ReadLine());
-                            fileMonitor.Recovery(recoveryDate);
+                            //fileMonitor.Recovery(recoveryDate);
                             break;
                         }
                 }
