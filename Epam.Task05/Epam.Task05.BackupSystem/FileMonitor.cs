@@ -216,7 +216,9 @@ namespace Epam.Task05.BackupSystem
 
         private void RestoreRenamed(string[,] allLogDataArray, int line)
         {
-            throw new NotImplementedException();
+            File.Copy(allLogDataArray[line, 4], allLogDataArray[line, 3]);
+            File.Delete(allLogDataArray[line, 3]);
+            //3|29.12.2018 23:55:46|Renamed|D:\Tests\XT-2018Q4\Epam.Task05\Epam.Task05.BackupSystem\bin\Debug\NewDoc.txt|D:\Tests\XT-2018Q4\Epam.Task05\Epam.Task05.BackupSystem\bin\Debug\NewDoc - копия (2).txt|
         }
 
         private void RestoreDeleted(string[,] allLogDataArray, int line)
