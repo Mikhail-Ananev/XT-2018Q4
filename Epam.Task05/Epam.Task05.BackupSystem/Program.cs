@@ -13,6 +13,7 @@ namespace Epam.Task05.BackupSystem
         {
             string folder = Environment.CurrentDirectory;
             string key;
+            FileMonitor fileMonitor = new FileMonitor(folder, @"C:\Backup\", "*.txt");
             do
             {
                 Console.WriteLine("Press 'm' to monitoring on the folder " + Environment.CurrentDirectory);
@@ -24,18 +25,31 @@ namespace Epam.Task05.BackupSystem
                     case "m":
                         {
                             Console.WriteLine("Monitoring ON");
-                            FileMonitor fileMonitor = new FileMonitor(folder, @"C:\Backup\", "*.txt", true);
+                            fileMonitor.MonitorOn = true;
+                            fileMonitor.Start();
+
                             break;
                         }
 
                     case "r":
                         {
-                            Console.WriteLine("Input restore date");
-                            FileMonitor fileMonitor = new FileMonitor(folder, @"C:\Backup\", "*.txt", false);
+                            if (fileMonitor.MonitorOn == true)
+                            {
+                                Console.WriteLine("Wile watcher in work you cann`t have recovery!");
+                                Console.WriteLine("To stop monoring folder press 's':");
+                                if (Console.ReadLine() == "s")
+                                {
+                                    fileMonitor.MonitorOn = false;
+                                }
+                                else
+                                {
+                                    return;
+                                }
+                            }
                             DateTime recoveryDate = new DateTime();
                             Console.WriteLine("Input recovery data (format dd.MM.yyyy hh:mm):");
                             recoveryDate = DateTime.Parse(Console.ReadLine());
-                            //fileMonitor.Recovery(recoveryDate);
+                            fileMonitor.Recovery(recoveryDate);
                             break;
                         }
                 }
