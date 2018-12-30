@@ -218,7 +218,6 @@ namespace Epam.Task05.BackupSystem
         {
             File.Copy(allLogDataArray[line, 4], allLogDataArray[line, 3]);
             File.Delete(allLogDataArray[line, 3]);
-            //3|29.12.2018 23:55:46|Renamed|D:\Tests\XT-2018Q4\Epam.Task05\Epam.Task05.BackupSystem\bin\Debug\NewDoc.txt|D:\Tests\XT-2018Q4\Epam.Task05\Epam.Task05.BackupSystem\bin\Debug\NewDoc - копия (2).txt|
         }
 
         private void RestoreDeleted(string[,] allLogDataArray, int line)
@@ -228,12 +227,7 @@ namespace Epam.Task05.BackupSystem
 
         private void RestoreCreatedAndChanged(string[,] allLogDataArray, int line)
         {
-            //string fileShortName = allLogDataArray[line, 3].Substring(allLogDataArray[line, 3].LastIndexOf('\\') + 1);
-            //string destinationPath = allLogDataArray[line, 3].Substring(0, allLogDataArray[line, 3].Length - fileShortName.Length - 1);
             File.Copy(Path.Combine(this.archivFolder, "Backup" + allLogDataArray[line, 0] + ".txt"), allLogDataArray[line, 3]);
-            //File.Copy(Path.Combine(this.archivFolder, "Backup" + allLogDataArray[line,0] + ".txt"), destinationPath);
-            
-                //0|29.12.2018 0:15:16|Created|D:\Tests\XT-2018Q4\Epam.Task05\Epam.Task05.BackupSystem\bin\Debug\1.txt|C:\Backup\archiv\Backup0.txt|
         }
 
         private void SaveFile(string fileEvent, params string[] filesName)
@@ -252,6 +246,11 @@ namespace Epam.Task05.BackupSystem
 
         private void FileWatcherOnRenamed(object sender, RenamedEventArgs systemEvent)
         {
+            if (!File.Exists(systemEvent.FullPath))
+            {
+                return;
+            }
+
             if (!systemEvent.FullPath.Contains(this.currentFolder) || !validationExtension(systemEvent))
             {
                 FileWatcherOnDeleted(sender, systemEvent);
@@ -275,6 +274,11 @@ namespace Epam.Task05.BackupSystem
 
         private void FileWatcherOnDeleted(object sender, FileSystemEventArgs systemEvent)
         {
+            if (!File.Exists(systemEvent.FullPath))
+            {
+                return;
+            }
+
             Console.WriteLine("File: {0} deleted", systemEvent.FullPath);
             using (this.log = new StreamWriter(this.logFile, true))
             {
@@ -284,17 +288,27 @@ namespace Epam.Task05.BackupSystem
 
         private void FileWatcherOnCreated(object sender, FileSystemEventArgs systemEvent)
         {
+            if (!File.Exists(systemEvent.FullPath))
+            {
+                return;
+            }
+
             if (!validationExtension(systemEvent))
             {
                 return;
             }
 
             Console.WriteLine("File: {0} created", systemEvent.FullPath);
-            this.SaveFile("Created", systemEvent.FullPath);
+            this.SaveFile("Created", Path.Combine(systemEvent.FullPath));
         }
 
         private void FileWatcherOnChanged(object sender, FileSystemEventArgs systemEvent)
         {
+            if (!File.Exists(systemEvent.FullPath))
+            {
+                return;
+            }
+
             if (!systemEvent.FullPath.Contains(this.currentFolder) || !validationExtension(systemEvent))
             {
                 FileWatcherOnDeleted(sender, systemEvent);
@@ -302,7 +316,7 @@ namespace Epam.Task05.BackupSystem
             }
 
             Console.WriteLine("File: {0} changed", systemEvent.FullPath);
-            this.SaveFile("Changed", systemEvent.FullPath);
+            this.SaveFile("Changed", Path.Combine(systemEvent.FullPath));
         }
 
         //private void MonitorOn()
@@ -367,7 +381,9 @@ namespace Epam.Task05.BackupSystem
             string[] allDirectoryFiles = Directory.GetFiles(this.currentFolder, "*" + this.filter, SearchOption.AllDirectories);
             if (allDirectoryFiles != null)
             {
-                this.SaveFile("Created", allDirectoryFiles);
+                //this.SaveFile("Created", allDirectoryFiles);
+                this.SaveFile("Created", Path.Combine(allDirectoryFiles));
+
             }
         }
 
