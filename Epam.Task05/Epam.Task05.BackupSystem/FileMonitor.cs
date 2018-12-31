@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Epam.Task05.BackupSystem
@@ -16,6 +18,9 @@ namespace Epam.Task05.BackupSystem
         private readonly string logFile;
         private readonly string filter;
         private long id;
+        private ConcurrentQueue<string> fileToLogQueue = new ConcurrentQueue<string>();
+        //private Thread logWrite = new Thread(RunLog); 
+
 
         public FileMonitor(string currentFolder, string backupFolder, string filter)
         {
@@ -55,13 +60,38 @@ namespace Epam.Task05.BackupSystem
         {
             if (!Directory.Exists(this.backupFolder) || !File.Exists(this.logFile))
             {
-                this.id = 0;
+                this.id = -1;
                 this.FirstStart();
             }
             else
             {
                 this.id = Directory.GetFiles(this.backupFolder, "Backup*" + this.filter, SearchOption.AllDirectories).Length;
                 ////CheckArchiv();
+            }
+
+            RunLog();
+        }
+
+        public void RunLog()
+        {
+            Thread th1 = new Thread(this.StartLogCopy);
+            //if (th1.ThreadState == ThreadState.Unstarted)
+            //{
+                th1.Start();
+            //}
+        }
+
+        private void StartLogCopy()
+        {
+            if (!fileToLogQueue.IsEmpty)
+            {
+                using (var log = new StreamWriter(this.logFile, true))
+                {
+                    while (fileToLogQueue.TryDequeue(out string lineInLog))
+                    {
+                        log.WriteLine(lineInLog);
+                    }
+                }
             }
         }
 
@@ -224,11 +254,9 @@ namespace Epam.Task05.BackupSystem
                 return;
             }
 
-            Console.WriteLine($"File: {systemEvent.OldFullPath} renamed to {systemEvent.FullPath}");
-            using (var log = new StreamWriter(this.logFile, true))
-            {
-                log.WriteLine(this.id + "|" + DateTime.Now.ToString() + "|" + "Renamed" + "|" + systemEvent.FullPath + "|" + systemEvent.OldFullPath + "|");
-            }
+            fileToLogQueue.Enqueue(this.id + "|" + DateTime.Now.ToString() + "|" + "Renamed" + "|" + systemEvent.FullPath + "|" + systemEvent.OldFullPath + "|");
+            RunLog();
+
         }
 
         private void FileWatcherOnDeleted(object sender, FileSystemEventArgs systemEvent)
@@ -238,11 +266,9 @@ namespace Epam.Task05.BackupSystem
                 return;
             }
 
-            Console.WriteLine("File: {0} deleted", systemEvent.FullPath);
-            using (var log = new StreamWriter(this.logFile, true))
-            {
-                log.WriteLine(this.id + "|" + DateTime.Now.ToString() + "|" + "Deleted" + "|" + systemEvent.FullPath + "| empty |");
-            }
+            fileToLogQueue.Enqueue(this.id + "|" + DateTime.Now.ToString() + "|" + "Deleted" + "|" + systemEvent.FullPath + "| empty |");
+            RunLog();
+
         }
 
         private void FileWatcherOnCreated(object sender, FileSystemEventArgs systemEvent)
@@ -257,7 +283,6 @@ namespace Epam.Task05.BackupSystem
                 return;
             }
 
-            Console.WriteLine("File: {0} created", systemEvent.FullPath);
             this.SaveFile("Created", systemEvent.FullPath);
         }
 
@@ -268,27 +293,32 @@ namespace Epam.Task05.BackupSystem
                 return;
             }
 
+            //DateTime lastWriteTimeEvent = File.GetLastWriteTime(systemEvent.FullPath).;
+            //DateTime lastWriteTimeBackupFile = File.GetLastWriteTime(systemEvent.FullPath);
+            //if (lastWriteTimeEvent != systemEvent.)
+            //{
+            //    doStuff();
+            //    lastRead = lastWriteTimeEvent;
+            //}
             if (!systemEvent.FullPath.Contains(this.currentFolder) || !this.ValidationExtension(systemEvent))
             {
                 this.FileWatcherOnDeleted(sender, systemEvent);
                 return;
             }
 
-            Console.WriteLine("File: {0} changed", systemEvent.FullPath);
             this.SaveFile("Changed", systemEvent.FullPath);
         }
 
         private void SaveFile(string fileEvent, params string[] filesName)
         {
-            using (var log = new StreamWriter(this.logFile, true))
+            foreach (var file in filesName)
             {
-                foreach (var file in filesName)
-                {
-                    this.id++;
-                    string backupFileName = Path.Combine(this.archivFolder, "Backup" + this.id.ToString() + ".txt");
-                    File.Copy(file, Path.Combine(this.archivFolder, backupFileName));
-                    log.WriteLine(this.id + "|" + DateTime.Now.ToString() + "|" + fileEvent + "|" + file + "|" + backupFileName + "|");
-                }
+                string backupFileName = Path.Combine(this.archivFolder, "Backup" + this.id.ToString() + ".txt");
+
+                this.id++;
+                File.Copy(file, Path.Combine(this.archivFolder, backupFileName));
+                fileToLogQueue.Enqueue(this.id + "|" + DateTime.Now.ToString() + "|" + fileEvent + "|" + file + "|" + backupFileName + "|");
+                RunLog();
             }
         }
 

@@ -53,6 +53,11 @@ namespace Epam.Task05.BackupSystem
                             fileMonitor.Recovery(recoveryDate);
                             break;
                         }
+                    default:
+                        {
+                            //fileMonitor.ShowQueue();
+                            break;
+                        }
                 }
             }
             while (key != "q");
