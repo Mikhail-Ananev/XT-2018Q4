@@ -54,6 +54,14 @@ namespace Epam.Task05.BackupSystem
                             break;
                         }
 
+                    case "q":
+                        {
+                            Console.WriteLine("Monitoring OFF");
+                            fileMonitor.MonitorOn = false;
+                            break;
+                        }
+
+
                     default:
                         {
                             // fileMonitor.ShowQueue();
