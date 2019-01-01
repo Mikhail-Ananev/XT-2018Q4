@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-//using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -137,7 +136,7 @@ namespace Epam.Task05.BackupSystem
 
         private void StartLogCopy()
         {
-            while (true)
+            while (this.fileSystemWatcher.EnableRaisingEvents)
             {
                 if (!this.fileToLogQueue.IsEmpty)
                 {
@@ -147,33 +146,17 @@ namespace Epam.Task05.BackupSystem
                         {
                             var lineInLogStr = lineInLog[0] + "|" + lineInLog[1] + "|" + lineInLog[2] + "|" + lineInLog[3] + "|" + lineInLog[4] + "|";
                             log.WriteLine(lineInLogStr);
-                            File.Copy(lineInLog[3], Path.Combine(this.archivFolder, lineInLog[4]));
+                            if (lineInLog[2] == "Created" || lineInLog[2] == "Changed")
+                            {
+                                File.Copy(lineInLog[3], Path.Combine(this.archivFolder, lineInLog[4]));
+                            }
                         }
                     }
+
                     Console.WriteLine("HERE I AM");
                 }
             }
         }
-
-        //private void StartLogCopy()
-        //{
-        //    while (this.MonitorOn && !this.fileToLogQueue.IsEmpty)
-        //    {
-        //        if (!this.fileToLogQueue.IsEmpty)
-        //        {
-        //            using (var log = new StreamWriter(this.logFile, true))
-        //            {
-        //                while (this.fileToLogQueue.TryDequeue(out string[] lineInLog))
-        //                {
-        //                    log.WriteLine(lineInLog);
-        //                }
-        //            }
-        //            File.Copy(file, Path.Combine(this.archivFolder, backupFileName));
-
-        //            Console.WriteLine("HERE I AM");
-        //        }
-        //    }
-        //}
 
         private void FirstStart()
         {
@@ -288,7 +271,6 @@ namespace Epam.Task05.BackupSystem
             }
 
             this.fileToLogQueue.Enqueue(new string[] { this.id.ToString(), DateTime.Now.ToString(), "Renamed", systemEvent.FullPath, systemEvent.OldFullPath });
-            //this.RunLog();
         }
 
         private void FileWatcherOnDeleted(object sender, FileSystemEventArgs systemEvent)
@@ -299,7 +281,6 @@ namespace Epam.Task05.BackupSystem
             }
 
             this.fileToLogQueue.Enqueue(new string[] { this.id.ToString(), DateTime.Now.ToString(), "Deleted", systemEvent.FullPath, "empty" });
-            //this.RunLog();
         }
 
         private void FileWatcherOnCreated(object sender, FileSystemEventArgs systemEvent)
@@ -337,18 +318,10 @@ namespace Epam.Task05.BackupSystem
         {
             foreach (var file in filesName)
             {
-                // string oldBackupFileName = Path.Combine(this.archivFolder, "Backup" + this.id.ToString() + ".txt");
                 this.id++;
                 string backupFileName = Path.Combine(this.archivFolder, "Backup" + this.id.ToString() + ".txt");
-
-                // if (File.GetLastWriteTime(oldBackupFileName) != File.GetLastWriteTime(backupFileName) || id == 1)
-                // {
-
                 this.timeEvent = DateTime.Now;
                 this.fileToLogQueue.Enqueue(new string[] { this.id.ToString(), this.timeEvent.ToString(), fileEvent, file, backupFileName });
-                //this.RunLog();
-
-                // }
             }
         }
 
@@ -368,21 +341,5 @@ namespace Epam.Task05.BackupSystem
                 this.SaveFile("Created", allDirectoryFiles);
             }
         }
-
-        ////private void CheckArchiv()
-        ////{
-        ////    string[] archivFiles = Directory.GetFiles(this.archivFolder, "Backup*" + filter, SearchOption.AllDirectories);
-        ////    //string fileShortName = allLogDataArray[line, 3].Substring(allLogDataArray[line, 3].LastIndexOf('\\') + 1);
-        ////    var 
-        ////    for (int i = 0; i < id; i++)
-        ////    {
-        ////        if (archivFiles[i].Substring(archivFiles[i].LastIndexOf('\\')) + 1 != string.Concat(Backup + id.ToString + ".txt"))
-        ////        {
-        ////            this.id = Directory.GetFiles(this.backupFolder, "Backup*" + filter, SearchOption.AllDirectories).Length + 1;
-
-        ////        }
-
-        ////    }
-        ////}
     }
 }
