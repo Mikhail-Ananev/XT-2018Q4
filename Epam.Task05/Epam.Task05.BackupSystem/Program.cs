@@ -60,13 +60,6 @@ namespace Epam.Task05.BackupSystem
                             fileMonitor.MonitorOn = false;
                             break;
                         }
-
-
-                    default:
-                        {
-                            // fileMonitor.ShowQueue();
-                            break;
-                        }
                 }
             }
             while (key != "q");

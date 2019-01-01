@@ -39,7 +39,6 @@ namespace Epam.Task05.BackupSystem
             this.fileSystemWatcher.EnableRaisingEvents = this.MonitorOn;
             Thread th1 = new Thread(this.StartLogCopy);
             th1.Start();
-
         }
 
         public bool MonitorOn
@@ -68,24 +67,8 @@ namespace Epam.Task05.BackupSystem
             else
             {
                 this.id = Directory.GetFiles(this.backupFolder, "Backup*" + this.filter, SearchOption.AllDirectories).Length;
-                //// CheckArchiv();
             }
-
-            //this.RunLog();
         }
-
-        //public void RunLog()
-        //{
-        //   // PROBLEMS BEGIN HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //    Thread th1 = new Thread(this.StartLogCopy);
-        //    // if (th1.ThreadState != ThreadState.Stopped)
-
-        //    //if (th1.ThreadState == ThreadState.Unstarted || )
-        //    //{
-        //        th1.Start();
-        //    //}
-
-        //}
 
         public void Recovery(DateTime recoveryDateTime)
         {
