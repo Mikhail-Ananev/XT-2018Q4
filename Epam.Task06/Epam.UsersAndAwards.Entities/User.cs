@@ -17,14 +17,7 @@ namespace Epam.UsersAndAwards.Entities
         public DateTime BirthDate { get; set; }
 
         public int Age { get; set; }
-        //{
-        //    get => Age;
-        //    private set
-        //    {
-        //        int nowDate = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
-        //        int birstDay = int.Parse(BirthDate.ToString("yyyyMMdd"));
-        //        Age = (nowDate - birstDay) / 10000;
-        //    }
-        //}
+
+        public bool AwardExists { get; set; }
     }
 }

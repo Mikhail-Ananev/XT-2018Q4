@@ -13,6 +13,7 @@ namespace Epam.UsersAndAwards.Logic
 
         public UserLogic()
         {
+            //через if реализовать выбор из файла конфигурации
             this.usersDao = new TextFilesDao.UsersDao();
         }
 
@@ -47,7 +48,7 @@ namespace Epam.UsersAndAwards.Logic
                 Console.WriteLine("Incorrect input birthday");
                 return false;
             }
-            //Не отдал Id - это забота userDao
+
             User user = new User { FirstName = firstName, LastName = lastName, BirthDate = birthDate, Age = age };
             try
             {
@@ -59,9 +60,10 @@ namespace Epam.UsersAndAwards.Logic
                 return false;
             }
         }
-        //где-то 1:00:00
+
         public IEnumerable<User> GetAll()
         {
+            //переписать под награды
             return this.usersDao.GetAll().ToArray();
         }
 

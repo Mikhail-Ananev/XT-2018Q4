@@ -14,10 +14,12 @@ namespace Epam.Task06.ConsoleUI
     class Program
     {
         private static IUserLogic usersLogic;
+        private static IAwardLogic awardsLogic;
 
         static void Main(string[] args)
         {
             usersLogic = new UserLogic();
+            awardsLogic = new AwardLogic();
 
             while (true)
             {
@@ -46,6 +48,15 @@ namespace Epam.Task06.ConsoleUI
                         RemoveUser();
                         break;
 
+                    case "Medal":
+                    case "medal":
+                    case "M":
+                    case "m":
+                        AwardMenu();
+                        //choice = ReadMenuChoice();
+                        //AwardWork(choice);
+                        break;
+
                     case "quit":
                     case "q":
                     case "exit":
@@ -69,7 +80,134 @@ namespace Epam.Task06.ConsoleUI
             Console.WriteLine("List - show all users");
             Console.WriteLine("Add - add new user");
             Console.WriteLine("Remove - remove user");
+            Console.WriteLine("Medal - give or remove user award");
             Console.WriteLine("Choose your option");
+        }
+
+        private static void AwardMenu()
+        {
+            while (true)
+            {
+                ShowAwardMenu();
+                string awardChoice = ReadMenuChoice();
+                switch (awardChoice)
+                {
+                    case "list":
+                    case "l":
+                    case "List":
+                    case "L":
+                        ShowAllAwards();
+                        break;
+
+                    case "Add":
+                    case "a":
+                    case "add":
+                    case "A":
+                        AddUserAward();
+                        break;
+
+                    case "remove":
+                    case "r":
+                    case "Remove":
+                    case "R":
+                        RemoveUserAward();
+                        break;
+
+                    case "quit":
+                    case "q":
+                    case "exit":
+                    case "Quit":
+                    case "Q":
+                    case "Exit":
+                    case "e":
+                    case "E":
+                    case "":
+                        return;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private static void RemoveUserAward()
+        {
+            Console.WriteLine("Enter a award ID:");
+            int awardId;
+            bool resultAwardId = int.TryParse(Console.ReadLine(), out awardId);
+            Console.WriteLine("Enter a user ID:");
+            int userId;
+            bool resultUserId = int.TryParse(Console.ReadLine(), out userId);
+            if (resultAwardId && resultUserId)
+            {
+                if (awardsLogic.Remove(awardId, userId))
+                {
+                    Console.WriteLine("Award was remove successfully");
+                }
+                else
+                {
+                    Console.WriteLine("Award removing error");
+                }
+            }
+            else
+            {
+                Console.WriteLine("One or both ID incorrect");
+            }
+
+            PressAnyKey();
+        }
+
+        private static void AddUserAward()
+        {
+            Console.WriteLine("Enter a award ID:");
+            int awardId;
+            bool resultAwardId = int.TryParse(Console.ReadLine(), out awardId);
+            Console.WriteLine("Enter a user ID:");
+            int userId;
+            bool resultUserId = int.TryParse(Console.ReadLine(), out userId);
+            if (resultAwardId && resultUserId)
+            {
+                if (awardsLogic.Add(awardId, userId))
+                {
+                    Console.WriteLine("Award was added successfully");
+                }
+                else
+                {
+                    Console.WriteLine("Award addition error");
+                }
+            }
+            else
+            {
+                Console.WriteLine("One or both ID incorrect");
+            }
+
+            PressAnyKey();
+        }
+
+        private static void ShowAllAwards()
+        {
+            IEnumerable<Award> awards = awardsLogic.GetAll();
+            foreach (Award award in awards)
+            {
+                ShowAward(award);
+            }
+
+            PressAnyKey();
+        }
+
+        private static void ShowAward(Award award)
+        {
+            Console.WriteLine($"{award.Id}: {award.Title}");
+        }
+
+        static void ShowAwardMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("List - show all awards");
+            Console.WriteLine("Add - award to user");
+            Console.WriteLine("Remove - award from user");
+            Console.WriteLine("Exit - exit from awards menu");
+            Console.WriteLine("Make your choice");
         }
 
         static string ReadMenuChoice()
