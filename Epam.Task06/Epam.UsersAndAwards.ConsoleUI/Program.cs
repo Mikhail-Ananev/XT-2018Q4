@@ -15,11 +15,13 @@ namespace Epam.Task06.ConsoleUI
     {
         private static IUserLogic usersLogic;
         private static IAwardLogic awardsLogic;
+        private static IUserAwardsLogic userAwardsLogic;
 
         static void Main(string[] args)
         {
             usersLogic = new UserLogic();
             awardsLogic = new AwardLogic();
+            userAwardsLogic = new UserAwardsLogic();
 
             while (true)
             {
@@ -228,7 +230,19 @@ namespace Epam.Task06.ConsoleUI
 
         static void ShowUser(User user)
         {
-            Console.WriteLine($"{user.Id}: {user.FirstName} {user.LastName}. {user.BirthDate} ({user.Age} ages)");
+            //if (user.AwardExists)
+            //{
+            //string listAwards = null;
+            //foreach (var award in userAwardsLogic.GetUserAwards(user))
+            //{
+            //    listAwards += award;
+            //}
+            Console.WriteLine($"{user.Id}: {user.FirstName} {user.LastName}. {user.BirthDate.ToShortDateString()} ({user.Age} ages) Awards:{userAwardsLogic.GetUserAwards(user).ToArray()}");
+            //}
+            //else
+            //{
+            //    Console.WriteLine($"{user.Id}: {user.FirstName} {user.LastName}. {user.BirthDate} ({user.Age} ages) Awards:{user.AwardExists}");
+            //}
         }
 
         static void AddNewUser()

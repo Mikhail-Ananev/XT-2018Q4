@@ -46,7 +46,7 @@ namespace Epam.UsersAndAwards.TextFilesDao
 
         private static string UserDataString(User user)
         {
-            return $"{user.Id}|{user.FirstName}|{user.LastName}|{ user.BirthDate.ToString(DateFormat)}|{user.Age}";
+            return $"{user.Id}|{user.FirstName}|{user.LastName}|{ user.BirthDate.ToString(DateFormat)}|{user.Age}|{user.AwardExists}";
         }
 
         public IEnumerable<User> GetAll()
@@ -54,18 +54,19 @@ namespace Epam.UsersAndAwards.TextFilesDao
             try
             {
                 return File.ReadAllLines(usersFilePath)
-                    .Select(line =>
-                    {
-                        var parts = line.Split(new[] { '|' }, 5);
-                        return new User
-                        {
-                            Id = int.Parse(parts[0]),
-                            FirstName = parts[1],
-                            LastName = parts[2],
-                            BirthDate = DateTime.ParseExact(parts[3], DateFormat, CultureInfo.InvariantCulture),
-                            Age = int.Parse(parts[4]),
-                        };
-                    });
+                            .Select(line =>
+                            {
+                                var parts = line.Split(new[] { '|' }, 6);
+                                return new User
+                                {
+                                    Id = int.Parse(parts[0]),
+                                    FirstName = parts[1],
+                                    LastName = parts[2],
+                                    BirthDate = DateTime.ParseExact(parts[3], DateFormat, CultureInfo.InvariantCulture),
+                                    Age = int.Parse(parts[4]),
+                                    AwardExists = Boolean.Parse(parts[5]),
+                                };
+                            });
             }
             catch
             {
