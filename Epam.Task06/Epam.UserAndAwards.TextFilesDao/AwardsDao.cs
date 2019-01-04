@@ -77,7 +77,8 @@ namespace Epam.UsersAndAwards.TextFilesDao
                     File.AppendAllLines(fileAwardsUsersPath, new[] { UsersAwardsString(award, user) });
                 }
 
-                user.AwardExists = true;
+                //user.AwardExists = true;
+                File.AppendAllLines(fileAwardsUsersPath, new[] { award.Id.ToString() + "|" + user.Id.ToString() });
                 return true;
             }
             else
@@ -126,7 +127,7 @@ namespace Epam.UsersAndAwards.TextFilesDao
 
         private bool CheckAwardId(Award award)
         {
-            return File.ReadAllLines(awardsFilePath).Length > award.Id;
+            return File.ReadAllLines(awardsFilePath).Length >= award.Id;
         }
 
         public bool Remove(Award award, User user)
@@ -155,15 +156,15 @@ namespace Epam.UsersAndAwards.TextFilesDao
                             })
                             .Where(id => id == user.Id)
                             .Count();
-            if (awards == 0)
-            {
-                RemoveAwardExist(user);
-            }
+            //if (awards == 0)
+            //{
+            //    RemoveAwardExist(user);
+            //}
         }
 
-        private void RemoveAwardExist(User user)
-        {
-            user.AwardExists = false;
-        }
+        //private void RemoveAwardExist(User user)
+        //{
+        //    user.AwardExists = false;
+        //}
     }
 }

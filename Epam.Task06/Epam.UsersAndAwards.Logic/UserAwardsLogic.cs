@@ -21,6 +21,11 @@ namespace Epam.UsersAndAwards.Logic
 
         public IEnumerable<string> GetUserAwards(User user)
         {
+            var xx = this.userAwardsDao.GetUserAwards(user);
+            //foreach (var x in xx)
+            //{
+            //    Console.WriteLine(x);
+            //}
             return this.userAwardsDao.GetUserAwards(user);
         }
 

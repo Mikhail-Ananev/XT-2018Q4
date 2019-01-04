@@ -42,12 +42,19 @@ namespace Epam.UsersAndAwards.TextFilesDao
                                 return user.Id == userId ? parts[0] : null;
                             });
 
-                return File.ReadAllLines(awardsFilePath)
+                 var xxx = File.ReadAllLines(awardsFilePath)
                     .Select(line =>
                     {
                         var parts = line.Split(new[] { '|' }, 2);
                         return userAwards.Contains(parts[0]) ? parts[1] : null;
                     });
+
+                //foreach (var x in xxx)
+                //{
+                //    Console.WriteLine(x);
+                //}
+
+                return xxx;
             }
             catch
             {

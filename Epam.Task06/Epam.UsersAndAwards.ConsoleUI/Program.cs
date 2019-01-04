@@ -235,14 +235,35 @@ namespace Epam.Task06.ConsoleUI
             //string listAwards = null;
             //foreach (var award in userAwardsLogic.GetUserAwards(user))
             //{
-            //    listAwards += award;
+            //    Console.WriteLine(award);
             //}
-            Console.WriteLine($"{user.Id}: {user.FirstName} {user.LastName}. {user.BirthDate.ToShortDateString()} ({user.Age} ages) Awards:{userAwardsLogic.GetUserAwards(user).ToArray()}");
+            Console.WriteLine($"{user.Id}: {user.FirstName} {user.LastName}. {user.BirthDate.ToShortDateString()} ({user.Age} ages)");
+            Console.Write($"Awards:");
+            ShowUserAwards(user);
+            Console.WriteLine();
             //}
             //else
             //{
             //    Console.WriteLine($"{user.Id}: {user.FirstName} {user.LastName}. {user.BirthDate} ({user.Age} ages) Awards:{user.AwardExists}");
             //}
+        }
+
+        private static void ShowUserAwards(User user)
+        {
+            if (userAwardsLogic.GetUserAwards(user) != null)
+            {
+                foreach (var award in userAwardsLogic.GetUserAwards(user))
+                {
+                    if (award != null)
+                    {
+                        Console.Write(" " + award + "! ");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine(" empty");
+            }
         }
 
         static void AddNewUser()

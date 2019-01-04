@@ -18,6 +18,6 @@ namespace Epam.UsersAndAwards.Entities
 
         public int Age { get; set; }
 
-        public bool AwardExists { get; set; }
+        //public bool AwardExists { get; set; }
     }
 }
