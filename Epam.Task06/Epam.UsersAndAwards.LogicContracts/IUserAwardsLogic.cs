@@ -1,14 +1,16 @@
-﻿using Epam.UsersAndAwards.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Epam.UsersAndAwards.Entities;
 
 namespace Epam.UsersAndAwards.LogicContracts
 {
     public interface IUserAwardsLogic
     {
         IEnumerable<string> GetUserAwards(User user);
+
+        bool Add(int awardId, int userId);
+
+        bool Remove(int awardId, int userId);
+
+        void RemoveUserAwards(int id);
     }
 }

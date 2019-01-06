@@ -142,7 +142,7 @@ namespace Epam.Task06.ConsoleUI
             bool resultUserId = int.TryParse(Console.ReadLine(), out userId);
             if (resultAwardId && resultUserId)
             {
-                if (awardsLogic.Remove(awardId, userId))
+                if (userAwardsLogic.Remove(awardId, userId))
                 {
                     Console.WriteLine("Award was remove successfully");
                 }
@@ -169,7 +169,7 @@ namespace Epam.Task06.ConsoleUI
             bool resultUserId = int.TryParse(Console.ReadLine(), out userId);
             if (resultAwardId && resultUserId)
             {
-                if (awardsLogic.Add(awardId, userId))
+                if (userAwardsLogic.Add(awardId, userId))
                 {
                     Console.WriteLine("Award was added successfully");
                 }
@@ -294,6 +294,7 @@ namespace Epam.Task06.ConsoleUI
             {
                 if (usersLogic.Remove(id))
                 {
+                    userAwardsLogic.RemoveUserAwards(id);
                     Console.WriteLine("User was remove successfully");
                 }
                 else

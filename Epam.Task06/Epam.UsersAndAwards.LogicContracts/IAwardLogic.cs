@@ -1,9 +1,5 @@
-﻿using Epam.UsersAndAwards.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Epam.UsersAndAwards.Entities;
 
 namespace Epam.UsersAndAwards.LogicContracts
 {
@@ -11,8 +7,5 @@ namespace Epam.UsersAndAwards.LogicContracts
     {
         IEnumerable<Award> GetAll();
 
-        bool Add(int awardId, int userId);
-
-        bool Remove(int awardId, int userId);
     }
 }

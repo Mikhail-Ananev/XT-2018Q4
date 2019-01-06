@@ -29,5 +29,23 @@ namespace Epam.UsersAndAwards.Logic
             return this.userAwardsDao.GetUserAwards(user);
         }
 
+        public bool Add(int awardId, int userId)
+        {
+            Award award = new Award { Id = awardId };
+            User user = new User { Id = userId };
+            return this.userAwardsDao.Add(award, user);
+        }
+
+        public bool Remove(int awardId, int userId)
+        {
+            Award award = new Award { Id = awardId };
+            User user = new User { Id = userId };
+            return this.userAwardsDao.Remove(award, user);
+        }
+
+        public void RemoveUserAwards(int id)
+        {
+            userAwardsDao.RemoveUserAwards(id);
+        }
     }
 }

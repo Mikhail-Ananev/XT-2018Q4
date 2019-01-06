@@ -20,20 +20,6 @@ namespace Epam.UsersAndAwards.Logic
             this.awardsDao = new TextFilesDao.AwardsDao();
         }
 
-        public bool Add(int awardId, int userId)
-        {
-            Award award = new Award { Id = awardId };
-            User user = new User { Id = userId };
-            return this.awardsDao.Add(award, user);
-        }
-
-        public bool Remove(int awardId, int userId)
-        {
-            Award award = new Award { Id = awardId };
-            User user = new User { Id = userId };
-            return this.awardsDao.Remove(award, user);
-        }
-
         IEnumerable<Award> IAwardLogic.GetAll()
         {
             return this.awardsDao.GetAll().ToArray();
