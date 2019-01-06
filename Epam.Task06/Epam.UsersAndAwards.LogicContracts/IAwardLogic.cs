@@ -6,6 +6,5 @@ namespace Epam.UsersAndAwards.LogicContracts
     public interface IAwardLogic
     {
         IEnumerable<Award> GetAll();
-
     }
 }

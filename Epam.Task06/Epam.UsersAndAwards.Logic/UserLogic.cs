@@ -1,9 +1,9 @@
-﻿using Epam.UsersAndAwards.Entities;
-using Epam.UsersAndAwards.LogicContracts;
-using Epam.UsersAndAwards.TextFilesDao;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Epam.UsersAndAwards.Entities;
+using Epam.UsersAndAwards.LogicContracts;
+using Epam.UsersAndAwards.TextFilesDao;
 
 namespace Epam.UsersAndAwards.Logic
 {
@@ -13,18 +13,18 @@ namespace Epam.UsersAndAwards.Logic
 
         public UserLogic()
         {
-            //через if реализовать выбор из файла конфигурации
+            ////через if реализовать выбор из файла конфигурации
             this.usersDao = new TextFilesDao.UsersDao();
         }
 
         public bool Add(string firstName, string lastName, string stringBirthDate)
         {
-            if (!Check(firstName))
+            if (!this.Check(firstName))
             {
                 return false;
             }
 
-            if (!Check(lastName))
+            if (!this.Check(lastName))
             {
                 return false;
             }
@@ -63,7 +63,6 @@ namespace Epam.UsersAndAwards.Logic
 
         public IEnumerable<User> GetAll()
         {
-            //переписать под награды
             return this.usersDao.GetAll().ToArray();
         }
 
@@ -97,47 +96,5 @@ namespace Epam.UsersAndAwards.Logic
 
             return true;
         }
-
     }
 }
-//private readonly INotesDao notesDao;
-//public NoteLogic()
-//{
-//    this.notesDao = new TextFilesDal.NotesDao();
-//}
-
-//public bool Add(string noteText)
-//{
-//    if (noteText == null)
-//    {
-//        throw new ArgumentException(nameof(noteText));
-//    }
-
-//    if (noteText.Length == 0 || noteText.Length > 140)
-//    {
-//        throw new ArgumentException("Wrong note length. Should be between 0 and 140", nameof(noteText));
-//    }
-
-//    Note note = new Note { Text = noteText, CreateDate = DateTime.Now };
-
-//    try
-//    {
-//        notesDao.Add(note);
-//        return true;
-//    }
-//    catch (Exception)
-//    {
-
-//        return false;
-//    }
-//}
-
-//public IEnumerable<Note> GetAll()
-//{
-//    return notesDao.GetAll().ToArray();
-//}
-
-//public bool Remove(int id)
-//{
-//    return notesDao.Remove(id);
-//}

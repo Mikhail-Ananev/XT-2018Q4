@@ -1,14 +1,11 @@
-﻿using Epam.UsersAndAwards.DalContracts;
-using Epam.UsersAndAwards.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Epam.UsersAndAwards.DalContracts;
+using Epam.UsersAndAwards.Entities;
 
 namespace Epam.UsersAndAwards.TextFilesDao
 {
-    class DataAccess : IDataAccess
+    public class DataAccess : IDataAccess
     {
         public IEnumerable<Award> GetAllAwards()
         {

@@ -1,11 +1,7 @@
-﻿using Epam.UsersAndAwards.DalContracts;
+﻿using System.Collections.Generic;
+using Epam.UsersAndAwards.DalContracts;
 using Epam.UsersAndAwards.Entities;
 using Epam.UsersAndAwards.LogicContracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.UsersAndAwards.Logic
 {
@@ -15,17 +11,13 @@ namespace Epam.UsersAndAwards.Logic
 
         public UserAwardsLogic()
         {
-            //через if реализовать выбор из файла конфигурации
+            ////через if реализовать выбор из файла конфигурации
             this.userAwardsDao = new TextFilesDao.UserAwardsDao();
         }
 
         public IEnumerable<string> GetUserAwards(User user)
         {
             var xx = this.userAwardsDao.GetUserAwards(user);
-            //foreach (var x in xx)
-            //{
-            //    Console.WriteLine(x);
-            //}
             return this.userAwardsDao.GetUserAwards(user);
         }
 
@@ -45,7 +37,7 @@ namespace Epam.UsersAndAwards.Logic
 
         public void RemoveUserAwards(int id)
         {
-            userAwardsDao.RemoveUserAwards(id);
+            this.userAwardsDao.RemoveUserAwards(id);
         }
     }
 }

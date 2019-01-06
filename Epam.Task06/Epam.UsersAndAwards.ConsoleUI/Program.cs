@@ -1,23 +1,18 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 using Epam.UsersAndAwards.Entities;
-using Epam.UsersAndAwards.FakeLogic;
 using Epam.UsersAndAwards.Logic;
 using Epam.UsersAndAwards.LogicContracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.Task06.ConsoleUI
 {
-    class Program
+    public class Program
     {
         private static IUserLogic usersLogic;
         private static IAwardLogic awardsLogic;
         private static IUserAwardsLogic userAwardsLogic;
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             usersLogic = new UserLogic();
             awardsLogic = new AwardLogic();
@@ -55,8 +50,6 @@ namespace Epam.Task06.ConsoleUI
                     case "M":
                     case "m":
                         AwardMenu();
-                        //choice = ReadMenuChoice();
-                        //AwardWork(choice);
                         break;
 
                     case "quit":
@@ -76,7 +69,7 @@ namespace Epam.Task06.ConsoleUI
             }
         }
 
-        static void ShowMenu()
+        private static void ShowMenu()
         {
             Console.Clear();
             Console.WriteLine("List - show all users");
@@ -202,7 +195,7 @@ namespace Epam.Task06.ConsoleUI
             Console.WriteLine($"{award.Id}: {award.Title}");
         }
 
-        static void ShowAwardMenu()
+        private static void ShowAwardMenu()
         {
             Console.Clear();
             Console.WriteLine("List - show all awards");
@@ -212,12 +205,12 @@ namespace Epam.Task06.ConsoleUI
             Console.WriteLine("Make your choice");
         }
 
-        static string ReadMenuChoice()
+        private static string ReadMenuChoice()
         {
             return Console.ReadLine();
         }
 
-        static void ShowAllUsers()
+        private static void ShowAllUsers()
         {
             IEnumerable<User> users = usersLogic.GetAll();
             foreach (User user in users)
@@ -228,24 +221,12 @@ namespace Epam.Task06.ConsoleUI
             PressAnyKey();
         }
 
-        static void ShowUser(User user)
+        private static void ShowUser(User user)
         {
-            //if (user.AwardExists)
-            //{
-            //string listAwards = null;
-            //foreach (var award in userAwardsLogic.GetUserAwards(user))
-            //{
-            //    Console.WriteLine(award);
-            //}
             Console.WriteLine($"{user.Id}: {user.FirstName} {user.LastName}. {user.BirthDate.ToShortDateString()} ({user.Age} ages)");
             Console.Write($"Awards:");
             ShowUserAwards(user);
             Console.WriteLine();
-            //}
-            //else
-            //{
-            //    Console.WriteLine($"{user.Id}: {user.FirstName} {user.LastName}. {user.BirthDate} ({user.Age} ages) Awards:{user.AwardExists}");
-            //}
         }
 
         private static void ShowUserAwards(User user)
@@ -266,7 +247,7 @@ namespace Epam.Task06.ConsoleUI
             }
         }
 
-        static void AddNewUser()
+        private static void AddNewUser()
         {
             Console.WriteLine("Enter a user first name:");
             string firstName = Console.ReadLine();
@@ -286,7 +267,7 @@ namespace Epam.Task06.ConsoleUI
             PressAnyKey();
         }
 
-        static void RemoveUser()
+        private static void RemoveUser()
         {
             Console.WriteLine("Enter an ID of user to remove: ");
             string input = Console.ReadLine();

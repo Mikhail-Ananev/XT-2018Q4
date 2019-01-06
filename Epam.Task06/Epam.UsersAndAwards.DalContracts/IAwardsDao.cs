@@ -6,6 +6,5 @@ namespace Epam.UsersAndAwards.DalContracts
     public interface IAwardsDao
     {
         IEnumerable<Award> GetAll();
-
     }
 }

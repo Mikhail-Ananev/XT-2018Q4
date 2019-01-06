@@ -9,34 +9,33 @@ namespace Epam.UsersAndAwards.TextFilesDao
 {
     public class AwardsDao : IAwardsDao
     {
-        private const string usersFileName = "users.txt";
-        private const string awardsFileName = "awards.txt";
-        private const string fileUsersdAwards = "usersawards.txt";
+        private const string UsersFileName = "users.txt";
+        private const string AwardsFileName = "awards.txt";
+        private const string FileUsersdAwards = "usersawards.txt";
         private readonly string usersFilePath;
         private readonly string awardsFilePath;
         private readonly string fileAwardsUsersPath;
 
-        //public var key = ConfigurationManager.AppSettings["AwardsFile"]
+        //// public var key = ConfigurationManager.AppSettings["AwardsFile"]
 
         public AwardsDao()
         {
             string folder = AppDomain.CurrentDomain.BaseDirectory;
-            usersFilePath = Path.Combine(folder, usersFileName);
-            awardsFilePath = Path.Combine(folder, awardsFileName);
-            fileAwardsUsersPath = Path.Combine(folder, fileUsersdAwards);
-            //ConfigurationManager.AppSettings["DAL:Files:Folder"]
-            if (!File.Exists(fileAwardsUsersPath))
+            this.usersFilePath = Path.Combine(folder, UsersFileName);
+            this.awardsFilePath = Path.Combine(folder, AwardsFileName);
+            this.fileAwardsUsersPath = Path.Combine(folder, FileUsersdAwards);
+            //// ConfigurationManager.AppSettings["DAL:Files:Folder"]
+            if (!File.Exists(this.fileAwardsUsersPath))
             {
-                File.Create(fileAwardsUsersPath).Close();
+                File.Create(this.fileAwardsUsersPath).Close();
             }
         }
-
 
         public IEnumerable<Award> GetAll()
         {
             try
             {
-                return File.ReadAllLines(awardsFilePath)
+                return File.ReadAllLines(this.awardsFilePath)
                     .Select(line =>
                     {
                         var parts = line.Split(new[] { '|' }, 2);
@@ -46,20 +45,11 @@ namespace Epam.UsersAndAwards.TextFilesDao
                             Title = parts[1],
                         };
                     });
-
-                //var xxx = File.ReadAllLines(awardsFilePath);
-                //foreach (var x in xxx)
-                //{
-                //    Console.WriteLine(x);
-                //}
-                //return Enumerable.Empty<Award>();
-
             }
             catch
             {
                 return Enumerable.Empty<Award>();
             }
         }
-
     }
 }

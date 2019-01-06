@@ -1,38 +1,32 @@
-﻿using Epam.UsersAndAwards.DalContracts;
-using Epam.UsersAndAwards.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Epam.UsersAndAwards.DalContracts;
+using Epam.UsersAndAwards.Entities;
 
 namespace Epam.UsersAndAwards.TextFilesDao
 {
     public class UserAwardsDao : IUserAwardsDao
     {
-        private const string usersFileName = "users.txt";
-
-        private const string awardsFileName = "awards.txt";
-        private const string fileUsersdAwards = "usersawards.txt";
+        private const string UsersFileName = "users.txt";
+        private const string AwardsFileName = "awards.txt";
+        private const string FileUsersdAwards = "usersawards.txt";
         private readonly string awardsFilePath;
         private readonly string usersFilePath;
-
         private readonly string fileAwardsUsersPath;
 
-        //public var key = ConfigurationManager.AppSettings["AwardsFile"]
+        ////public var key = ConfigurationManager.AppSettings["AwardsFile"]
 
         public UserAwardsDao()
         {
             string folder = AppDomain.CurrentDomain.BaseDirectory;
-            awardsFilePath = Path.Combine(folder, awardsFileName);
-            usersFilePath = Path.Combine(folder, usersFileName);
-
-            fileAwardsUsersPath = Path.Combine(folder, fileUsersdAwards);
-            //ConfigurationManager.AppSettings["DAL:Files:Folder"]
-            if (!File.Exists(fileAwardsUsersPath))
+            this.awardsFilePath = Path.Combine(folder, AwardsFileName);
+            this.usersFilePath = Path.Combine(folder, UsersFileName);
+            this.fileAwardsUsersPath = Path.Combine(folder, FileUsersdAwards);
+            if (!File.Exists(this.fileAwardsUsersPath))
             {
-                File.Create(fileAwardsUsersPath).Close();
+                File.Create(this.fileAwardsUsersPath).Close();
             }
         }
 
@@ -40,7 +34,7 @@ namespace Epam.UsersAndAwards.TextFilesDao
         {
             try
             {
-                var userAwards = File.ReadAllLines(fileAwardsUsersPath)
+                var userAwards = File.ReadAllLines(this.fileAwardsUsersPath)
                             .Select(line =>
                             {
                                 var parts = line.Split(new[] { '|' }, 2);
@@ -48,34 +42,28 @@ namespace Epam.UsersAndAwards.TextFilesDao
                                 return user.Id == userId ? parts[0] : null;
                             });
 
-                 var xxx = File.ReadAllLines(awardsFilePath)
+                 var xxx = File.ReadAllLines(this.awardsFilePath)
                     .Select(line =>
                     {
                         var parts = line.Split(new[] { '|' }, 2);
                         return userAwards.Contains(parts[0]) ? parts[1] : null;
                     });
 
-                //foreach (var x in xxx)
-                //{
-                //    Console.WriteLine(x);
-                //}
-
                 return xxx;
             }
             catch
             {
-
                 return Enumerable.Empty<string>();
             }
         }
 
         public bool Add(Award award, User user)
         {
-            if (CheckAwardId(award) && CheckUserId(user))
+            if (this.CheckAwardId(award) && this.CheckUserId(user))
             {
-                if (!CheckAwardsUsers(award, user))
+                if (!this.CheckAwardsUsers(award, user))
                 {
-                    File.AppendAllLines(fileAwardsUsersPath, new[] { UsersAwardsString(award, user) });
+                    File.AppendAllLines(this.fileAwardsUsersPath, new[] { this.UsersAwardsString(award, user) });
                     return true;
                 }
                 else
@@ -83,10 +71,6 @@ namespace Epam.UsersAndAwards.TextFilesDao
                     Console.WriteLine("User already have this reward");
                     return false;
                 }
-
-                //user.AwardExists = true;
-                //File.AppendAllLines(fileAwardsUsersPath, new[] { UsersAwardsString(award, user) });
-                //return true;
             }
             else
             {
@@ -95,9 +79,37 @@ namespace Epam.UsersAndAwards.TextFilesDao
             }
         }
 
+        public bool Remove(Award award, User user)
+        {
+            var awardsUsers = File.ReadAllLines(this.fileAwardsUsersPath).ToList();
+            string search = string.Concat(award.Id.ToString() + "|" + user.Id.ToString());
+            var result = awardsUsers.FirstOrDefault(n => n == search);
+            if (result == null)
+            {
+                return false;
+            }
+
+            this.CheckExistsUserAwards(user);
+            awardsUsers.Remove(result);
+            File.WriteAllLines(this.fileAwardsUsersPath, awardsUsers.Select(n => n));
+            return true;
+        }
+
+        public void RemoveUserAwards(int userId)
+        {
+            var awardsUsers = File.ReadAllLines(this.fileAwardsUsersPath).ToList();
+            var lineToRemove = awardsUsers.Where(line => line.Contains("|" + userId.ToString()));
+            foreach (var line in lineToRemove)
+            {
+                awardsUsers.Remove(line);
+            }
+
+            File.WriteAllLines(this.fileAwardsUsersPath, awardsUsers.Select(n => n));
+        }
+
         private bool CheckAwardsUsers(Award award, User user)
         {
-            var awardsUsers = File.ReadAllLines(fileAwardsUsersPath)
+            var awardsUsers = File.ReadAllLines(this.fileAwardsUsersPath)
                             .Where(line =>
                             {
                                 var parts = line.Split(new[] { '|' }, 2);
@@ -115,7 +127,7 @@ namespace Epam.UsersAndAwards.TextFilesDao
 
         private bool CheckUserId(User user)
         {
-            var users = File.ReadAllLines(usersFilePath)
+            var users = File.ReadAllLines(this.usersFilePath)
                             .Select(line =>
                             {
                                 var parts = line.Split(new[] { '|' }, 5);
@@ -131,44 +143,16 @@ namespace Epam.UsersAndAwards.TextFilesDao
             {
                 return true;
             }
-
-            //Console.WriteLine("HERE");
-            //foreach (var id in users.Cu)
-            //{
-            //    Console.WriteLine(id);
-            //    if (id == 0)
-            //    {
-            //        return false;
-            //    }
-            //}
-
-            //return true;
         }
 
         private bool CheckAwardId(Award award)
         {
-            return File.ReadAllLines(awardsFilePath).Length >= award.Id;
-        }
-
-        public bool Remove(Award award, User user)
-        {
-            var awardsUsers = File.ReadAllLines(fileAwardsUsersPath).ToList();
-            string search = string.Concat(award.Id.ToString() + "|" + user.Id.ToString());
-            var result = awardsUsers.FirstOrDefault(n => n == search);
-            if (result == null)
-            {
-                return false;
-            }
-
-            CheckExistsUserAwards(user);
-            awardsUsers.Remove(result);
-            File.WriteAllLines(fileAwardsUsersPath, awardsUsers.Select(n => n));
-            return true;
+            return File.ReadAllLines(this.awardsFilePath).Length >= award.Id;
         }
 
         private void CheckExistsUserAwards(User user)
         {
-            var awards = File.ReadAllLines(fileAwardsUsersPath)
+            var awards = File.ReadAllLines(this.fileAwardsUsersPath)
                             .Select(line =>
                             {
                                 var parts = line.Split(new[] { '|' }, 2);
@@ -176,32 +160,11 @@ namespace Epam.UsersAndAwards.TextFilesDao
                             })
                             .Where(id => id == user.Id)
                             .Count();
-            //if (awards == 0)
-            //{
-            //    RemoveAwardExist(user);
-            //}
         }
 
-        //private void RemoveAwardExist(User user)
-        //{
-        //    user.AwardExists = false;
-        //}
-
-        private static string UsersAwardsString(Award award, User user)
+        private string UsersAwardsString(Award award, User user)
         {
             return $"{award.Id}|{user.Id}";
-        }
-
-        public void RemoveUserAwards(int userId)
-        {
-            var awardsUsers = File.ReadAllLines(fileAwardsUsersPath).ToList();
-            var lineToRemove = awardsUsers.Where(line => line.Contains("|" + userId.ToString()));
-            foreach (var line in lineToRemove)
-            {
-                awardsUsers.Remove(line);
-            }
-
-            File.WriteAllLines(fileAwardsUsersPath, awardsUsers.Select(n => n));
         }
     }
 }

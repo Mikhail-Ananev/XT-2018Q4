@@ -1,10 +1,8 @@
-﻿using Epam.UsersAndAwards.Entities;
-using Epam.UsersAndAwards.LogicContracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Epam.UsersAndAwards.Entities;
+using Epam.UsersAndAwards.LogicContracts;
 
 namespace Epam.UsersAndAwards.FakeLogic
 {
@@ -17,14 +15,15 @@ namespace Epam.UsersAndAwards.FakeLogic
         {
             this.users = new HashSet<User>();
         }
+
         public bool Add(string firstName, string lastName, string stringBirthDate)
         {
-            if (!Check(firstName))
+            if (!this.Check(firstName))
             {
                 return false; 
             }
 
-            if (!Check(lastName))
+            if (!this.Check(lastName))
             {
                 return false;
             }

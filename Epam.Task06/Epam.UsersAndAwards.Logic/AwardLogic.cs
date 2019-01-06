@@ -1,12 +1,8 @@
-﻿using Epam.UsersAndAwards.DalContracts;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Epam.UsersAndAwards.DalContracts;
 using Epam.UsersAndAwards.Entities;
 using Epam.UsersAndAwards.LogicContracts;
-using Epam.UsersAndAwards.TextFilesDao;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epam.UsersAndAwards.Logic
 {
@@ -16,7 +12,7 @@ namespace Epam.UsersAndAwards.Logic
 
         public AwardLogic()
         {
-            //через if реализовать выбор из файла конфигурации
+            ////через if реализовать выбор из файла конфигурации
             this.awardsDao = new TextFilesDao.AwardsDao();
         }
 
