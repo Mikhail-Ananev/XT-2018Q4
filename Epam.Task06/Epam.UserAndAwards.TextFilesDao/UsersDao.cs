@@ -1,85 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
+﻿using System.Collections.Generic;
+using Epam.UsersAndAwards.DalContracts;
 using Epam.UsersAndAwards.Entities;
 
 namespace Epam.UsersAndAwards.TextFilesDao
 {
     public class UsersDao : IUsersDao
     {
-        private const string UsersFileName = "users.txt";
-        private const string MaxIdFileName = "maxId.txt";
-        private const string DateFormat = "yyyyMMddHHmmss";
-        private readonly string usersFilePath;
-        private readonly string maxIdFilePath;
-        private int maxId;
+        private IDataAccess dataAccess;
 
         public UsersDao()
         {
-            string folder = AppDomain.CurrentDomain.BaseDirectory;
-            this.usersFilePath = Path.Combine(folder, UsersFileName);
-            this.maxIdFilePath = Path.Combine(folder, MaxIdFileName);
-            ////ConfigurationManager.ArrSettings["DAL:Files:Folder"]
-            try
-            {
-                this.maxId = int.Parse(File.ReadAllText(this.maxIdFilePath));
-            }
-            catch
-            {
-                this.maxId = 0;
-            }
+            this.dataAccess = new FileDataAccess();
         }
 
         public void Add(User user)
         {
-            user.Id = ++this.maxId;
-            File.WriteAllText(this.maxIdFilePath, this.maxId.ToString());
-            File.AppendAllLines(this.usersFilePath, new[] { UserDataString(user) });
+            this.dataAccess.Add(user);
         }
 
         public IEnumerable<User> GetAll()
         {
-            try
-            {
-                return File.ReadAllLines(this.usersFilePath)
-                            .Select(line =>
-                            {
-                                var parts = line.Split(new[] { '|' }, 5);
-                                return new User
-                                {
-                                    Id = int.Parse(parts[0]),
-                                    FirstName = parts[1],
-                                    LastName = parts[2],
-                                    BirthDate = DateTime.ParseExact(parts[3], DateFormat, CultureInfo.InvariantCulture),
-                                    Age = int.Parse(parts[4]),
-                                };
-                            });
-            }
-            catch
-            {
-                return Enumerable.Empty<User>();
-            }
+            return this.dataAccess.GetAllUsers();
         }
 
         public bool Remove(int id)
         {
-            var users = this.GetAll().ToList();
-            var user = users.FirstOrDefault(n => n.Id == id);
-            if (user == null)
-            {
-                return false;
-            }
-
-            users.Remove(user);
-            File.WriteAllLines(this.usersFilePath, users.Select(UserDataString));
-            return true;
-        }
-
-        private static string UserDataString(User user)
-        {
-            return $"{user.Id}|{user.FirstName}|{user.LastName}|{ user.BirthDate.ToString(DateFormat)}|{user.Age}";
+            return this.dataAccess.RemoveUser(id);
         }
     }
 }

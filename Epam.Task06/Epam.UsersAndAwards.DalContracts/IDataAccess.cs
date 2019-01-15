@@ -9,6 +9,18 @@ namespace Epam.UsersAndAwards.DalContracts
 
         IEnumerable<Award> GetAllAwards();
 
-        IEnumerable<string> GetAllUsersAwards();
+        IEnumerable<int[]> GetAllAwardsUsers();
+
+        void Add(User user);
+
+        bool RemoveUser(int id);
+
+        bool Add(Award award, User user);
+
+        bool Remove(Award award, User user);
+
+        void RemoveUserAwards(int userId);
+
+
     }
 }

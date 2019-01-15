@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8B71B023-983A-40CA-801C-C86580845661}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Epam.UsersAndAwards.TextFilesDao</RootNamespace>
-    <AssemblyName>Epam.UsersAndAwards.TextFilesDao</AssemblyName>
+    <ProjectGuid>{B73D8548-47BE-4EBD-BF90-498673F646A3}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Epam.Task07.DateExistance</RootNamespace>
+    <AssemblyName>Epam.Task07.DateExistance</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,21 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AwardsDao.cs" />
-    <Compile Include="FileDataAccess.cs" />
-    <Compile Include="UserAwardsDao.cs" />
-    <Compile Include="UsersDao.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Epam.UsersAndAwards.DalContracts\Epam.UsersAndAwards.DalContracts.csproj">
-      <Project>{fd7111e2-ba3f-4d68-b9a9-b57e3cedf3e1}</Project>
-      <Name>Epam.UsersAndAwards.DalContracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Epam.UsersAndAwards.Entities\Epam.UsersAndAwards.Entities.csproj">
-      <Project>{699e8ba5-eb07-40cb-9ede-d317bf91d4a3}</Project>
-      <Name>Epam.UsersAndAwards.Entities</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
