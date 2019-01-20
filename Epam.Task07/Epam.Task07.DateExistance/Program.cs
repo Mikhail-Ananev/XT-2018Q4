@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Epam.Task07.DateExistance
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {

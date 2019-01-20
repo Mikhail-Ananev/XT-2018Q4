@@ -1,0 +1,75 @@
+.step {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+ul.step {
+	margin: 20px auto;
+	text-align: center;
+	font-family: Arial;	
+}
+
+.step input {
+	display: none;
+}
+
+
+.step > li {
+	display: inline-block;
+	width: 150px;
+	height: 30px;
+	background: linear-gradient(#ccc, #979797, #ccc);
+	line-height: 30px;
+	vertical-align: top;
+	position: relative;
+	margin-left: -5px;
+
+}
+.step span {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+.step li:before, .step li:after {
+	content: "";
+	display: block;
+	width: 10px;
+	height: 15px;
+	position: absolute;
+	right: 0;
+	background: #fff;
+	z-index: 100;
+	right: -5px;
+}
+
+.step li:after {
+	top:0;
+	transform: skew(30deg);
+}
+
+.step li:before {
+	top: 15px;
+	transform:skew(-30deg);
+}
+
+.step li:last-child:after,
+.step li:last-child:before {
+	right: -5px;
+}
+
+.step li:last-child:after {
+    top: 15px;
+	transform:skew(90deg);
+}
+
+.step li:last-child:before {
+    top: 15px;
+	transform:skew(90deg);
+}
+
+.step input:checked + span {
+	background: linear-gradient(#A8DF81, #669D3F, #A8DF81);
+	color: #fff;
+}

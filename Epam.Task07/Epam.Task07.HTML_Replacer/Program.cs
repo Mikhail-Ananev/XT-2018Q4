@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Epam.Task07.HTML_Replacer
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
@@ -20,6 +20,5 @@ namespace Epam.Task07.HTML_Replacer
             string result = regex.Replace(test, "_");
             Console.WriteLine(result);
         }
-
     }
 }

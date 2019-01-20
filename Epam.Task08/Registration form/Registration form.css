@@ -1,0 +1,51 @@
+form.registration {
+    background: rgb(6,144,207);
+    border: 3px solid rgb(0,117,178);
+    padding: 10px;
+    width: 420px;
+}
+
+.form-row {
+    color: white;
+    font: 16pt/12pt sans-serif;
+    padding: 10px;
+}
+
+.header {
+    font: 20pt/15pt sans-serif;
+    padding: 20px;
+    margin-left: -10px;
+    margin-right: -10px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: white;
+}
+
+.form-row  > div{
+    padding-top: 10px;  
+    padding-right: 5%;
+}
+
+.form-row input{
+    display:block;
+    width: 90%;
+    height: 19px;
+    line-height: 19px;
+    padding: 0px 5px;
+    margin-top: 4px;
+}
+
+.floating-box > div{
+    display:inline-block;
+    width: 43%;
+}
+
+.submit input{
+    text-decoration: none;
+    font-size: 16px;
+    outline: none;
+    border:1px solid transparent;
+    width: 100px;
+    height: 30px;
+    background: rgb(255,223,127);
+}

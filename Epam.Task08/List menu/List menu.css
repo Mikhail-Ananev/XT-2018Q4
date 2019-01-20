@@ -1,0 +1,21 @@
+.menu {
+    position: relative; 
+    width: 200px;
+    box-shadow: 6px 6px #880000;
+    border-radius: 10px;
+    border: 1px solid black;
+    background: rgb(249,228,151);
+    padding: 10px;
+    list-style-type: none;
+}
+
+.menu li{
+    padding-top: 3px;
+    padding-bottom: 5px;
+}
+
+.menu a{
+    font-size:16px;
+    text-decoration: none;
+    color: #8C0000; 
+}

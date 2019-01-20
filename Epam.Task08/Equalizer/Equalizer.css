@@ -1,0 +1,20 @@
+body {
+    background: #333;
+}
+
+.allcol > div {
+    background: repeating-linear-gradient(to bottom, transparent, 
+	        transparent 20px, #333 20px, #333 23px),
+	        linear-gradient(to bottom, #ffd059, #ff8c00);
+    width: 40px;
+    display: inline-block;
+    margin-right: 5px;
+    border-radius: 5px 5px 0 0;
+    vertical-align: bottom;
+}
+    
+div.cell2 { height: 46px; }
+div.cell3 { height: 69px; }
+div.cell5 { height: 115px; }
+div.cell8 { height: 184px; }
+div.cell10 { height: 230px; }  

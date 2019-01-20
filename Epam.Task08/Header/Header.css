@@ -1,0 +1,24 @@
+.article {
+    position: absolute;
+    padding:10px;
+}
+
+.article > header {
+    position: relative;
+    float: left/right;
+    background: #008B66;
+    color: #fff;
+    font-size: 1.1em;
+    padding: 10px;
+    margin-bottom: -7px;
+}
+
+.article > article{
+    position: relative;
+    background: #dfe6e1;
+    float: right;
+    width: 95%;
+    border: 1px solid #fff;
+    padding: 10px;
+    border-right: none;
+}

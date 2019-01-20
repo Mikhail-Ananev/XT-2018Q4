@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-
 namespace Epam.Task07.EmailFinder
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
