@@ -1,0 +1,25 @@
+div.buttons {
+    width: 500px;
+    display: inline;
+}
+
+.buttons button {
+    width: 150px;
+}
+
+.images > select{
+    overflow:  hidden;
+    width: 200px;
+    height: 200px;
+}
+
+.images p {
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    width: 200px;
+}
+
+img{
+    width: 600px;
+}
