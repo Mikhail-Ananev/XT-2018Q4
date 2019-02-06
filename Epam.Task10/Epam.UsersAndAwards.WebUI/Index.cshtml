@@ -1,0 +1,30 @@
+﻿@{ 
+    Layout = "~/_Layout.cshtml";
+    var users = Epam.UsersAndAwards.WebUI.LogicProvider.UserLogic.GetAll();
+    var awards = Epam.UsersAndAwards.WebUI.LogicProvider.AwardLogic.GetAll();
+    var userawards = Epam.UsersAndAwards.WebUI.LogicProvider.UserAwardsLogic.GetUserAwards(0);
+}
+
+@section styles{
+    <link href="~/Styles/pageIndex.css" rel="stylesheet" />
+    }
+
+@if (User.IsInRole("Admins"))
+{
+    <button>Add award to user</button>
+}
+
+<ul>
+    <li>Users count: @users.Count()</li>
+    @if (User.Identity.IsAuthenticated)
+    {
+            foreach (var user in users)
+            {
+                <li>@user.Id @user.FirstName @user.LastName @user.Age (Birthday: @user.BirthDate )</li>
+            }
+    }
+
+
+
+</ul>
+

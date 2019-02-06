@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            @:Hello, @User.Identity.Name. <a href="/Account/Logout">log out</a>
+        }
+        else
+        {
+            @:Hello, guest!  <a href="/Account/Login">log in</a>
+        }
+    </div>
+    @RenderBody()
+</body>
+</html>

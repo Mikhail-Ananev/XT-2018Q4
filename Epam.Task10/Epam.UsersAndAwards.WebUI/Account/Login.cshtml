@@ -1,0 +1,43 @@
+﻿@if (IsPost)
+{
+    string login = Request["login"];
+    string password = Request["password"];
+    if (Epam.UsersAndAwards.WebUI.LogicProvider.AccountsLogic.CanLogin(login, password))
+    {
+        FormsAuthentication.SetAuthCookie(login, createPersistentCookie: false);
+        Response.Redirect("~");
+        return;
+    }
+    else
+    {
+
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <form method="post">
+        @if (IsPost)
+        {
+        <div class="alert" style="background-color:forestgreen; color: black">Wrong login or password</div>
+        }
+
+        <div>
+            <label for="login">Login:</label>
+            <input type="text" id="login" name="login"/>
+        </div>
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" />
+        </div>
+
+        <div>
+            <button>Log in</button>
+        </div>
+    </form>
+</body>
+</html>
