@@ -1,0 +1,23 @@
+﻿@using Epam.UsersAndAwards.Logic
+@{
+    if (!IsPost)
+    {
+        Response.SetStatus(HttpStatusCode.NotFound);
+        return;
+    }
+
+    var userLogic = new UserLogic();
+
+    string strId = Request["id"];
+    int id;
+    bool result = int.TryParse(strId, out id);
+
+    if (!result || !userLogic.Remove(id))
+    {
+        Response.SetStatus(HttpStatusCode.BadRequest);
+        return;
+    }
+
+
+    Response.Redirect("/Account");
+}

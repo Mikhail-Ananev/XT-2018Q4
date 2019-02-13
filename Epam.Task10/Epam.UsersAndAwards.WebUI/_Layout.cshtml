@@ -1,20 +1,23 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Page.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     @RenderSection("styles", required: false)
 </head>
 <body>
     <div>
-        @if (User.Identity.IsAuthenticated)
-        {
-            @:Hello, @User.Identity.Name. <a href="/Account/Logout">log out</a>
-        }
-        else
-        {
-            @:Hello, guest!  <a href="/Account/Login">log in</a>
-        }
+        @RenderPage("~/_HeaderPartial.cshtml")
     </div>
-    @RenderBody()
+
+
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

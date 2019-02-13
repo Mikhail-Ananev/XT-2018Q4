@@ -10,5 +10,10 @@ namespace Epam.UsersAndAwards.TextFilesDao
         bool Remove(int id);
 
         IEnumerable<User> GetAll();
+
+        void EditUser(User user);
+
+        User GetUserById(int id);
+
     }
 }

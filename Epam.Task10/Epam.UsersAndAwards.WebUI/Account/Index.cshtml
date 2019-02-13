@@ -1,3 +1,59 @@
-﻿@{ 
-    Layout = "~/_Layout.cshtml";
+﻿@{
+    Layout = null /*"~/_Layout.cshtml"*/;
 }
+@{
+    Layout = "~/_Layout.cshtml";
+    var users = Epam.UsersAndAwards.WebUI.LogicProvider.UserLogic.GetAll();
+    var awards = Epam.UsersAndAwards.WebUI.LogicProvider.AwardLogic.GetAll();
+    var userawards = Epam.UsersAndAwards.WebUI.LogicProvider.UserAwardsLogic;
+}
+@section scripts {
+    <script src="~/Scripts/MyScript/delete-user.js"></script>
+}
+@section styles{
+    <link href="~/Styles/pageIndex.css" rel="stylesheet" />
+}
+
+@if (User.IsInRole("Admins"))
+{
+    <button>Add award to user</button>
+}
+
+<ul id="userList">
+    @foreach (var user in users)
+    {
+        <li data-id="@user.Id">
+            <span>
+                @user.Id @user.FirstName @user.LastName @Epam.UsersAndAwards.WebUI.LogicProvider.UserLogic.GetAge(user.BirthDate)
+                (Birthday: @user.BirthDate.ToString("dd.MM.yyyy"))
+            </span>
+            <a href="~/Users/edit?id=@user.Id" class="edit-user btn btn-sm btn-warning">
+                Edit
+            </a>
+            <button class="delete-user btn btn-sm btn-danger">Del</button>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    Medals:
+                    @foreach (var award in userawards.GetUserAwards(user.Id))
+                    {
+                        @award
+                    }
+                </div>
+            }
+        </li>
+    }
+</ul>
+
+<form action="~/Users/add" method="post" class="form-horizontal">
+    <div class="form-group">
+        <label for="FirstName" class="control-label">First name</label>
+        <input type="text" id="FirstName" name="FirstName" class="form-control" />
+        <label for="LastName" class="control-label">Last name</label>
+        <input type="text" id="LastName" name="LastName" class="form-control" />
+        <label for="BirthDay" class="control-label">Birthday (dd.mm.yyyy)</label>
+        <input type="text" id="BirthDay" name="BirthDay" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Add user</button>
+</form>

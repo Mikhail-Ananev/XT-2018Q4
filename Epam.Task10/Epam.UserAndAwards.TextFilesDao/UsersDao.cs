@@ -46,14 +46,13 @@ namespace Epam.UsersAndAwards.TextFilesDao
                 return File.ReadAllLines(this.usersFilePath)
                             .Select(line =>
                             {
-                                var parts = line.Split(new[] { '|' }, 5);
+                                var parts = line.Split(new[] { '|' }, 4);
                                 return new User
                                 {
                                     Id = int.Parse(parts[0]),
                                     FirstName = parts[1],
                                     LastName = parts[2],
                                     BirthDate = DateTime.ParseExact(parts[3], DateFormat, CultureInfo.InvariantCulture),
-                                    Age = int.Parse(parts[4]),
                                 };
                             });
             }
@@ -79,7 +78,17 @@ namespace Epam.UsersAndAwards.TextFilesDao
 
         private static string UserDataString(User user)
         {
-            return $"{user.Id}|{user.FirstName}|{user.LastName}|{ user.BirthDate.ToString(DateFormat)}|{user.Age}";
+            return $"{user.Id}|{user.FirstName}|{user.LastName}|{ user.BirthDate.ToString(DateFormat)}";
+        }
+
+        public void EditUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUserById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

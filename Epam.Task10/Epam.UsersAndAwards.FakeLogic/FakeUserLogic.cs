@@ -48,9 +48,14 @@ namespace Epam.UsersAndAwards.FakeLogic
                 return false;
             }
 
-            User user = new User { Id = ++this.maxId, FirstName = firstName, LastName = lastName, BirthDate = birthDate, Age = age };
+            User user = new User { Id = ++this.maxId, FirstName = firstName, LastName = lastName, BirthDate = birthDate};
             this.users.Add(user);
             return true;
+        }
+
+        public int GetAge(DateTime birthday)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<User> GetAll()

@@ -11,7 +11,5 @@ namespace Epam.UsersAndAwards.Entities
         public string LastName { get; set; }
 
         public DateTime BirthDate { get; set; }
-
-        public int Age { get; set; }
     }
 }

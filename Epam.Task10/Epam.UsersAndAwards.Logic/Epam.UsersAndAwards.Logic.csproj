@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -64,6 +65,13 @@
       <Project>{1DBA1448-5A29-43D9-9FE3-5AF4FD86129E}</Project>
       <Name>Epam.UsersAndAwards.LogicContracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Epam.UsersAndAwards.SQLDao\Epam.UsersAndAwards.SQLDao.csproj">
+      <Project>{2217e9ab-5226-4fc7-9f98-6941b2d8e9e0}</Project>
+      <Name>Epam.UsersAndAwards.SQLDao</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

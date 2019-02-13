@@ -223,7 +223,7 @@ namespace Epam.Task06.ConsoleUI
 
         private static void ShowUser(User user)
         {
-            Console.WriteLine($"{user.Id}: {user.FirstName} {user.LastName}. {user.BirthDate.ToShortDateString()} ({user.Age} ages)");
+            Console.WriteLine($"{user.Id}: {user.FirstName} {user.LastName}. {user.BirthDate.ToShortDateString()} ({usersLogic.GetAge(user.BirthDate)} ages)");
             Console.Write($"Awards:");
             ShowUserAwards(user.Id);
             Console.WriteLine();
