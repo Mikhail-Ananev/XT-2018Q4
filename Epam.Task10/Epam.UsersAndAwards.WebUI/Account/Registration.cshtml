@@ -1,0 +1,87 @@
+﻿@using Epam.UsersAndAwards.Entities;
+
+
+@if (IsPost)
+{
+    string login = Request["login"];
+    string password = Request["password"];
+    string password_again = Request["password_again"];
+
+    if (password == password_again || !Epam.UsersAndAwards.WebUI.LogicProvider.AccountsLogic.UserExist(login))
+    {
+        int imgId = 0;
+
+        if (Request.Files["file"].ContentLength > 0)
+        {
+            var file = Request.Files["file"];
+
+            byte[] data = new byte[file.ContentLength];
+
+            int len = file.InputStream.Read(data, 0, file.ContentLength);
+
+            WebImage imgdata = new WebImage(data);
+
+            imgdata.Resize(500, 500, true, true);
+
+            data = imgdata.GetBytes();
+
+            Image image = new Image()
+            {
+                Data = data,
+                Name = file.FileName,
+                ContentType = file.ContentType,
+            };
+
+            imgId = Epam.UsersAndAwards.WebUI.LogicProvider.ImageLogic.AddUserImage(image);
+        }
+
+            if (Epam.UsersAndAwards.WebUI.LogicProvider.AccountsLogic.SaveNewAccount(login, password, imgId))
+            {
+                FormsAuthentication.SetAuthCookie(login, createPersistentCookie: false);
+                Response.Redirect("~");
+                return;
+            }
+
+        }
+    }
+
+<form method="post" enctype="multipart/form-data">
+    @if (IsPost)
+    {
+        <div class="alert" style="background-color:forestgreen; color: black">Wrong input information (password cannot be empty)</div>
+    }
+
+    <div>
+        <label for="login">Login:</label>
+        <input type="text" id="login" name="login" />
+    </div>
+
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" />
+    </div>
+
+    <div>
+        <label for="password_again">Password again:</label>
+        <input type="password" id="password_again" name="password_again" />
+    </div>
+
+    <div class="panel">
+        <h4>
+            Image:
+            <label class="btn btn-success btn-file">
+                <span class="glyphicon glyphicon-picture"></span>
+                Browse
+                <input type="file" name="file" style="display: none;">
+            </label>
+        </h4>
+    </div>
+
+
+    <div>
+        <button type="submit" class="btn btn-success">
+            Registration
+        </button>
+    </div>
+</form>
+

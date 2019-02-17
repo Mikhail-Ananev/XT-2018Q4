@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IAwardLogic.cs" />
     <Compile Include="IAccountsLogic.cs" />
+    <Compile Include="IImageLogic.cs" />
     <Compile Include="IUserAwardsLogic.cs" />
     <Compile Include="IUserLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

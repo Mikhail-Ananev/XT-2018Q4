@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Epam.UsersAndAwards.Entities;
 
-
-namespace Epam.UsersAndAwards.LogicContracts
+namespace Epam.UsersAndAwards.DalContracts
 {
-    public interface IAccountsLogic
+    public interface IAccountsDao
     {
-        bool SaveNewAccount(string login, string password, int ImageId);
+        bool SaveNewAccount(string login, byte[] password, int imageId);
 
         bool RemoveAccount(string login);
 
@@ -20,9 +22,7 @@ namespace Epam.UsersAndAwards.LogicContracts
 
         Account GetAccountByLogin(string login);
 
-        bool CheckLogin(string login, string password);
-
-        bool IsAccountAdmin(string login);
+        bool CheckLogin(string login, byte[] password);
 
         bool UserExist(string login);
 

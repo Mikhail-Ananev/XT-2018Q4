@@ -1,13 +1,10 @@
 ﻿using Epam.UsersAndAwards.Entities;
-using Epam.UsersAndAwards.TextFilesDao;
+using Epam.UsersAndAwards.DalContracts;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Epam.UsersAndAwards.TextFilesDao;
 
 namespace Epam.UsersAndAwards.SQLDao
 {

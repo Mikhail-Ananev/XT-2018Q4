@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using Epam.UsersAndAwards.DalContracts;
 using Epam.UsersAndAwards.Entities;
 using Epam.UsersAndAwards.LogicContracts;
+using Epam.UsersAndAwards.SQLDao;
 
 namespace Epam.UsersAndAwards.Logic
 {
@@ -11,13 +13,12 @@ namespace Epam.UsersAndAwards.Logic
 
         public UserAwardsLogic()
         {
-            ////через if реализовать выбор из файла конфигурации
-            this.userAwardsDao = new TextFilesDao.UserAwardsDao();
+            string connectionString = ConfigurationManager.ConnectionStrings["UaADB"].ConnectionString;
+            this.userAwardsDao = new SQLUserAwardsDao(connectionString);
         }
 
         public IEnumerable<string> GetUserAwards(int id)
         {
-            var xx = this.userAwardsDao.GetUserAwards(id);
             return this.userAwardsDao.GetUserAwards(id);
         }
 
@@ -38,6 +39,11 @@ namespace Epam.UsersAndAwards.Logic
         public void RemoveUserAwards(int id)
         {
             this.userAwardsDao.RemoveUserAwards(id);
+        }
+
+        public bool UserHasAwards(int userId)
+        {
+            return this.userAwardsDao.UserHasAwards(userId);
         }
     }
 }

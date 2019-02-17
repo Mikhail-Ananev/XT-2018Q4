@@ -11,6 +11,8 @@ namespace Epam.UsersAndAwards.LogicContracts
 
         bool Remove(int awardId, int userId);
 
+        bool UserHasAwards(int userId);
+
         void RemoveUserAwards(int id);
     }
 }

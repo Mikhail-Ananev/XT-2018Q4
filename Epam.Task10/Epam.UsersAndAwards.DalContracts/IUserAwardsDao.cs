@@ -9,6 +9,8 @@ namespace Epam.UsersAndAwards.DalContracts
 
         bool Add(Award award, User user);
 
+        bool UserHasAwards(int userId);
+
         bool Remove(Award award, User user);
 
         void RemoveUserAwards(int userId);

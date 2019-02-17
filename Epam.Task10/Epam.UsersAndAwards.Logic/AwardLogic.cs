@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using Epam.UsersAndAwards.DalContracts;
 using Epam.UsersAndAwards.Entities;
 using Epam.UsersAndAwards.LogicContracts;
+using Epam.UsersAndAwards.SQLDao;
 
 namespace Epam.UsersAndAwards.Logic
 {
@@ -12,11 +15,36 @@ namespace Epam.UsersAndAwards.Logic
 
         public AwardLogic()
         {
-            ////через if реализовать выбор из файла конфигурации
-            this.awardsDao = new TextFilesDao.AwardsDao();
+            string connectionString = ConfigurationManager.ConnectionStrings["UaADB"].ConnectionString;
+            this.awardsDao = new SQLAwardsDao(connectionString);
         }
 
-        IEnumerable<Award> IAwardLogic.GetAll()
+        public Award GetAwardById(int awardId)
+        {
+            return this.awardsDao.GetAwardById(awardId);
+        }
+
+        public bool SaveNewAward(Award award)
+        {
+            if (award == null)
+            {
+                throw new ArgumentNullException($"{nameof(award)}");
+            }
+
+            if (string.IsNullOrWhiteSpace(award.Title))
+            {
+                throw new ArgumentException("Name text cannot be null or whitespace");
+            }
+
+            if (awardsDao.Add(award))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public IEnumerable<Award> GetAll()
         {
             return this.awardsDao.GetAll().ToArray();
         }

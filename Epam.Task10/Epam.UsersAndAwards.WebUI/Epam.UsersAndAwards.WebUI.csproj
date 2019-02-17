@@ -116,6 +116,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Account\Registration.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -158,6 +159,9 @@
     <Content Include="Users\add.cshtml" />
     <Content Include="Users\delete.cshtml" />
     <Content Include="Users\edit.cshtml" />
+    <Content Include="Users\addaward.cshtml" />
+    <Content Include="ViewImage.cshtml" />
+    <Content Include="Users\addawardtouser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -49,11 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Epam.UsersAndAwards.DalContracts\Epam.UsersAndAwards.DalContracts.csproj">
-      <Project>{fd7111e2-ba3f-4d68-b9a9-b57e3cedf3e1}</Project>
+      <Project>{FD7111E2-BA3F-4D68-B9A9-B57E3CEDF3E1}</Project>
       <Name>Epam.UsersAndAwards.DalContracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.UsersAndAwards.Entities\Epam.UsersAndAwards.Entities.csproj">
-      <Project>{699e8ba5-eb07-40cb-9ede-d317bf91d4a3}</Project>
+      <Project>{699E8BA5-EB07-40CB-9EDE-D317BF91D4A3}</Project>
       <Name>Epam.UsersAndAwards.Entities</Name>
     </ProjectReference>
   </ItemGroup>

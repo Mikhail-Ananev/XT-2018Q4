@@ -166,5 +166,10 @@ namespace Epam.UsersAndAwards.TextFilesDao
         {
             return $"{award.Id}|{user.Id}";
         }
+
+        public bool UserHasAwards(int userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

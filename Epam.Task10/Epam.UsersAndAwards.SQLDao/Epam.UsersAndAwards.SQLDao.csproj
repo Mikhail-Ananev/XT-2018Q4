@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SQLAccountsDao.cs" />
+    <Compile Include="SQLAwardsDao.cs" />
+    <Compile Include="SQLImagesDao.cs" />
+    <Compile Include="SQLUserAwardsDao.cs" />
     <Compile Include="SQLUsersDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

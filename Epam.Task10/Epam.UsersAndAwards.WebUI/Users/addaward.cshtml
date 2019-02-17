@@ -1,0 +1,86 @@
+﻿@using Epam.UsersAndAwards.Logic;
+@using Epam.UsersAndAwards.Entities;
+
+@{
+    if (!User.IsInRole("Admin"))
+    {
+        Response.Redirect("~/Account");
+        return;
+    }
+
+    if (IsPost)
+    {
+        string title = Request["title"];
+        var file = Request.Files["file"];
+
+        int imgId = 0;
+
+        if ((!string.IsNullOrWhiteSpace(title)))
+        {
+            byte[] data = new byte[file.ContentLength];
+
+            int len = file.InputStream.Read(data, 0, file.ContentLength);
+
+            WebImage imgdata = new WebImage(data);
+
+            imgdata.Resize(300, 300, true, true);
+
+            data = imgdata.GetBytes();
+
+            Image image = new Image()
+            {
+                Data = data,
+                Name = file.FileName,
+                ContentType = file.ContentType,
+            };
+
+            imgId = Epam.UsersAndAwards.WebUI.LogicProvider.ImageLogic.AddUserImage(image);
+
+            var award = new Award { Title = title, ImageId = imgId};
+
+            if (!Epam.UsersAndAwards.WebUI.LogicProvider.AwardLogic.SaveNewAward(award))
+            {
+                Response.SetStatus(HttpStatusCode.BadRequest);
+                return;
+            }
+
+
+            if (imgId == 0)
+            {
+                Response.Redirect("~/Account");
+                return;
+            }
+
+            Response.Redirect("~/Account");
+            return;
+
+        }
+    }
+}
+
+
+
+<form action="~/Users/addaward" method="post" enctype="multipart/form-data">
+    <div class="panel">
+        <h4>
+            Title: <input type="text" name="title" value="" />
+        </h4>
+    </div>
+    <div class="panel">
+        <h4>
+            Image:
+            <label class="btn btn-success btn-file">
+                <span class="glyphicon glyphicon-picture"></span>
+                Browse
+                <input type="file" name="file" style="display: none;">
+            </label>
+        </h4>
+    </div>
+    <div class="panel">
+        <button type="submit" class="btn btn-success">
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-download-alt"></span>
+            Save
+        </button>
+    </div>
+</form>

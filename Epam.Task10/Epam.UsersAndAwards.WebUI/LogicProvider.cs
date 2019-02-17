@@ -15,6 +15,7 @@ namespace Epam.UsersAndAwards.WebUI
             UserAwardsLogic = new UserAwardsLogic();
             UserLogic = new UserLogic();
             AccountsLogic = new AccountsLogic();
+            ImageLogic = new ImageLogic();
         }
 
         public static IAwardLogic AwardLogic { get; }
@@ -24,5 +25,7 @@ namespace Epam.UsersAndAwards.WebUI
         public static IUserLogic UserLogic { get; }
 
         public static IAccountsLogic AccountsLogic { get; }
+
+        public static IImageLogic ImageLogic { get; }
     }
 }

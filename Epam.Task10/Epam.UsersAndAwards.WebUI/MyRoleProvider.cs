@@ -10,13 +10,15 @@ namespace Epam.UsersAndAwards.WebUI
     {
         public override string[] GetRolesForUser(string username)
         {
-            switch (username)
+            string role = LogicProvider.AccountsLogic.GetUserRole(username);
+
+            switch (role)
             {
-                case "user1":
-                    return new[] { "Users" };
+                case "User":
+                    return new[] { "User" };
 
                 case "Admin":
-                    return new[] { "Users", "Admins" };
+                    return new[] { "Admin" };
 
                 default:
                     return new string[0];

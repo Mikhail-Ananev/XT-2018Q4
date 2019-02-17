@@ -4,6 +4,8 @@ namespace Epam.UsersAndAwards.Entities
 {
     public class User
     {
+        public int ImageId { get; set; }
+
         public int Id { get; set; }
 
         public string FirstName { get; set; }

@@ -44,15 +44,12 @@
   <ItemGroup>
     <Compile Include="AccountsLogic.cs" />
     <Compile Include="AwardLogic.cs" />
+    <Compile Include="ImageLogic.cs" />
     <Compile Include="UserAwardsLogic.cs" />
     <Compile Include="UserLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Epam.UserAndAwards.TextFilesDao\Epam.UsersAndAwards.TextFilesDao.csproj">
-      <Project>{8b71b023-983a-40ca-801c-c86580845661}</Project>
-      <Name>Epam.UsersAndAwards.TextFilesDao</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Epam.UsersAndAwards.DalContracts\Epam.UsersAndAwards.DalContracts.csproj">
       <Project>{fd7111e2-ba3f-4d68-b9a9-b57e3cedf3e1}</Project>
       <Name>Epam.UsersAndAwards.DalContracts</Name>

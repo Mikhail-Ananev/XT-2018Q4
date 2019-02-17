@@ -2,16 +2,13 @@
 {
     string login = Request["login"];
     string password = Request["password"];
-    if (Epam.UsersAndAwards.WebUI.LogicProvider.AccountsLogic.CanLogin(login, password))
+    if (Epam.UsersAndAwards.WebUI.LogicProvider.AccountsLogic.CheckLogin(login, password))
     {
         FormsAuthentication.SetAuthCookie(login, createPersistentCookie: false);
         Response.Redirect("~");
         return;
     }
-    else
-    {
 
-    }
 }
 <!DOCTYPE html>
 <html>

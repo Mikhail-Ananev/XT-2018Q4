@@ -1,0 +1,10 @@
+﻿@using Epam.UsersAndAwards.Logic;
+@using Epam.UsersAndAwards.Entities;
+
+@{
+    int id = int.Parse(Request["id"]);
+
+    Image image = Epam.UsersAndAwards.WebUI.LogicProvider.ImageLogic.GetImageById(id);
+
+    Response.WriteBinary(image.Data, image.ContentType);
+}

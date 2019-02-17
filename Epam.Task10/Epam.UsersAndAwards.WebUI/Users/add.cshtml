@@ -1,22 +1,33 @@
 ﻿@using Epam.UsersAndAwards.Logic
 @{ 
-    if (!IsPost)
+    if (IsPost)
     {
-        Response.SetStatus(HttpStatusCode.NotFound);
-        return;
+
+        var userLogic = new UserLogic();
+
+        string firstName = Request["FirstName"];
+        string lastName = Request["LastName"];
+        string birthDay = Request["BirthDay"];
+
+        if (!userLogic.Add(firstName, lastName, birthDay))
+        {
+            Response.SetStatus(HttpStatusCode.BadRequest);
+            return;
+        }
+
+        Response.Redirect("/Account");
     }
-
-    var userLogic = new UserLogic();
-
-    string firstName = Request["FirstName"];
-    string lastName = Request["LastName"];
-    string birthDay = Request["BirthDay"];
-
-    if (!userLogic.Add(firstName, lastName, birthDay))
-    {
-        Response.SetStatus(HttpStatusCode.BadRequest);
-        return;
-    }
-
-    Response.Redirect("/Account");
 }
+
+<form method="post" class="form-horizontal">
+    <div class="form-group">
+        <label for="FirstName" class="control-label">First name</label>
+        <input type="text" id="FirstName" name="FirstName" class="form-control" />
+        <label for="LastName" class="control-label">Last name</label>
+        <input type="text" id="LastName" name="LastName" class="form-control" />
+        <label for="BirthDay" class="control-label">Birthday (dd.mm.yyyy)</label>
+        <input type="text" id="BirthDay" name="BirthDay" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Add user</button>
+</form>

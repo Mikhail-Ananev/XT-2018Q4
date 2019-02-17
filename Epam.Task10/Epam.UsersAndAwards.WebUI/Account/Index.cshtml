@@ -1,11 +1,12 @@
-﻿@{
-    Layout = null /*"~/_Layout.cshtml"*/;
-}
+﻿@using Epam.UsersAndAwards.Entities;
+
 @{
+    /**/
+
     Layout = "~/_Layout.cshtml";
-    var users = Epam.UsersAndAwards.WebUI.LogicProvider.UserLogic.GetAll();
-    var awards = Epam.UsersAndAwards.WebUI.LogicProvider.AwardLogic.GetAll();
-    var userawards = Epam.UsersAndAwards.WebUI.LogicProvider.UserAwardsLogic;
+    var users = Epam.UsersAndAwards.WebUI.LogicProvider.UserLogic;
+    var awards = Epam.UsersAndAwards.WebUI.LogicProvider.AwardLogic;
+    var userAwards = Epam.UsersAndAwards.WebUI.LogicProvider.UserAwardsLogic;
 }
 @section scripts {
     <script src="~/Scripts/MyScript/delete-user.js"></script>
@@ -14,46 +15,73 @@
     <link href="~/Styles/pageIndex.css" rel="stylesheet" />
 }
 
-@if (User.IsInRole("Admins"))
+@if (User.IsInRole("Admin"))
 {
-    <button>Add award to user</button>
+    <a href="~/Users/add" class="btn btn-success">
+        Add user
+    </a>
+
+    <a href="~/Users/addaward" class="btn btn-success">
+        Add award
+    </a>
+
+    <a href="~/Users/policy" class="btn btn-success">
+        Legal policy
+    </a>
+
 }
 
+<h4>Users list:</h4>
+
 <ul id="userList">
-    @foreach (var user in users)
+    @foreach (var user in users.GetAll())
     {
         <li data-id="@user.Id">
+
             <span>
-                @user.Id @user.FirstName @user.LastName @Epam.UsersAndAwards.WebUI.LogicProvider.UserLogic.GetAge(user.BirthDate)
+                @user.FirstName @user.LastName @Epam.UsersAndAwards.WebUI.LogicProvider.UserLogic.GetAge(user.BirthDate)
                 (Birthday: @user.BirthDate.ToString("dd.MM.yyyy"))
             </span>
-            <a href="~/Users/edit?id=@user.Id" class="edit-user btn btn-sm btn-warning">
-                Edit
-            </a>
-            <button class="delete-user btn btn-sm btn-danger">Del</button>
+
             @if (User.Identity.IsAuthenticated)
             {
-                <div>
-                    Medals:
-                    @foreach (var award in userawards.GetUserAwards(user.Id))
-                    {
-                        @award
-                    }
-                </div>
+                if (userAwards.UserHasAwards(user.Id))
+                {
+                    <div>
+                        User awards:
+                        <div>
+                            @foreach (var award in userAwards.GetUserAwards(user.Id))
+                            {
+                                <div>
+                                    @{ Award userAward = awards.GetAwardById(int.Parse(award));
+
+                                        <img src="~/ViewImage?id=@userAward.ImageId" alt=@userAward.Title class="img-rounded img-responsive" width="20" height="20">
+
+                                        @userAward.Title
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
             }
+
+            @if (User.IsInRole("Admin"))
+            {
+
+                <a href="~/Users/edit?id=@user.Id" class="edit-user btn btn-sm btn-warning">
+                    Edit
+                </a>
+
+                <button class="delete-user btn btn-sm btn-danger">Del</button>
+
+                <a href="~/Users/addawardtouser?id=@user.Id" class="add-award btn btn-sm btn-success">
+                    Add award to user
+                </a>
+
+            }
+            <hr />
         </li>
     }
 </ul>
 
-<form action="~/Users/add" method="post" class="form-horizontal">
-    <div class="form-group">
-        <label for="FirstName" class="control-label">First name</label>
-        <input type="text" id="FirstName" name="FirstName" class="form-control" />
-        <label for="LastName" class="control-label">Last name</label>
-        <input type="text" id="LastName" name="LastName" class="form-control" />
-        <label for="BirthDay" class="control-label">Birthday (dd.mm.yyyy)</label>
-        <input type="text" id="BirthDay" name="BirthDay" class="form-control" />
-    </div>
-
-    <button type="submit" class="btn btn-success">Add user</button>
-</form>
