@@ -10,5 +10,13 @@ namespace Epam.UsersAndAwards.DalContracts
         Award GetAwardById(int awardId);
 
         bool Add(Award award);
+
+        bool EditTitle(int id, string title);
+
+        bool CheckAwardedUsers(int id);
+
+        bool Remove(int id);
+
+        bool ForcedRemove(int id);
     }
 }

@@ -1,0 +1,33 @@
+﻿body {
+
+}
+
+div.column {
+    display: inline-block;
+}
+
+div.buttons {
+    width: 40px;
+}
+
+    div.buttons > button {
+        width: 40px;
+        color: black;
+    }
+
+        div.buttons > button.useless {
+            color: white;
+        }
+
+.items > select {
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+}
+
+.items p {
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    width: 200px;
+}

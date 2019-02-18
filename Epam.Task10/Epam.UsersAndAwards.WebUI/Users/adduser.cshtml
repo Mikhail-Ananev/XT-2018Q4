@@ -1,5 +1,12 @@
-﻿@using Epam.UsersAndAwards.Logic
-@{ 
+﻿
+@using Epam.UsersAndAwards.Logic
+
+@if (!User.IsInRole("Admin"))
+{
+    Response.Redirect("/Account");
+}
+
+@{
     if (IsPost)
     {
 
@@ -15,7 +22,7 @@
             return;
         }
 
-        Response.Redirect("/Account");
+        Response.Redirect("~/Users/userpolicy");
     }
 }
 

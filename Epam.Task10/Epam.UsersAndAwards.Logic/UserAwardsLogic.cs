@@ -45,5 +45,39 @@ namespace Epam.UsersAndAwards.Logic
         {
             return this.userAwardsDao.UserHasAwards(userId);
         }
+
+        public bool EditAwards(int userId, IEnumerable<int> newListAwardsId)
+        {
+            var userAwards = new List<int>();
+            foreach (var awardId in GetUserAwards(userId))
+            {
+                userAwards.Add(int.Parse(awardId));
+            }
+
+            foreach (var newAwardId in newListAwardsId)
+            {
+                if (!userAwards.Contains(newAwardId))
+                {
+                    if (!this.userAwardsDao.Add(new Award { Id = newAwardId }, new User { Id = userId }))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    userAwards.Remove(newAwardId);
+                }
+            }
+
+            foreach (var removedAward in userAwards)
+            {
+                if (!this.userAwardsDao.Remove(new Award { Id = removedAward }, new User { Id = userId }))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

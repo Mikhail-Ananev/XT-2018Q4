@@ -1,0 +1,102 @@
+﻿@using Epam.UsersAndAwards.Logic
+@using Epam.UsersAndAwards.Entities
+
+@if (!User.IsInRole("Admin"))
+{
+    Response.Redirect("/Account");
+}
+
+@{
+    string strId = Request["id"];
+    var awardLogic = new AwardLogic();
+    int id = 0;
+
+
+    if (strId == "0")
+    {
+        Response.SetStatus(HttpStatusCode.NotFound);
+        return;
+    }
+
+    if (!int.TryParse(strId, out id))
+    {
+        Response.SetStatus(HttpStatusCode.BadRequest);
+        return;
+    }
+
+    Award award = awardLogic.GetAwardById(id);
+
+    if (IsPost)
+    {
+        string title = Request["title"];
+
+        if (Request.Files["file"].ContentLength > 0)
+        {
+            var file = Request.Files["file"];
+
+            byte[] data = new byte[file.ContentLength];
+
+            int len = file.InputStream.Read(data, 0, file.ContentLength);
+
+            WebImage imgdata = new WebImage(data);
+
+            imgdata.Resize(500, 500, true, true);
+
+            data = imgdata.GetBytes();
+
+            Image image = new Image()
+            {
+                Data = data,
+                Name = file.FileName,
+                ContentType = file.ContentType,
+            };
+
+            if (!Epam.UsersAndAwards.WebUI.LogicProvider.ImageLogic.EditImage(award.ImageId, image))
+            {
+                Response.SetStatus(HttpStatusCode.BadRequest);
+                return;
+            }
+        }
+
+        if (title != award.Title)
+        {
+            if (!awardLogic.EditTitle(id, title))
+            {
+                Response.SetStatus(HttpStatusCode.BadRequest);
+                return;
+            }
+        }
+
+        Response.Redirect("~/Users/awardpolicy");
+        return;
+    }
+
+
+}
+
+<form action="~/Users/editaward" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="@id" />
+    <div class="panel">
+        <h4>
+            Title: <input type="text" id="title" name="title" value="@award.Title" />
+        </h4>
+    </div>
+    <div class="panel">
+        <h4>
+            Image:
+            <img src="~/ViewImage?id=@award.ImageId" alt=@award.Title class="img-rounded img-responsive" width="60" height="60">
+            <label class="btn btn-success btn-file">
+                <span class="glyphicon glyphicon-picture"></span>
+                Browse
+                <input type="file" name="file" style="display:none">
+            </label>
+        </h4>
+    </div>
+    <div class="panel">
+        <button type="submit" class="btn btn-success">
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-download-alt"></span>
+            Edit
+        </button>
+    </div>
+</form>

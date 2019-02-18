@@ -1,0 +1,129 @@
+﻿@using Epam.UsersAndAwards.Logic
+@using Epam.UsersAndAwards.Entities
+
+
+@section scripts {
+    <script src="~/Scripts/MyScript/edituserawards.js"></script>
+}
+@section styles{
+    <link href="~/Styles/edituserawards.css" rel="stylesheet" />
+}
+
+
+
+@if (!User.IsInRole("Admin"))
+{
+    Response.Redirect("/Account");
+}
+@{
+    var awards = Epam.UsersAndAwards.WebUI.LogicProvider.AwardLogic;
+    var userAwards = Epam.UsersAndAwards.WebUI.LogicProvider.UserAwardsLogic;
+
+    if (IsPost)
+    {
+
+        string idsStrings = Request["ids[]"];
+        string strUserId = Request["userId"];
+
+        var ids = new List<int>();
+
+        if (!idsStrings.IsEmpty())
+        {
+            string[] arrIdString = idsStrings.Split(',');
+            foreach (var idString in arrIdString)
+            {
+                ids.Add(int.Parse(idString));
+            }
+        }
+
+        if (!userAwards.EditAwards(int.Parse(strUserId), ids))
+        {
+            Response.SetStatus(HttpStatusCode.BadRequest);
+            return;
+        }
+
+
+        Response.SetStatus(HttpStatusCode.OK);
+    }
+
+    string strId = Request["id"];
+    var awardLogic = new AwardLogic();
+
+    if (strId == "0")
+    {
+        Response.SetStatus(HttpStatusCode.NotFound);
+        return;
+
+    }
+
+    int id;
+    if (!int.TryParse(strId, out id))
+    {
+        Response.SetStatus(HttpStatusCode.BadRequest);
+        return;
+    }
+}
+
+@{
+    var awardsList = awards.GetAll();
+    var listUserAwards = new List<int>();
+    var listAvailableAwards = new List<int>();
+
+    foreach (var awardId in userAwards.GetUserAwards(id))
+    {
+        listUserAwards.Add(int.Parse(awardId));
+    }
+
+    foreach (var award in awardsList)
+    {
+        if (!listUserAwards.Contains(award.Id))
+        {
+            listAvailableAwards.Add(award.Id);
+        }
+    }
+}
+
+
+<div class="butterflyControl">
+    <div class="items column">
+        <p> Available </p>
+        <select class="Available" size="@awardsList.Count()" name="Available">
+
+            @foreach (var awardId in listAvailableAwards)
+            {
+                var award = awards.GetAwardById(awardId);
+
+                <option value="@award.Id"> @award.Title </option>
+
+            }
+
+
+        </select>
+    </div>
+    <div class="buttons column">
+        <button class="AllRight" name="AllRight"> >> </button>
+        <button class="Right" name="Right"> > </button>
+        <button class="Left" name="Left"> < </button>
+        <button class="AllLeft" name="AllLeft"> << </button>
+    </div>
+    <div class="items column">
+        <p> Selected </p>
+        <select class="Selected" size="@awardsList.Count()" name="Selected">
+
+
+            @foreach (var strAwardId in listUserAwards)
+            {
+                var award = awards.GetAwardById(strAwardId);
+                <option value="@award.Id"> @award.Title </option>
+
+            }
+
+
+        </select>
+    </div>
+</div>
+
+<button class="btn btn-success" id="editAwards" data-id="@id">
+    Submit
+</button>
+

@@ -10,5 +10,11 @@ namespace Epam.UsersAndAwards.LogicContracts
         Award GetAwardById(int awardId);
 
         bool SaveNewAward(Award award);
+
+        bool EditTitle(int id, string title);
+
+        bool Remove(int id);
+
+        bool ForcedRemove(int id);
     }
 }

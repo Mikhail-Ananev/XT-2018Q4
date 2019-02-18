@@ -48,5 +48,27 @@ namespace Epam.UsersAndAwards.Logic
         {
             return this.awardsDao.GetAll().ToArray();
         }
+
+        public bool EditTitle(int id, string title)
+        {
+            return this.awardsDao.EditTitle(id, title);
+        }
+
+        public bool Remove(int id)
+        {
+            if (!awardsDao.CheckAwardedUsers(id))
+            {
+                return awardsDao.Remove(id);
+            }
+            else
+            {
+            return false;
+            }
+        }
+
+        public bool ForcedRemove(int id)
+        {
+            return this.awardsDao.ForcedRemove(id);
+        }
     }
 }

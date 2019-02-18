@@ -14,5 +14,7 @@ namespace Epam.UsersAndAwards.DalContracts
         Image GetImageById(int id);
 
         bool Delete(int id);
+
+        bool EditImage(int id, Image image);
     }
 }

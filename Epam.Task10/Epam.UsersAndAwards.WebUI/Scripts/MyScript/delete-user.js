@@ -8,7 +8,7 @@
             id = $listItem.data('id');
 
         $.ajax({
-            url: '/Users/delete',
+            url: '/Users/delete-user',
             type: 'post',
             data: { id: id }
         })

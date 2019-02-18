@@ -12,5 +12,7 @@ namespace Epam.UsersAndAwards.LogicContracts
         int AddUserImage(Image image);
 
         Image GetImageById(int id);
+
+        bool EditImage(int id, Image image);
     }
 }

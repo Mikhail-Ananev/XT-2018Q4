@@ -17,14 +17,25 @@ namespace Epam.UsersAndAwards.Logic
             string connectionString = ConfigurationManager.ConnectionStrings["UaADB"].ConnectionString;
             this.imageDao = new SQLImagesDao(connectionString);
         }
+
         public int AddUserImage(Image image)
         {
-
             if (imageDao == null)
             {
                 return 0;
             }
+
             return imageDao.AddUserImage(image);
+        }
+
+        public bool EditImage(int id, Image image)
+        {
+            if (image == null)
+            {
+                return false;
+            }
+
+            return imageDao.EditImage(id, image);
         }
 
         public Image GetImageById(int id)

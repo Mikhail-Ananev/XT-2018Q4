@@ -1,32 +1,47 @@
-﻿@using Epam.UsersAndAwards.Entities;
+﻿@using Epam.UsersAndAwards.Logic
+@using Epam.UsersAndAwards.Entities
+
+@section scripts {
+    <script src="~/Scripts/MyScript/delete-user.js"></script>
+}
+
+
+@if (!User.IsInRole("Admin"))
+{
+    Response.Redirect("/Account");
+}
 
 @{
-    Layout = "~/_Layout.cshtml";
     var users = Epam.UsersAndAwards.WebUI.LogicProvider.UserLogic;
     var awards = Epam.UsersAndAwards.WebUI.LogicProvider.AwardLogic;
     var userAwards = Epam.UsersAndAwards.WebUI.LogicProvider.UserAwardsLogic;
-}
-@section styles{
-    <link href="~/Styles/pageIndex.css" rel="stylesheet" />
-}
-
-@if (User.IsInRole("Admin"))
-{
-    <a href="~/Users/userpolicy" class="btn btn-success">
-        User policy
-    </a>
-
-    <a href="~/Users/awardpolicy" class="btn btn-success">
-        Award policy
-    </a>
-
-    <a href="~/Users/accountpolicy" class="btn btn-success">
-        Account policy
-    </a>
 
 }
 
-<h4>Users list:</h4>
+@{
+    if (IsPost)
+    {
+
+        var userLogic = new UserLogic();
+
+        string firstName = Request["FirstName"];
+        string lastName = Request["LastName"];
+        string birthDay = Request["BirthDay"];
+
+        if (!userLogic.Add(firstName, lastName, birthDay))
+        {
+            Response.SetStatus(HttpStatusCode.BadRequest);
+            return;
+        }
+
+        Response.Redirect("/Account");
+    }
+}
+
+<a href="~/Users/adduser" class="add-award btn btn-sm btn-success">
+    Add user
+</a>
+
 
 <ul id="userList">
     @foreach (var user in users.GetAll())
@@ -34,12 +49,10 @@
         <li data-id="@user.Id">
 
             <span>
-                @user.FirstName @user.LastName @Epam.UsersAndAwards.WebUI.LogicProvider.UserLogic.GetAge(user.BirthDate)
-                (Birthday: @user.BirthDate.ToString("dd.MM.yyyy"))
+                @user.FirstName @user.LastName (Birthday: @user.BirthDate.ToString("dd.MM.yyyy"))
             </span>
+            <br />
 
-            @if (User.Identity.IsAuthenticated)
-            {
                 if (userAwards.UserHasAwards(user.Id))
                 {
                     <div>
@@ -59,10 +72,19 @@
                         </div>
                     </div>
                 }
-            }
+
+
+            <a href="~/Users/edituser?id=@user.Id" class="edit-user btn btn-sm btn-warning">
+                Edit user
+            </a>
+
+            <button class="delete-user btn btn-sm btn-danger">Delete user</button>
+
+            <a href="~/Users/edituserawards?id=@user.Id" class="add-award btn btn-sm btn-success">
+                Edit user awards
+            </a>
 
             <hr />
         </li>
     }
 </ul>
-

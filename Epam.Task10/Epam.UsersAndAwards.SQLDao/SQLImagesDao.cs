@@ -83,4 +83,21 @@ public class SQLImagesDao : IImageDao
 
         return true;
     }
+
+    public bool EditImage(int id, Image image)
+    {
+        using (SqlConnection connect = new SqlConnection(connectString))
+        {
+            SqlCommand cmd = connect.CreateCommand();
+            cmd.CommandText = "UPDATE dbo.Images SET Name=@Name, ContentType=@ContentType, Data=@Data WHERE Id=@Id";
+            cmd.Parameters.Add(new SqlParameter("@Id", DbType.Int32) { Value = id });
+
+            cmd.Parameters.AddWithValue("@Name", image.Name);
+            cmd.Parameters.AddWithValue("@ContentType", image.ContentType);
+            cmd.Parameters.AddWithValue("@Data", image.Data);
+
+            connect.Open();
+            return cmd.ExecuteNonQuery() == 1;
+        }
+    }
 }

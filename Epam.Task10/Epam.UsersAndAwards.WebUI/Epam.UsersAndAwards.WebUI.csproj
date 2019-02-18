@@ -117,12 +117,15 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Account\Registration.cshtml" />
+    <Content Include="Account\accountpolicy.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\MyScript\delete-award.js" />
     <Content Include="Scripts\MyScript\delete-user.js" />
+    <Content Include="Scripts\MyScript\edituserawards.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -131,6 +134,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Styles\awardpolicy.css" />
+    <Content Include="Styles\edituserawards.css" />
     <Content Include="Web.config" />
     <Content Include="_HeaderPartial.cshtml" />
   </ItemGroup>
@@ -156,12 +161,16 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Users\add.cshtml" />
-    <Content Include="Users\delete.cshtml" />
-    <Content Include="Users\edit.cshtml" />
-    <Content Include="Users\addaward.cshtml" />
+    <Content Include="Users\userpolicy.cshtml" />
+    <Content Include="Users\delete-user.cshtml" />
+    <Content Include="Users\edituser.cshtml" />
+    <Content Include="Users\awardpolicy.cshtml" />
     <Content Include="ViewImage.cshtml" />
-    <Content Include="Users\addawardtouser.cshtml" />
+    <Content Include="Users\edituserawards.cshtml" />
+    <Content Include="Users\adduser.cshtml" />
+    <Content Include="Users\addaward.cshtml" />
+    <Content Include="Users\delete-award.cshtml" />
+    <Content Include="Users\editaward.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

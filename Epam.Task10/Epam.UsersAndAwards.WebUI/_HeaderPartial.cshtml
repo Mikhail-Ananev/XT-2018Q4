@@ -1,19 +1,20 @@
-﻿<div class="container">
+﻿<div class="container" style="background-color:gainsboro">
     @if (User.Identity.IsAuthenticated)
     {
 
         string login = User.Identity.Name;
         var accounts = Epam.UsersAndAwards.WebUI.LogicProvider.AccountsLogic;
         var account = accounts.GetAccountByLogin(login);
-
-        if (account.ImageId > 0)
-        {
-            <img src="~/ViewImage?id=@account.ImageId" alt=@account.ImageId class="img-rounded img-responsive" width="70" height="70">
-        }
-        else
-        {
-            <img src="~/Images/default_user_image.png" alt="usrImg" class="img-rounded img-responsive" width="70" height="70">
-        }
+        <a href="~/Account/">
+            @if (account.ImageId > 0)
+            {
+                <img src="~/ViewImage?id=@account.ImageId" alt=@account.ImageId class="img-rounded img-responsive" width="70" height="70">
+            }
+            else
+            {
+                <img src="~/Images/default_user_image.png" alt="usrImg" class="img-rounded img-responsive" width="70" height="70">
+            }
+        </a>
 
         <h3>
             Hello, @User.Identity.Name.

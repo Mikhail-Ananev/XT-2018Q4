@@ -104,11 +104,11 @@ namespace Epam.UsersAndAwards.SQLDao
             using (SqlConnection connect = new SqlConnection(connectString))
             {
                 SqlCommand cmd = connect.CreateCommand();
-                cmd.CommandText = "DELETE FROM dbo.Users WHERE Id=@Id";
+                cmd.CommandText = "DELETE FROM dbo.Users WHERE Id=@Id; DELETE FROM dbo.UserAwards WHERE UserId=@id";
                 cmd.Parameters.AddWithValue("@Id", id);
 
                 connect.Open();
-                return cmd.ExecuteNonQuery() == 1;
+                return cmd.ExecuteNonQuery() >= 1;
             }
         }
     }

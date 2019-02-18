@@ -96,7 +96,7 @@ namespace Epam.UsersAndAwards.SQLDao
             using (SqlConnection connect = new SqlConnection(connectString))
             {
                 SqlCommand cmd = connect.CreateCommand();
-                cmd.CommandText = "DELETE FROM dbo.UserAwards WHERE AwardId=@awardId&UserId=@userId";
+                cmd.CommandText = "DELETE FROM dbo.UserAwards WHERE AwardId=@awardId AND UserId=@userId";
                 cmd.Parameters.Add(new SqlParameter("@awardId", DbType.Int32) { Value = award.Id });
                 cmd.Parameters.Add(new SqlParameter("@userId", DbType.Int32) { Value = user.Id });
 

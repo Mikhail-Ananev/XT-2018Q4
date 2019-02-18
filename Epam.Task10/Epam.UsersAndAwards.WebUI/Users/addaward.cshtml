@@ -36,7 +36,7 @@
 
             imgId = Epam.UsersAndAwards.WebUI.LogicProvider.ImageLogic.AddUserImage(image);
 
-            var award = new Award { Title = title, ImageId = imgId};
+            var award = new Award { Title = title, ImageId = imgId };
 
             if (!Epam.UsersAndAwards.WebUI.LogicProvider.AwardLogic.SaveNewAward(award))
             {
@@ -57,8 +57,6 @@
         }
     }
 }
-
-
 
 <form action="~/Users/addaward" method="post" enctype="multipart/form-data">
     <div class="panel">

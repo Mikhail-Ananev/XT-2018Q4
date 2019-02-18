@@ -1,0 +1,30 @@
+﻿@using Epam.UsersAndAwards.Logic
+
+@if (!User.IsInRole("Admin"))
+{
+    Response.Redirect("/Account");
+}
+
+@{
+    if (!IsPost)
+    {
+        Response.SetStatus(HttpStatusCode.NotFound);
+        return;
+    }
+
+    var awardLogic = new AwardLogic();
+
+    string strId = Request["id"];
+    int id;
+    bool result = int.TryParse(strId, out id);
+
+    if (!result || !awardLogic.Remove(id))
+    {
+        Response.SetStatus(HttpStatusCode.BadRequest);
+        return;
+    }
+
+    Response.SetStatus(HttpStatusCode.OK);
+    return;
+
+}
