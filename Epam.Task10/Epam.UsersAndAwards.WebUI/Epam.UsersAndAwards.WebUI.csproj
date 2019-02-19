@@ -171,6 +171,7 @@
     <Content Include="Users\addaward.cshtml" />
     <Content Include="Users\delete-award.cshtml" />
     <Content Include="Users\editaward.cshtml" />
+    <Content Include="Users\delete-award-forced.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -28,21 +28,11 @@
 
             var userLogic = new UserLogic();
 
-            string firstName = Request["FirstName"];
-            string lastName = Request["LastName"];
-            string birthDay = Request["BirthDay"];
-
-            if (!userLogic.Add(firstName, lastName, birthDay))
-            {
-                Response.SetStatus(HttpStatusCode.BadRequest);
-                return;
-            }
-
             Response.Redirect("/Account");
         }
     }*@
 
-<div id="cover-div" class="cover-div">
+@*<div id="cover-div" class="cover-div pages">
 </div>
 
 <div id="modalWindow" class="modalWindow">
@@ -52,7 +42,7 @@
     <button class="delete-award-yes btn btn-sm btn-danger" id="deleteAward">Delete award</button>
     <button class="delete-award-no btn btn-sm btn-success" id="stayAward">Stay award</button>
 
-</div>
+</div>*@
 
 <a href="~/Users/addaward" class="add-award btn btn-sm btn-success">
     Add award
@@ -62,18 +52,20 @@
 <ul id="awardList">
     @foreach (var award in awards.GetAll())
     {
-        <li data-id="@award.Id">
-            <img src="~/ViewImage?id=@award.ImageId" alt=@award.Title class="img-rounded img-responsive" width="60" height="60">
-            @award.Title
-            <br />
+    <li data-id="@award.Id">
+        <img src="~/ViewImage?id=@award.ImageId" alt=@award.Title class="img-rounded img-responsive" width="60" height="60">
+        @award.Title
+        <br />
 
-            <a href="~/Users/editaward?id=@award.Id" class="edit-user btn btn-sm btn-warning">
-                Edit award
-            </a>
+        <a href="~/Users/editaward?id=@award.Id" class="edit-user btn btn-sm btn-warning">
+            Edit award
+        </a>
 
-            <button class="delete-award btn btn-sm btn-danger">Delete award</button>
+        <a href="~/Users/delete-award?id=@award.Id" class="edit-user btn btn-sm btn-danger">
+            Delete award
+        </a>
 
-            <hr />
-        </li>
+        <hr />
+    </li>
     }
 </ul>

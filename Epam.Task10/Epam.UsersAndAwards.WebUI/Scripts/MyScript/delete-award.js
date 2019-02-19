@@ -20,7 +20,7 @@ function failRemoveItem() {
     var modalWindow = $('#modalWindow'),
         coverDiv = $('#cover-div');
 
-    coverDiv.style.zIndex = 9000;
+    coverDiv.style.zIndex = 90;
     modalWindow.style.opacity = 1;
 }
 
@@ -30,7 +30,7 @@ function modalWindowOnOkHandler() {
     var modalWindow = $('#modalWindow'),
         coverDiv = $('#cover-div');
     modalWindow.style.opacity = 0;
-    coverDiv.style.zIndex = -9000;
+    coverDiv.style.zIndex = -90;
 
     $.ajax({
         url: '/Users/deleteallaward',
@@ -45,6 +45,9 @@ function modalWindowOnOkHandler() {
     var $awardList = $('#awardList'),
         $deleteAwardButton = $('#deleteAward'),
         $stayAwardButton = $('#stayAward');
+    var modalWindow = $('#modalWindow'),
+        coverDiv = $('#cover-div');
+
 
     $awardList.on('click', '.delete-award', function (e) {
         $target = $(e.target),
@@ -62,10 +65,8 @@ function modalWindowOnOkHandler() {
 
     $deleteAwardButton.on('click', modalWindowOnOkHandler);
     $stayAwardButton.on('click', function (e) {
-        var modalWindow = $('#modalWindow'),
-            coverDiv = $('#cover-div');
         modalWindow.style.opacity = 0;
-        coverDiv.style.zIndex = -9000;
+        coverDiv.style.zIndex = -90;
 
     })
 })();

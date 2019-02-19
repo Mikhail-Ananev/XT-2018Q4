@@ -11,13 +11,6 @@
     var awardLogic = new AwardLogic();
     int id = 0;
 
-
-    if (strId == "0")
-    {
-        Response.SetStatus(HttpStatusCode.NotFound);
-        return;
-    }
-
     if (!int.TryParse(strId, out id))
     {
         Response.SetStatus(HttpStatusCode.BadRequest);

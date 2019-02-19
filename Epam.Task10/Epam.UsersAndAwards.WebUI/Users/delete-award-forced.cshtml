@@ -6,8 +6,6 @@
     Response.Redirect("/Account");
 }
 
-
-
 @{
     string strId = Request["id"];
     var awardLogic = new AwardLogic();
@@ -21,19 +19,21 @@
 
     Award award = awardLogic.GetAwardById(id);
 
-
-    if (!awardLogic.CheckAwardedUsers(id))
+    if ("yes" == Request["tag"])
     {
-        if (awardLogic.Remove(id))
+        if (awardLogic.ForcedRemove(id))
         {
             Response.Redirect("~/Users/awardpolicy");
         }
+        else
+        {
+            Response.SetStatus(HttpStatusCode.BadRequest);
+            return;
+        }
 
-        Response.SetStatus(HttpStatusCode.BadRequest);
-        return;
-    }
-    else
-    {
-        Response.Redirect("~/Users/delete-award-forced?id=" + strId);
     }
 }
+<h4>One ore more users already have this award!</h4>
+<h5>Are you sure that you want delete award?</h5>
+    <a class="btn btn-danger" type="submit" href="~/Users/delete-award-forced?tag=yes&id=@strId">Yes</a>
+    <a class="btn btn-success" type="submit" href="~/Users/awardpolicy">No</a>

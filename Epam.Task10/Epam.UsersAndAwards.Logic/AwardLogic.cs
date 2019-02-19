@@ -70,5 +70,10 @@ namespace Epam.UsersAndAwards.Logic
         {
             return this.awardsDao.ForcedRemove(id);
         }
+
+        public bool CheckAwardedUsers(int id)
+        {
+            return awardsDao.CheckAwardedUsers(id);
+        }
     }
 }
