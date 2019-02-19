@@ -1,1 +1,58 @@
-﻿
+﻿@{
+    if (!User.IsInRole("Admin"))
+    {
+        Response.Redirect("~");
+        return;
+    }
+
+
+    if (IsPost)
+    {
+        string login = Request["login"];
+        string action = Request["action"];
+
+        // перевод пользователя в разряд админ/не админ
+        if ((!String.IsNullOrWhiteSpace(login)) && (!String.IsNullOrWhiteSpace(action)))
+        {
+            if (action == "add_admin")
+            {
+                Epam.UsersAndAwards.WebUI.LogicProvider.AccountsLogic.AccountAssignAsAdmin(login);
+            }
+
+            if (action == "rem_admin")
+            {
+                Epam.UsersAndAwards.WebUI.LogicProvider.AccountsLogic.RemoveAccountFromAdmins(login);
+            }
+        }
+    }
+
+    var accounts = Epam.UsersAndAwards.WebUI.LogicProvider.AccountsLogic.GetAllAccounts();
+    foreach (var account in accounts)
+    {
+        <h5> Login: @account.Login </h5>
+        <h5>Category: @account.Category</h5>
+
+        <div style="float: left; margin-right: 10px">
+            <form method="post">
+                <input type="hidden" name="login" value="@account.Login" />
+                <input type="hidden" name="action" value="add_admin" />
+                <button type="submit" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-font"></span>
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add to admins
+                </button>
+            </form>
+        </div>
+
+        <form method="post">
+            <input type="hidden" name="login" value="@account.Login" />
+            <input type="hidden" name="action" value="rem_admin" />
+            <button type="submit" class="btn btn-danger">
+                <span class="glyphicon glyphicon-font"></span>
+                <span class="glyphicon glyphicon-minus"></span>
+                Remove from admins
+            </button>
+        </form>
+        <hr />
+    }
+}
