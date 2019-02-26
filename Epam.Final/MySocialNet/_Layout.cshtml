@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Title</title>
+    <!--Уточнить по заголовкам-->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/MyContent/net.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+</head>
+<body>
+
+    <header>
+            <a href="/" class="home-link"><img src="~/Images/home.png" alt="home link" height="35" width="40" /></a>
+            <div class="user-action">
+                @{
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        @*@account.Name;*@
+                        //Выпадающее меню с вариантами - выйти и перейти на свою страничку
+                    }
+                    else
+                    {
+                        <text>Hello, </text>
+                        <img src="~/Images/inkognito.png" alt="Inkognito image" height="35" width="40" />
+
+                    }
+                }
+            </div>
+
+
+    </header>
+
+    <div class="wrap">
+        <nav class="nav flex-column nav-pills border border-secondary border-left-0 border-top-0 border-bottom-0 border-3">
+
+            <div class="row">
+                <div class="col-3">
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                        Моя страница
+                        </a>
+                        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                        Пользователи
+                        </a>
+                        <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+                        Сообщения
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </nav>
+
+        <div class="content">
+            @RenderBody()
+        </div>
+
+        @*<footer>
+                My social net!
+            </footer>*@
+
+    </div>
+
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
