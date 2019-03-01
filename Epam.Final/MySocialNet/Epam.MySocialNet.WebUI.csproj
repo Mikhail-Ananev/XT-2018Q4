@@ -12,8 +12,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MySocialNet</RootNamespace>
-    <AssemblyName>MySocialNet</AssemblyName>
+    <RootNamespace>Epam.MySocialNet.WebUI</RootNamespace>
+    <AssemblyName>Epam.MySocialNet.WebUI</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -90,17 +90,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-grid.css" />
-    <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.min.css" />
-    <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\MyContent\net.css" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -109,18 +100,12 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Index.cshtml" />
     <Content Include="Accounts\Index.cshtml" />
+    <Content Include="CommonChat\Index.cshtml" />
+    <Content Include="Accounts\LogIn.cshtml" />
+    <Content Include="Accounts\Registration.cshtml" />
+    <Content Include="Accounts\LogOut.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -146,8 +131,11 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="_Layout.cshtml" />
     <Content Include="_PageStart.cshtml" />
+    <Content Include="_HeaderPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LogicProvider.cs" />
+    <Compile Include="MyRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +157,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Epam.MySocialNet.Entities\Epam.MySocialNet.Entities.csproj">
+      <Project>{a490c4c3-9fb6-42ce-9e62-48543fadf852}</Project>
+      <Name>Epam.MySocialNet.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.MySocialNet.LogicContracts\Epam.MySocialNet.LogicContracts.csproj">
+      <Project>{6c78ad2c-cb54-49d8-b783-7ff46613f2d4}</Project>
+      <Name>Epam.MySocialNet.LogicContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.MySocialNet.Logic\Epam.MySocialNet.Logic.csproj">
+      <Project>{b25a9a24-6781-4a90-b032-8d5d3c8fd2c1}</Project>
+      <Name>Epam.MySocialNet.Logic</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

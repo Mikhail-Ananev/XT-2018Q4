@@ -8,29 +8,44 @@
 header {
     height: 45px;
     background: linear-gradient(to bottom, #58C6C7, #028E8F);
-    width: 100%;
 }
 
-.home-link {
-    width: 137px;
+
+header>ul {
+    /*-webkit-flex: auto;*/
     display: flex;
-    float: left;
-    height: 45px;
-    align-items: center;
-    justify-content: center;
-    border: 0;
-}
-.user-action {
-    width: 137px;
-    display: flex;
-    float: right;
-    height: 45px;
-    align-items: center;
-    justify-content: center;
-    border: 0;
+    list-style: none;
+    justify-content: space-between;
+    align-items:center;
+    padding-left:0;
+    padding-right:0;
 }
 
-.navigation {
+header>ul>li {
+height:45px;
+
+}
+.header-link {
+    width: 137px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+    a.header-link {
+        text-decoration: none;
+        color:black;
+
+    }
+
+        a.header-link:hover {
+            background: linear-gradient(to bottom,#FEFEFE, #028E8F);
+        }
+
+
+
+    .navigation {
     display: flex;
     float: left;
     flex-direction: column;
@@ -39,8 +54,7 @@ header {
     background-color: #F9A81B;
     width: 137px;
     align-items: center;
-    padding:2px, 0;
-    
+    padding: 2px, 0;
 }
 
 .nav-button {
@@ -53,7 +67,7 @@ header {
 }
 
 .navigation a{
-    text-decoration:none;
+    text-decoration: none;
 }
 
     .navigation a:hover {
@@ -64,21 +78,4 @@ header {
     margin-left: 12.5%;
     padding: 2px 5px;
     overflow: auto;
-}
-
-footer {
-    clear: both;
-    height: 35px;
-    /*width: 100%;*/
-    background-color: #A5218F;
-    text-align: center;
-}
-
-
-.border-3 {
-    border-width: 3px !important;
-}
-
-.nav-link{
-    white-space:nowrap;
 }

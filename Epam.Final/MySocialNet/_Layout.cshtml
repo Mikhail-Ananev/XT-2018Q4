@@ -11,26 +11,7 @@
 </head>
 <body>
 
-    <header>
-            <a href="/" class="home-link"><img src="~/Images/home.png" alt="home link" height="35" width="40" /></a>
-            <div class="user-action">
-                @{
-                    if (User.Identity.IsAuthenticated)
-                    {
-                        @*@account.Name;*@
-                        //Выпадающее меню с вариантами - выйти и перейти на свою страничку
-                    }
-                    else
-                    {
-                        <text>Hello, </text>
-                        <img src="~/Images/inkognito.png" alt="Inkognito image" height="35" width="40" />
-
-                    }
-                }
-            </div>
-
-
-    </header>
+    @RenderPage("~/_HeaderPartial.cshtml")
 
     <div>
         <nav class="navigation">
