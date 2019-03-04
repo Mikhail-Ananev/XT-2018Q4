@@ -7,30 +7,30 @@ using System.Threading.Tasks;
 
 namespace Epam.MySocialNet.LogicContracts
 {
-    public interface IAccountsLogic
+    public interface IAccountsDao
     {
-        bool SaveNewAccount(string login, string firstName, string lastName, string password, string role, string birthDay, int imgId);
+        bool SaveNewAccount(Account account);
 
         bool RemoveAccount(string login);
+
+        bool EditAccount(Account account);
+
+        bool AccountExist(string login);
+
+        bool CheckLogin(string login, byte[] bytePassword);
 
         bool CheckAdminRole(string login);
 
         bool SetAdminRole(string login);
 
-        bool RemoveAdminRole(string login);
+        bool RemoveAccountFromAdmins(string login);
 
         IEnumerable<Account> GetAllAccounts();
 
-        Account GetAccountById(int id);
-
         Account GetAccountByLogin(string login);
 
-        bool CheckLogin(string login, string password);
-
-        bool AccountExist(string login);
+        Account GetAccountById(int id);
 
         string GetAccountRole(string login);
-
-        bool EditAccount(Account account);
     }
 }

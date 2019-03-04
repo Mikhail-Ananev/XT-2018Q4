@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Epam.MySocialNet.LogicContracts
 {
-    public interface IImagesLogic
+    public interface IImageDao
     {
-        int AddUserImage(Image image);
+        int AddImage(Image image);
 
         Image GetImageById(int id);
 
-        bool EditImage(Image image);
-
         bool DeleteImage(int id);
+
+        bool EditImage(int id, Image image);
     }
 }

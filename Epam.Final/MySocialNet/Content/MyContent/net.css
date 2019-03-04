@@ -7,9 +7,10 @@
 
 header {
     height: 45px;
+    min-width:612px;
+    width:100%;
     background: linear-gradient(to bottom, #58C6C7, #028E8F);
 }
-
 
 header>ul {
     /*-webkit-flex: auto;*/
@@ -23,8 +24,8 @@ header>ul {
 
 header>ul>li {
 height:45px;
-
 }
+
 .header-link {
     width: 137px;
     display: flex;
@@ -33,19 +34,24 @@ height:45px;
     height: 100%;
 }
 
-    a.header-link {
-        text-decoration: none;
-        color:black;
+a.header-link {
+    text-decoration: none;
+    color:black;
 
+}
+
+a.header-link:hover {
+    background: linear-gradient(to bottom,#FEFEFE, #028E8F);
+}
+
+/*@media (min-width:381px) and (max-width: 560px){
+    header > ul {
+    flex-wrap:wrap;
     }
-
-        a.header-link:hover {
-            background: linear-gradient(to bottom,#FEFEFE, #028E8F);
-        }
+ }*/
 
 
-
-    .navigation {
+.navigation {
     display: flex;
     float: left;
     flex-direction: column;
@@ -70,12 +76,46 @@ height:45px;
     text-decoration: none;
 }
 
-    .navigation a:hover {
-        background: linear-gradient(to bottom, #F8DAB2, #F79104);
-    }
+.navigation a:hover {
+    background: linear-gradient(to bottom, #F8DAB2, #F79104);
+}
 
 .content {
-    margin-left: 12.5%;
+    display:flex;
+    /*margin-left: 12.5%;*/
+    max-width:860px;
+    min-width:300px;
     padding: 2px 5px;
     overflow: auto;
+    margin:0;
+}
+
+.login,
+.registration{
+    margin-top:20px;
+    display: flex;
+    width:340px;
+    flex-direction:column;
+    
+    align-items: flex-end;
+}
+form div{
+    padding-bottom:4px;
+    
+}
+input{
+    border-radius: 10px;
+    background-color:darkgray;
+}
+
+button {
+    border-radius: 5px;
+    background: linear-gradient(to bottom, white, darkgray);
+}
+
+form p{
+    font-size:12px;
+    text-align:right;
+    margin-top: 0;
+    padding-right:10px;
 }

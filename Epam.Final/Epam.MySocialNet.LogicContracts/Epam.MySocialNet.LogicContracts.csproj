@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAccountsDao.cs" />
     <Compile Include="IAccountsLogic.cs" />
+    <Compile Include="IImagesDao.cs" />
     <Compile Include="IImagesLogic.cs" />
     <Compile Include="IMessagesLogic.cs" />
     <Compile Include="IChatsLogic.cs" />

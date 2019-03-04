@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.MySocialNet.LogicContr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.MySocialNet.Logic", "Epam.MySocialNet.Logic\Epam.MySocialNet.Logic.csproj", "{B25A9A24-6781-4A90-B032-8D5D3C8FD2C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.MySocialNet.SQLDao", "Epam.MySocialNet.SQLDao\Epam.MySocialNet.SQLDao.csproj", "{04BCFF73-2637-415F-A9D9-B7B224B66C7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{B25A9A24-6781-4A90-B032-8D5D3C8FD2C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B25A9A24-6781-4A90-B032-8D5D3C8FD2C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B25A9A24-6781-4A90-B032-8D5D3C8FD2C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04BCFF73-2637-415F-A9D9-B7B224B66C7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04BCFF73-2637-415F-A9D9-B7B224B66C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04BCFF73-2637-415F-A9D9-B7B224B66C7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04BCFF73-2637-415F-A9D9-B7B224B66C7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{A490C4C3-9FB6-42CE-9E62-48543FADF852} = {CBE2AF5F-A987-43F2-8C9A-7B51056E3FAE}
 		{6C78AD2C-CB54-49D8-B783-7FF46613F2D4} = {82285E65-03CF-40DC-8DF9-36EEB950CA82}
 		{B25A9A24-6781-4A90-B032-8D5D3C8FD2C1} = {82285E65-03CF-40DC-8DF9-36EEB950CA82}
+		{04BCFF73-2637-415F-A9D9-B7B224B66C7C} = {71A74EB4-CFAF-4416-86D2-C509E699CAF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DD4627DF-BF45-402B-982C-941DB645D20A}

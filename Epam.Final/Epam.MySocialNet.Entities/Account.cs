@@ -10,7 +10,7 @@ namespace Epam.MySocialNet.Entities
     {
         public int Id { get; set; }
 
-        public string EMail { get; set; }
+        public string Login { get; set; }
 
         public string FirstName { get; set; }
 
@@ -23,7 +23,5 @@ namespace Epam.MySocialNet.Entities
         public string Role { get; set; }
 
         public int ImageId { get; set; }
-
-        public string Sex { get; set; }
     }
 }

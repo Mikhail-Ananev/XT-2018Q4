@@ -12,8 +12,11 @@ namespace Epam.MySocialNet.WebUI
         static LogicProvider()
         {
             AccountsLogic = new AccountsLogic();
+            ImagesLogic = new ImagesLogic();
         }
 
         public static IAccountsLogic AccountsLogic { get; }
+
+        public static IImagesLogic ImagesLogic { get; }
     }
 }

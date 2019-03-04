@@ -1,10 +1,12 @@
-﻿<header class="header">
+﻿
+
+<header class="header">
 
     <ul class="header-element">
         <li>
             <a href="/" class="header-link"><img src="~/Images/home.png" alt="home link" height="35" width="40" /></a>
 
-        </li> <!--first child element-->
+        </li>
         <li>
             @{
                 if (!User.Identity.IsAuthenticated)
@@ -12,7 +14,7 @@
                     <a href="~/Accounts/Registration" class="header-link" alt="Registraion">Registration</a>
                 }
             }
-        </li> <!--second child element-->
+        </li>
         <li>
             @{
                 if (!User.Identity.IsAuthenticated)
@@ -20,14 +22,29 @@
                     <a href="~/Accounts/LogIn.cshtml" class="header-link" alt="Log in">Log in</a>
                 }
             }
-        </li> <!--second child element-->
+        </li>
 
         <li>
             <div class="header-link">
                 @{
                     if (User.Identity.IsAuthenticated)
                     {
-                        @*@account.Name;*@
+                        string login = User.Identity.Name;
+                        var accounts = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
+                        var account = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAccountByLogin(login);
+
+                        @account.FirstName;
+                        <a href="~/Accounts/">
+                            @if (account.ImageId > 0)
+                            {
+                                <img src="~/ViewImage?id=@account.ImageId" alt=@account.ImageId class="img-rounded img-responsive" width="70" height="70">
+                            }
+                            else
+                            {
+                                <img src="~/Images/default_user_image.png" alt="usrImg" class="img-rounded img-responsive" width="70" height="70">
+                            }
+                        </a>
+
                         //Выпадающее меню с вариантами - выйти и перейти на свою страничку
                     }
                     else
@@ -41,7 +58,7 @@
 
             </div>
 
-        </li> <!--third child element-->
+        </li> 
     </ul>
 
 
@@ -49,32 +66,32 @@
 
 
     @*<div >
-        <a href="/" class="header-link"><img src="~/Images/home.png" alt="home link" height="35" width="40" /></a>
-        @{
-            if (!User.Identity.IsAuthenticated)
-            {
-                <a href="~/Accounts/Registration" class="header-link" alt="Registraion">Registration</a>
+            <a href="/" class="header-link"><img src="~/Images/home.png" alt="home link" height="35" width="40" /></a>
+            @{
+                if (!User.Identity.IsAuthenticated)
+                {
+                    <a href="~/Accounts/Registration" class="header-link" alt="Registraion">Registration</a>
 
-                <a href="~/Accounts/LogIn.cshtml" class="header-link" alt="Log in">Log in</a>
+                    <a href="~/Accounts/LogIn.cshtml" class="header-link" alt="Log in">Log in</a>
+                }
             }
-        }
-    </div>*@
+        </div>*@
 
     @*<div class="user-action">*@
     @*<div class="header-link">
 
-        @{
-            if (User.Identity.IsAuthenticated)
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    @account.Name;
+                Выпадающее меню с вариантами -выйти и перейти на свою страничку
+                }
+            else
             {
-                @account.Name;
-            Выпадающее меню с вариантами -выйти и перейти на свою страничку
-            }
-        else
-        {
-                <text>Hello, </text>
-                <img src="~/Images/inkognito.png" alt="Inkognito image" height="35" width="40" />
+                    <text>Hello, </text>
+                    <img src="~/Images/inkognito.png" alt="Inkognito image" height="35" width="40" />
 
+                }
             }
-        }
-    </div>*@
+        </div>*@
 </header>

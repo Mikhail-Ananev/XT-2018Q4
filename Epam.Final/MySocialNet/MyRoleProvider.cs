@@ -10,7 +10,7 @@ namespace Epam.MySocialNet.WebUI
     {
         public override string[] GetRolesForUser(string username)
         {
-            string role = LogicProvider.AccountsLogic.GetUserRole(username);
+            string role = LogicProvider.AccountsLogic.GetAccountRole(username);
 
             switch (role)
             {
