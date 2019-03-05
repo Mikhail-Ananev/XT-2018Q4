@@ -30,7 +30,7 @@
                     if (User.Identity.IsAuthenticated)
                     {
                         string login = User.Identity.Name;
-                        var accounts = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
+                        //var accounts = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
                         var account = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAccountByLogin(login);
 
                         @account.FirstName;

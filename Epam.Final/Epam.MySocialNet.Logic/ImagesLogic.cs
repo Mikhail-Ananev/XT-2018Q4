@@ -22,22 +22,54 @@ namespace Epam.MySocialNet.Logic
 
         public int AddUserImage(Image image)
         {
-            throw new NotImplementedException();
+            if (!CheckImage(image))
+            {
+                return -1;
+            }
+
+            return imageDao.AddImage(image);
         }
 
         public bool EditImage(Image image)
         {
-            throw new NotImplementedException();
+            if (!CheckImage(image))
+            {
+                return false;
+            }
+
+            return imageDao.EditImage(image);
         }
 
         public bool DeleteImage(int id)
         {
-            throw new NotImplementedException();
+            if (id < 1)
+            {
+                return false;
+            }
+
+            return imageDao.DeleteImage(id);
         }
 
         public Image GetImageById(int id)
         {
-            throw new NotImplementedException();
+            if (id < 1)
+            {
+                return null;
+            }
+
+            return imageDao.GetImageById(id);
+        }
+
+        private bool CheckImage(Image image)
+        {
+            if (image == null || image.Id < 1 || image.Data.Length == 0 || string.IsNullOrWhiteSpace(image.Name))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

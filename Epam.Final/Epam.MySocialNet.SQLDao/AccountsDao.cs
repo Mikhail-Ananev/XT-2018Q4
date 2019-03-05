@@ -135,6 +135,11 @@ namespace Epam.MySocialNet.SQLDao
 
         public bool CheckAdminRole(string login)
         {
+            if (CheckBadInputString(login))
+            {
+                return false;
+            }
+
             string role = null;
             using (var con = new SqlConnection(connectString))
             {
@@ -159,44 +164,220 @@ namespace Epam.MySocialNet.SQLDao
             return role == "Admin";
         }
 
-        public bool RemoveAccount(string login)
+
+
+        public bool RemoveAccount(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connect = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = connect.CreateCommand();
+                cmd.CommandText = "DELETE FROM dbo.Accounts WHERE Id=@Id; DELETE FROM dbo.Chats WHERE WHERE SenderAccountId=@id OR AddresseeAccountId=@id; " +
+                                  "DELETE FROM dbo.Messages WHERE SenderAccountId=@id OR AddresseeAccountId=@id";
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
         }
 
         public bool EditAccount(Account account)
         {
-            throw new NotImplementedException();
+            if (account == null)
+            {
+                return false;
+            }
+
+            using (SqlConnection connect = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = connect.CreateCommand();
+                cmd.CommandText = "UPDATE dbo.Accounts SET Login=@login, FirstName=@firstName, LastName=@lastName, Birthday=@birthDay, ImageId=@imageId WHERE Id=@Id";
+                cmd.Parameters.Add(new SqlParameter("@Id", DbType.Int32) { Value = account.Id });
+
+                cmd.Parameters.AddWithValue("@login", account.Login);
+                cmd.Parameters.AddWithValue("@firstName", account.FirstName);
+                cmd.Parameters.AddWithValue("@lastName", account.LastName);
+                cmd.Parameters.AddWithValue("@birthDay", account.BirthDay);
+                cmd.Parameters.Add("@imageId", SqlDbType.Int).Value = account.ImageId;
+
+                connect.Open();
+                return cmd.ExecuteNonQuery() == 1;
+            }
         }
 
-        public bool SetAdminRole(string login)
+        public bool SetAdminRole(int id)
         {
-            throw new NotImplementedException();
+            string role = "Admin";
+
+            using (var con = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "UPDATE dbo.Accounts SET Role=@role WHERE Id=@Id";
+                cmd.Parameters.Add(new SqlParameter("@Id", DbType.Int32) { Value = id });
+                cmd.Parameters.AddWithValue("@role", role);
+
+                con.Open();
+
+                return cmd.ExecuteNonQuery() == 1;
+            }
         }
 
-        public bool RemoveAccountFromAdmins(string login)
+        public bool RemoveAccountFromAdmins(int id)
         {
-            throw new NotImplementedException();
+            string role = "User";
+
+            bool adminIsAlone = true;
+
+            foreach (var account in GetAllAccounts())
+            {
+                if ((account.Role == "Admin") && (account.Id != id))
+                {
+                    adminIsAlone = false;
+                    break;
+                }
+            }
+
+            if (adminIsAlone)
+            {
+                return false;
+            }
+
+            using (var con = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "UPDATE dbo.Accounts SET Role=@role WHERE Id=@id";
+                cmd.Parameters.Add(new SqlParameter("@Id", DbType.Int32) { Value = id });
+                cmd.Parameters.AddWithValue("@role", role);
+
+                con.Open();
+
+                return cmd.ExecuteNonQuery() == 1;
+            }
         }
 
         public IEnumerable<Account> GetAllAccounts()
         {
-            throw new NotImplementedException();
+            List<Account> allAccounts = new List<Account>();
+
+            using (var con = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "SELECT Id, Login, FirstName, LastName, BirthDay, ImageId FROM dbo.Accounts";
+
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    int id = (int)reader["Id"];
+                    string login = (string)reader["Login"];
+                    string firstName = (string)reader["FirstName"];
+                    string lastName = (string)reader["LastName"];
+                    DateTime birthDay = (DateTime)reader["BirthDay"];
+                    int imageId = (int)reader["ImageId"];
+
+                    Account account = new Account()
+                    {
+                        Id = id,
+                        Login = login,
+                        FirstName = firstName,
+                        LastName = lastName,
+                        BirthDay = birthDay,
+                        ImageId = imageId,
+                    };
+
+                    allAccounts.Add(account);
+                }
+            }
+
+            return allAccounts;
         }
 
         public Account GetAccountByLogin(string login)
         {
-            throw new NotImplementedException();
+            if (CheckBadInputString(login))
+            {
+                return null;
+            }
+
+            using (SqlConnection connect = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = connect.CreateCommand();
+                cmd.CommandText = "SELECT Id, FirstName, LastName, BirthDay, ImageId FROM dbo.Accounts WHERE Login=@login";
+                cmd.Parameters.AddWithValue("@login", login);
+
+                connect.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (!reader.Read())
+                {
+                    return null;
+                }
+
+                return new Account
+                {
+                    Id = (int)reader["Id"],
+                    Login = login,
+                    FirstName = (string)reader["FirstName"],
+                    LastName = (string)reader["LastName"],
+                    BirthDay = (DateTime)reader["BirthDay"],
+                    ImageId = (int)reader["ImageId"],
+                };
+            }
         }
 
         public Account GetAccountById(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connect = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = connect.CreateCommand();
+                cmd.CommandText = "SELECT Login, FirstName, LastName, BirthDay, ImageId FROM dbo.Accounts WHERE id=@id";
+                cmd.Parameters.Add(new SqlParameter("@id", DbType.Int32) { Value = id });
+
+                connect.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (!reader.Read())
+                {
+                    return null;
+                }
+
+                return new Account
+                {
+                    Id = id,
+                    Login = (string)reader["Login"],
+                    FirstName = (string)reader["FirstName"],
+                    LastName = (string)reader["LastName"],
+                    BirthDay = (DateTime)reader["BirthDay"],
+                    ImageId = (int)reader["ImageId"],
+                };
+            }
         }
 
         public string GetAccountRole(string login)
         {
-            throw new NotImplementedException();
+            if (CheckBadInputString(login))
+            {
+                return null;
+            }
+
+            using (SqlConnection connect = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = connect.CreateCommand();
+                cmd.CommandText = "SELECT Role FROM dbo.Accounts WHERE Login=@login";
+                cmd.Parameters.AddWithValue("@login", login);
+
+                connect.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (!reader.Read())
+                {
+                    return null;
+                }
+
+                return (string)reader["Role"];
+            }
         }
 
         private bool CheckBadInputString(string str)

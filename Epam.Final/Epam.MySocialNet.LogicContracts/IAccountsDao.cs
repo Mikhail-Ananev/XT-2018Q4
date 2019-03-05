@@ -11,7 +11,7 @@ namespace Epam.MySocialNet.LogicContracts
     {
         bool SaveNewAccount(Account account);
 
-        bool RemoveAccount(string login);
+        bool RemoveAccount(int id);
 
         bool EditAccount(Account account);
 
@@ -19,11 +19,9 @@ namespace Epam.MySocialNet.LogicContracts
 
         bool CheckLogin(string login, byte[] bytePassword);
 
-        bool CheckAdminRole(string login);
+        bool SetAdminRole(int id);
 
-        bool SetAdminRole(string login);
-
-        bool RemoveAccountFromAdmins(string login);
+        bool RemoveAccountFromAdmins(int id);
 
         IEnumerable<Account> GetAllAccounts();
 

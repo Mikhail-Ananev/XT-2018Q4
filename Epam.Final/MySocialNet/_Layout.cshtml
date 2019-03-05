@@ -15,15 +15,23 @@
 
     <div>
         <nav class="navigation">
-            <a class="nav-button" href="#">
+            <a class="nav-button" href="~/Accounts/UserPage">
                 Моя страница
             </a>
-            <a class="nav-button" href="#">
+            <a class="nav-button" href="~/CommonChat/AccountsList">
                 Пользователи
             </a>
             <a class="nav-button" href="#">
                 Сообщения
             </a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="nav-button" href="~/Accounts/LogOut">
+                    Выйти
+                </a>
+            }
+
+
         </nav>
 
 

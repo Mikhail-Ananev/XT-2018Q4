@@ -32,7 +32,14 @@ namespace Epam.MySocialNet.Logic
                 return false;
             }
 
-            return accountDao.CheckAdminRole(login);
+            if (accountDao.GetAccountRole(login) == "Admin")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool CheckLogin(string login, string password)
@@ -76,32 +83,17 @@ namespace Epam.MySocialNet.Logic
 
         public string GetAccountRole(string login)
         {
-            if (CheckBadInputString(login))
-            {
-                return null;
-            }
-
             return accountDao.GetAccountRole(login);
         }
 
-        public bool RemoveAccount(string login)
+        public bool RemoveAccount(int id)
         {
-            if (CheckBadInputString(login))
-            {
-                return false;
-            }
-
-            return accountDao.RemoveAccount(login);
+            return accountDao.RemoveAccount(id);
         }
 
-        public bool RemoveAdminRole(string login)
+        public bool RemoveAdminRole(int id)
         {
-            if (CheckBadInputString(login))
-            {
-                return false;
-            }
-
-            return accountDao.RemoveAccountFromAdmins(login);
+            return accountDao.RemoveAccountFromAdmins(id);
         }
 
         public bool SaveNewAccount(string login, string firstName, string lastName, string password, string role, string birthDayStr, int imgId)
@@ -227,14 +219,9 @@ namespace Epam.MySocialNet.Logic
             }
         }
 
-        public bool SetAdminRole(string login)
+        public bool SetAdminRole(int id)
         {
-            if (CheckBadInputString(login))
-            {
-                return false;
-            }
-
-            return accountDao.SetAdminRole(login);
+            return accountDao.SetAdminRole(id);
         }
 
         public bool AccountExist(string login)

@@ -15,6 +15,6 @@ namespace Epam.MySocialNet.LogicContracts
 
         bool DeleteImage(int id);
 
-        bool EditImage(int id, Image image);
+        bool EditImage(Image image);
     }
 }

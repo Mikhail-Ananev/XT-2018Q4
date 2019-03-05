@@ -1,0 +1,15 @@
+﻿@{
+    if (User.Identity.IsAuthenticated)
+    {
+        foreach (var account in Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAllAccounts())
+        {
+            if (User.Identity.Name != account.Login)
+            {
+<div id="@account.Id">
+    <text>@account.FirstName</text>
+</div>
+            }
+        }
+    }
+}
+

@@ -1,0 +1,12 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    var account = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAccountByLogin(User.Identity.Name);
+    <text>Привет @account.FirstName
+Я тебя поймал!</text>
+
+}
+else
+{
+    Response.Redirect("~");
+}
+Страница с полной информацией по пользователю с кнопками: редактировать данные, сменить фото, начать беседу(ссылка на полный список юзеров)

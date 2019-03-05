@@ -40,12 +40,10 @@ namespace Epam.MySocialNet.SQLDao
 
         public Image GetImageById(int id)
         {
-            if (id == 0)
+            if (id < 1)
             {
                 return null;
             }
-
-            Image image = new Image();
 
             using (var con = new SqlConnection(connectString))
             {
@@ -65,12 +63,16 @@ namespace Epam.MySocialNet.SQLDao
                 string name = (string)reader["Name"];
                 string contentType = (string)reader["ContentType"];
 
-                image.Id = id;
-                image.Data = data;
-                image.Name = name;
-                image.ContentType = contentType;
+                Image image = new Image()
+                {
+                    Id = id,
+                    Data = data,
+                    Name = name,
+                    ContentType = contentType,
+                };
+
+                return image;
             }
-            return image;
         }
 
         public bool DeleteImage(int id)
@@ -82,19 +84,18 @@ namespace Epam.MySocialNet.SQLDao
                 cmd.Parameters.Add(new SqlParameter("@id", DbType.Int32) { Value = id });
 
                 con.Open();
-                int result = cmd.ExecuteNonQuery();
-            }
 
-            return true;
+                return cmd.ExecuteNonQuery() == 1;
+            }
         }
 
-        public bool EditImage(int id, Image image)
+        public bool EditImage(Image image)
         {
             using (SqlConnection connect = new SqlConnection(connectString))
             {
                 SqlCommand cmd = connect.CreateCommand();
                 cmd.CommandText = "UPDATE dbo.Images SET Name=@Name, ContentType=@ContentType, Data=@Data WHERE Id=@Id";
-                cmd.Parameters.Add(new SqlParameter("@Id", DbType.Int32) { Value = id });
+                cmd.Parameters.Add(new SqlParameter("@Id", DbType.Int32) { Value = image.Id });
 
                 cmd.Parameters.AddWithValue("@Name", image.Name);
                 cmd.Parameters.AddWithValue("@ContentType", image.ContentType);

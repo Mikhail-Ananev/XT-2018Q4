@@ -106,6 +106,8 @@
     <Content Include="Accounts\LogIn.cshtml" />
     <Content Include="Accounts\Registration.cshtml" />
     <Content Include="Accounts\LogOut.cshtml" />
+    <Content Include="Accounts\UserPage.cshtml" />
+    <Content Include="CommonChat\AccountsList.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

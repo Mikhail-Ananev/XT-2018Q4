@@ -8,8 +8,8 @@ namespace Epam.MySocialNet.Entities
 {
     public class ChatList
     {
-        public int AccountId { get; set; }
+        public int SenderAccountId { get; set; }
 
-        public IEnumerable<int> ListInterlocutor { get; set; }
+        public int AddresseeAccountId { get; set; }
     }
 }
