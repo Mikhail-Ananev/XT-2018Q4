@@ -16,11 +16,21 @@ namespace Epam.MySocialNet.SQLDao
 
         public ImagesDao(string connectionString)
         {
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentNullException("Connection string empty!", nameof(connectionString));
+            }
+
             this.connectString = connectionString;
         }
 
         public int AddImage(Image image)
         {
+            if (CheckNull(image))
+            {
+                throw new ArgumentNullException("Input data is empty!", nameof(image));
+            }
+
             int id = 0;
             using (var con = new SqlConnection(connectString))
             {
@@ -91,6 +101,11 @@ namespace Epam.MySocialNet.SQLDao
 
         public bool EditImage(Image image)
         {
+            if (CheckNull(image))
+            {
+                throw new ArgumentNullException("Input data is empty!", nameof(image));
+            }
+
             using (SqlConnection connect = new SqlConnection(connectString))
             {
                 SqlCommand cmd = connect.CreateCommand();
@@ -103,6 +118,18 @@ namespace Epam.MySocialNet.SQLDao
 
                 connect.Open();
                 return cmd.ExecuteNonQuery() == 1;
+            }
+        }
+
+        private bool CheckNull (Image image)
+        {
+            if (image == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

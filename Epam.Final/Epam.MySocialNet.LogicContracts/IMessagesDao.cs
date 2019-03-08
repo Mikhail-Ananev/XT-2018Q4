@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 
 namespace Epam.MySocialNet.LogicContracts
 {
-    public interface IMessagesLogic
+    public interface IMessagesDao
     {
         bool AddMessage(string text, int senderId, int adresseeId);
 
-        bool RemoveMessage(int accountId, int messageId, string accountRole);
+        bool RemoveMessage(int messageId);
 
         IEnumerable<Message> GetListLastMessages(int quantity, int senderAccountId, int addresseeAccountId);
 
         IEnumerable<Message> GetAllAccountMessages(int senderAccountId);
 
-        bool EditMessage(int accountId, int messageId, string accountRole, string text);
+        bool EditMessage(int messageId, string text);
 
         IEnumerable<Message> GetAllSharedMessages();
+
+        int GetSenderId(int messageId);
     }
 }

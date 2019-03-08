@@ -46,7 +46,7 @@
             //    ImageId = imgId,
             //};
 
-            if (Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.SaveNewAccount(Request["login"], Request["firstName"], Request["lastName"],
+            if (Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.SaveNewAccount(Request["login"].Trim(), Request["firstName"], Request["lastName"],
                                                                                   Request["password"], "User",Request["date"], imgId))
             {
                 FormsAuthentication.SetAuthCookie(Request["login"], createPersistentCookie: false);

@@ -18,14 +18,18 @@
             <a class="nav-button" href="~/Accounts/UserPage">
                 Моя страница
             </a>
-            <a class="nav-button" href="~/CommonChat/AccountsList">
+            <a class="nav-button" href="~/Chats/AccountsList">
                 Пользователи
             </a>
-            <a class="nav-button" href="#">
+            <a class="nav-button" href="~/Chats/ChatsList">
                 Сообщения
             </a>
             @if (User.Identity.IsAuthenticated)
             {
+                <a class="nav-button" href="~/Accounts/FriendsList">
+                Друзья
+                </a>
+
                 <a class="nav-button" href="~/Accounts/LogOut">
                     Выйти
                 </a>

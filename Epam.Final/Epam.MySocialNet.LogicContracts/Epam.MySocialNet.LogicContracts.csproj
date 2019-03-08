@@ -45,6 +45,7 @@
     <Compile Include="IAccountsLogic.cs" />
     <Compile Include="IImagesDao.cs" />
     <Compile Include="IImagesLogic.cs" />
+    <Compile Include="IMessagesDao.cs" />
     <Compile Include="IMessagesLogic.cs" />
     <Compile Include="IChatsLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

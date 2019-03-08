@@ -102,12 +102,15 @@
     <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Index.cshtml" />
     <Content Include="Accounts\Index.cshtml" />
-    <Content Include="CommonChat\Index.cshtml" />
+    <Content Include="Chats\Index.cshtml" />
     <Content Include="Accounts\LogIn.cshtml" />
     <Content Include="Accounts\Registration.cshtml" />
     <Content Include="Accounts\LogOut.cshtml" />
     <Content Include="Accounts\UserPage.cshtml" />
-    <Content Include="CommonChat\AccountsList.cshtml" />
+    <Content Include="Chats\AccountsList.cshtml" />
+    <Content Include="Message\AddMessage.cshtml" />
+    <Content Include="Accounts\FriendsList.cshtml" />
+    <Content Include="Chats\ChatsList.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

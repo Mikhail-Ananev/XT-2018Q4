@@ -1,0 +1,60 @@
+﻿@using Epam.MySocialNet.Entities;
+
+@{
+    if (!User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("~");
+    }
+
+    int id = int.Parse(Request["id"]);
+
+
+    if (IsPost)
+    {
+        if (!string.IsNullOrWhiteSpace(Request["message"]))
+        {
+            int senderId, adresseeId;
+            bool result1 = int.TryParse(Request["From"], out senderId);
+            bool result2 = int.TryParse(Request["To"], out adresseeId);
+
+            if (result1 && result2)
+            {
+                if (adresseeId < 0)
+                {
+                    Response.SetStatus(HttpStatusCode.BadRequest);
+                    return;
+                }
+            }
+
+            string text = Request["message"];
+
+            if (Epam.MySocialNet.WebUI.LogicProvider.MessagesLogic.AddMessage(text, senderId, adresseeId))
+            {
+                Response.Redirect("~");
+            }
+            else
+            {
+                Response.SetStatus(HttpStatusCode.BadRequest);
+                return;
+            }
+
+        }
+    }
+}
+
+
+
+@*<div>
+    <label for="login">Почта:</label>
+    <input type="text" id="login" name="login" />
+    <p>используется для входа на сайт</p>
+</div>*@
+
+
+<form class="registration" method="post">
+    скрытая передача Ид From из ссылки
+    <input type="hidden" name="From" value="@id">
+    <p><b>Введите сообщение:</b></p>
+    <p><textarea id="message" name="message"></textarea></p>
+    <p><input type="submit"></p>
+</form>

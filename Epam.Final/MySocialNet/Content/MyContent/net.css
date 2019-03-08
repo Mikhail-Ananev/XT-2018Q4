@@ -82,6 +82,7 @@ a.header-link:hover {
 
 .content {
     display:flex;
+    flex-direction: column;
     /*margin-left: 12.5%;*/
     max-width:860px;
     min-width:300px;

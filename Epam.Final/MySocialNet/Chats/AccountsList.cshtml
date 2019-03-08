@@ -1,0 +1,18 @@
+﻿@{
+                /**/
+
+                if (User.Identity.IsAuthenticated)
+                {
+                    foreach (var account in Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAllAccounts())
+                    {
+                        if (User.Identity.Name != account.Login)
+                        {
+                            <a id="@account.Id" href="~/Message/AddMessage?From=@account.Id">
+                                <text>@account.FirstName</text>
+                                <hr />
+                            </a>
+                        }
+                    }
+                }
+}
+

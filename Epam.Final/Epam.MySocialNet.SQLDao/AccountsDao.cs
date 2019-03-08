@@ -16,6 +16,11 @@ namespace Epam.MySocialNet.SQLDao
 
         public AccountsDao(string connectionString)
         {
+            if (CheckBadInputString(connectionString))
+            {
+                throw new ArgumentNullException("Connection string empty!", nameof(connectionString));
+            }
+
             this.connectString = connectionString;
         }
 
@@ -44,9 +49,8 @@ namespace Epam.MySocialNet.SQLDao
                 cmd.Parameters.Add("@imageId", SqlDbType.Int).Value = account.ImageId;
 
                 con.Open();
-                int result = cmd.ExecuteNonQuery();
 
-                return result == 1;
+                return cmd.ExecuteNonQuery() == 1;
             }
         }
 
