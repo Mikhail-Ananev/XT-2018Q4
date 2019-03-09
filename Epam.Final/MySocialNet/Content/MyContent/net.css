@@ -1,29 +1,29 @@
 ﻿body {
     background-color: #E1E1E1;
-    max-width:1000px;
-    width:90%;
-    margin:auto;
+    max-width: 1000px;
+    width: 90%;
+    margin: auto;
 }
 
 header {
     height: 45px;
-    min-width:612px;
-    width:100%;
+    /*min-width: 612px;*/
+    width: 100%;
     background: linear-gradient(to bottom, #58C6C7, #028E8F);
 }
 
-header>ul {
+/*header>*/ ul {
     /*-webkit-flex: auto;*/
     display: flex;
     list-style: none;
     justify-content: space-between;
-    align-items:center;
-    padding-left:0;
-    padding-right:0;
+    align-items: center;
+    padding-left: 0;
+    padding-right: 0;
 }
 
-header>ul>li {
-height:45px;
+header > ul > li {
+    height: 45px;
 }
 
 .header-link {
@@ -36,13 +36,12 @@ height:45px;
 
 a.header-link {
     text-decoration: none;
-    color:black;
-
+    color: black;
 }
 
-a.header-link:hover {
-    background: linear-gradient(to bottom,#FEFEFE, #028E8F);
-}
+    a.header-link:hover {
+        background: linear-gradient(to bottom,#FEFEFE, #028E8F);
+    }
 
 /*@media (min-width:381px) and (max-width: 560px){
     header > ul {
@@ -72,41 +71,106 @@ a.header-link:hover {
     justify-content: center;
 }
 
-.navigation a{
+.navigation a {
     text-decoration: none;
 }
 
-.navigation a:hover {
-    background: linear-gradient(to bottom, #F8DAB2, #F79104);
-}
+    .navigation a:hover {
+        background: linear-gradient(to bottom, #F8DAB2, #F79104);
+    }
 
 .content {
-    display:flex;
+    display: flex;
     flex-direction: column;
     /*margin-left: 12.5%;*/
-    max-width:860px;
-    min-width:300px;
+    max-width: 500px;
+    min-width: 300px;
     padding: 2px 5px;
     overflow: auto;
-    margin:0;
+    margin: 0;
+}
+.message-container{
+    display:flex;
+    /*flex-direction:column;
+    justify-content:center;
+    align-items: stretch;*/
+}
+.top-message-part {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+    .top-message-part .nav-button {
+        text-align: center;
+        background: linear-gradient(to bottom, #DFDFDF, #828282);
+    }
+
+    .top-message-part a.nav-button,
+    .top-message-part a.nav-button:active,
+    .top-message-part a.nav-button:hover {
+        text-decoration: none;
+    }
+
+        .top-message-part a.nav-button:hover {
+            background: linear-gradient(to bottom, #DFDFDF, #999999);
+        }
+
+ul.message-list{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /*align-items: flex-start;*/
+}
+
+    ul.message-list li {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+        width: 100%;
+        /*align-items: flex-start;*/
+    }
+
+
+.message {
+    border-radius: 5px;
+    border: solid 1px grey;
+    padding: 5px;
+    margin: 3px;
+}
+
+
+/*div.message-header {
+}*/
+
+.date{
+    font-size:0.8em;
+}
+
+.main-message {
+    display: flex;
+    clear: right;
 }
 
 .login,
-.registration{
-    margin-top:20px;
+.registration {
+    margin-top: 20px;
     display: flex;
-    width:340px;
-    flex-direction:column;
-    
+    width: 340px;
+    flex-direction: column;
     align-items: flex-end;
 }
-form div{
-    padding-bottom:4px;
-    
+
+form div {
+    padding-bottom: 4px;
 }
-input{
+
+input {
     border-radius: 10px;
-    background-color:darkgray;
+    background-color: darkgray;
 }
 
 button {
@@ -114,9 +178,13 @@ button {
     background: linear-gradient(to bottom, white, darkgray);
 }
 
-form p{
-    font-size:12px;
-    text-align:right;
+form p {
+    font-size: 12px;
+    text-align: right;
     margin-top: 0;
-    padding-right:10px;
+    padding-right: 10px;
+}
+
+.account-link{
+    display:block;
 }

@@ -1,5 +1,6 @@
 ﻿@{
-
+    var accountId = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAccountByLogin(User.Identity.Name).Id;
+    var chatList = Epam.MySocialNet.WebUI.LogicProvider.ChatsLogic.GetChatList(accountId);
 }
 
 По логину получаем Id пользователя и запрашиваем список всех бесед, выводим в форме:

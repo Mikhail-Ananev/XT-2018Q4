@@ -1,0 +1,54 @@
+﻿@{
+    var messagesLogic = Epam.MySocialNet.WebUI.LogicProvider.MessagesLogic;
+    var accountLogic = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
+    var last20Messages = messagesLogic.GetAllSharedMessages();
+    var account = accountLogic.GetAccountByLogin(User.Identity.Name);
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="top-message-part">
+        <div>
+            <a class="nav-button" href="~/Message/AddMessage?ToId=0">
+                Написать сообщение
+            </a>
+        </div>
+    </div>
+}
+
+<div class="message-container">
+    <ul class="message-list">
+        @{
+            foreach (var message in last20Messages)
+            {
+                <li data-id="@message.Id">
+                    <div class="message">
+                        <div class="message-header">
+                            @{
+                                var senderAccount = accountLogic.GetAccountById(message.SenderAccountId);
+                                if (senderAccount.ImageId > 0)
+                                {
+                                    <img src="~/ViewImage?id=@senderAccount.ImageId" alt="@senderAccount.FirstName image" class="img-responsive" width="50" height="50">
+                                }
+                                else
+                                {
+                                    <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
+                                }
+                                <text>
+                                    @senderAccount.FirstName <span class="date">(@message.CreationTime)</span>
+                                </text>
+                            }
+                        </div>
+
+                        <div class="main-message">
+                            @message.Text
+                        </div>
+
+                    </div>
+
+                </li>
+            }
+        }
+
+    </ul>
+</div>

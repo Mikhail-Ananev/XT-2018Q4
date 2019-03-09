@@ -8,45 +8,6 @@
                            стрелка вверх (в начало), стрелка вниз (в конец)
 
     ввод новых сообщений осуществить в модальном окне.*@
-
 @{
-    var messagesLogic = Epam.MySocialNet.WebUI.LogicProvider.MessagesLogic;
-    var accountLogic = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
-    var last20Messages = messagesLogic.GetAllSharedMessages();
-    var account = accountLogic.GetAccountByLogin(User.Identity.Name);
+    Response.Redirect("~/Chats/Common");
 }
-
-@if (User.Identity.IsAuthenticated)
-{
-    <div>
-        <a class="nav-button" href="~/Message/AddMessage?Id=@account.Id">
-            Написать сообщение
-        </a>
-    </div>
-}
-
-@*цикл с выводом каждого сообщения в формате:*@
-<div class="shared message">
-    @{
-
-        foreach (var message in last20Messages)
-                {
-                <div class="message" id="@message.Id">
-                    @account.FirstName
-                    <hr />
-                    <div>
-                        @message.Text
-                    </div>
-                </div>
-            }
-    }
-    @*получить картинку юзера, справа написать имя, на новой строке дату и время сообщения*@
-    <img src="~/Images/inkognito.png" alt="Inkognito image" height="35" width="40" />
-    текст
-</div>
-
-
-@{
-    //если пользователь зарегистрирован - форма для нового сообщения в общий чат
-}
-

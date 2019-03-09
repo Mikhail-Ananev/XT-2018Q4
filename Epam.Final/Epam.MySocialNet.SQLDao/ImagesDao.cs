@@ -10,7 +10,7 @@ using Epam.MySocialNet.LogicContracts;
 
 namespace Epam.MySocialNet.SQLDao
 {
-    public class ImagesDao : IImageDao
+    public class ImagesDao : IImagesDao
     {
         private readonly string connectString;
 

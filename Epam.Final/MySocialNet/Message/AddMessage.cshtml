@@ -6,7 +6,7 @@
         Response.Redirect("~");
     }
 
-    int id = int.Parse(Request["id"]);
+    //int id = int.Parse(Request["id"]);
 
 
     if (IsPost)
@@ -52,9 +52,9 @@
 
 
 <form class="registration" method="post">
-    скрытая передача Ид From из ссылки
-    <input type="hidden" name="From" value="@id">
+    <input type="hidden" name="From" value="@Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAccountByLogin(User.Identity.Name).Id">
+    <input type="hidden" name="To" value="@Request["ToId"]">
     <p><b>Введите сообщение:</b></p>
-    <p><textarea id="message" name="message"></textarea></p>
+    <p><textarea id="message" name="message" rows="6" cols="40"></textarea></p>
     <p><input type="submit"></p>
 </form>

@@ -14,9 +14,12 @@ namespace Epam.MySocialNet.WebUI
             AccountsLogic = new AccountsLogic();
             ImagesLogic = new ImagesLogic();
             MessagesLogic = new MessagesLogic();
+            ChatsLogic = new ChatsLogic();
         }
 
         public static IAccountsLogic AccountsLogic { get; }
+
+        public static IChatsLogic ChatsLogic { get; }
 
         public static IImagesLogic ImagesLogic { get; }
 

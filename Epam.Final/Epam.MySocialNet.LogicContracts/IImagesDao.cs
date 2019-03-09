@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Epam.MySocialNet.LogicContracts
 {
-    public interface IImageDao
+    public interface IImagesDao
     {
         int AddImage(Image image);
 

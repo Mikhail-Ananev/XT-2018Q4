@@ -1,0 +1,10 @@
+﻿@using Epam.MySocialNet.Entities;
+
+@{
+    int id = int.Parse(Request["id"]);
+
+    Image image = Epam.MySocialNet.WebUI.LogicProvider.ImagesLogic.GetImageById(id);
+
+    Response.WriteBinary(image.Data, image.ContentType);
+}
+

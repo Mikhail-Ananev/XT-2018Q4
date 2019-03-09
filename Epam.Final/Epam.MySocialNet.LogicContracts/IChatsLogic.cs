@@ -9,6 +9,6 @@ namespace Epam.MySocialNet.LogicContracts
 {
     public interface IChatsLogic
     {
-        IEnumerable<ChatList> GetTalkLists(int accountId);
+        IEnumerable<ChatList> GetChatList(int accountId);
     }
 }

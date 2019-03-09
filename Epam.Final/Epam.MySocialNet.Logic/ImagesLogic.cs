@@ -12,12 +12,12 @@ namespace Epam.MySocialNet.Logic
 {
     public class ImagesLogic : IImagesLogic
     {
-        private readonly IImageDao imageDao;
+        private readonly IImagesDao imagesDao;
 
         public ImagesLogic()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["MSN"].ConnectionString;
-            this.imageDao = new ImagesDao(connectionString);
+            this.imagesDao = new ImagesDao(connectionString);
         }
 
         public int AddUserImage(Image image)
@@ -27,7 +27,7 @@ namespace Epam.MySocialNet.Logic
                 return -1;
             }
 
-            return imageDao.AddImage(image);
+            return imagesDao.AddImage(image);
         }
 
         public bool EditImage(Image image)
@@ -37,7 +37,7 @@ namespace Epam.MySocialNet.Logic
                 return false;
             }
 
-            return imageDao.EditImage(image);
+            return imagesDao.EditImage(image);
         }
 
         public bool DeleteImage(int id)
@@ -47,7 +47,7 @@ namespace Epam.MySocialNet.Logic
                 return false;
             }
 
-            return imageDao.DeleteImage(id);
+            return imagesDao.DeleteImage(id);
         }
 
         public Image GetImageById(int id)
@@ -57,12 +57,12 @@ namespace Epam.MySocialNet.Logic
                 return null;
             }
 
-            return imageDao.GetImageById(id);
+            return imagesDao.GetImageById(id);
         }
 
         private bool CheckImage(Image image)
         {
-            if (image == null || image.Id < 1 || image.Data.Length == 0 || string.IsNullOrWhiteSpace(image.Name))
+            if (image == null || image.Data.Length == 0 || string.IsNullOrWhiteSpace(image.Name))
             {
                 return false;
             }
