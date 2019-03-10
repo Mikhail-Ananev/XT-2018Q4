@@ -157,7 +157,7 @@ namespace Epam.MySocialNet.SQLDao
             using (var con = new SqlConnection(connectString))
             {
                 SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = "SELECT Id, CreationTime, Text FROM dbo.Messages WHERE FromId = @fromId AND ToId = @toId";
+                cmd.CommandText = "SELECT Id, CreationTime, Text, FromId, ToId FROM dbo.Messages WHERE (FromId = @fromId AND ToId = @toId) OR (FromId = @toId AND ToId = @fromId)";
                 cmd.Parameters.Add("@fromId", SqlDbType.Int).Value = senderAccountId;
                 cmd.Parameters.Add("@toId", SqlDbType.Int).Value = addresseeAccountId;
 
@@ -170,14 +170,16 @@ namespace Epam.MySocialNet.SQLDao
                     int id = (int)reader["Id"];
                     DateTime creationTime = (DateTime)reader["CreationTime"];
                     string text = (string)reader["Text"];
+                    int senderId = (int)reader["FromId"];
+                    int adresseeId = (int)reader["ToId"];
 
                     Message message = new Message()
                     {
                         Id = id,
                         CreationTime = creationTime,
                         Text = text,
-                        SenderAccountId = senderAccountId,
-                        AddresseeAccountId = addresseeAccountId,
+                        SenderAccountId = senderId,
+                        AddresseeAccountId = adresseeId,
                     };
 
                     messages.Add(message);

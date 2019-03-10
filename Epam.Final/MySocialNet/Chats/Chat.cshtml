@@ -1,0 +1,123 @@
+﻿@if (!User.Identity.IsAuthenticated)
+{
+    Response.SetStatus(HttpStatusCode.BadRequest);
+    return;
+
+}
+
+@{
+    string adresseeStringId = Request["WithId"];
+    string senderStringId = Request["Sender"];
+    int adresseeId;
+    int senderId;
+    bool resultAdr = int.TryParse(adresseeStringId, out adresseeId);
+    bool resultSen = int.TryParse(senderStringId, out senderId);
+
+    if (!resultAdr || !resultSen || senderId < 1 ||adresseeId < 1)
+    {
+        Response.SetStatus(HttpStatusCode.BadRequest);
+        return;
+    }
+
+    var messagesLogic = Epam.MySocialNet.WebUI.LogicProvider.MessagesLogic;
+    var accountLogic = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
+    var senderAccount = accountLogic.GetAccountById(senderId);
+    var adresseeAccount = accountLogic.GetAccountById(adresseeId);
+    var last50Messages = messagesLogic.GetListLastMessages(50, senderAccount.Id, adresseeAccount.Id);
+
+}
+
+
+@if (User.Identity.Name != senderAccount.Login)
+{
+    Response.SetStatus(HttpStatusCode.BadRequest);
+    return;
+
+}
+
+
+<div class="top-message-part">
+    <div>
+        <a class="nav-button" href="~/Message/AddMessage?ToId=@adresseeId">
+            Написать сообщение
+        </a>
+    </div>
+</div>
+
+
+
+<div class="message-container">
+    <ul class="message-list">
+        @{
+            foreach (var message in last50Messages)
+            {
+                <li data-id="@message.Id">
+                    <div class="message">
+                        <div class="message-header">
+                            @{
+                                if (message.SenderAccountId == senderAccount.Id)
+                                {
+                                    if (senderAccount.ImageId > 0)
+                                    {
+                                        <img src="~/ViewImage?id=@senderAccount.ImageId" alt="@senderAccount.FirstName image" class="img-responsive" width="50" height="50">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
+                                    }
+                                    <text>
+                                        @senderAccount.FirstName <span class="date">(@message.CreationTime)</span>
+                                    </text>
+                                }
+                                else
+                                {
+                                    if (adresseeAccount.ImageId > 0)
+                                    {
+                                        <img src="~/ViewImage?id=@adresseeAccount.ImageId" alt="@adresseeAccount.FirstName image" class="img-responsive" width="50" height="50">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
+                                    }
+                                    <text>
+                                        @adresseeAccount.FirstName <span class="date">(@message.CreationTime)</span>
+                                    </text>
+                                }
+
+
+
+
+
+
+
+
+
+
+
+
+                                @*if (senderAccount.ImageId > 0)
+            {
+                <img src="~/ViewImage?id=@senderAccount.ImageId" alt="@senderAccount.FirstName image" class="img-responsive" width="50" height="50">
+            }
+            else
+            {
+                <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
+            }
+            <text>
+                @senderAccount.FirstName <span class="date">(@message.CreationTime)</span>
+            </text>*@
+                            }
+                        </div>
+
+                        <div class="main-message">
+                            @message.Text
+                        </div>
+
+                    </div>
+
+                </li>
+            }
+        }
+
+    </ul>
+</div>

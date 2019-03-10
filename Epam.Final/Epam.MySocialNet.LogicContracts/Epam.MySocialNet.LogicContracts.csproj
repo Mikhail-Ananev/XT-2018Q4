@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IAccountsDao.cs" />
     <Compile Include="IAccountsLogic.cs" />
+    <Compile Include="IChatsDao.cs" />
     <Compile Include="IImagesDao.cs" />
     <Compile Include="IImagesLogic.cs" />
     <Compile Include="IMessagesDao.cs" />

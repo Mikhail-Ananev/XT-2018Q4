@@ -1,13 +1,8 @@
-﻿@using Epam.MySocialNet.Entities;
-
-@{
+﻿@{
     if (!User.Identity.IsAuthenticated)
     {
         Response.Redirect("~");
     }
-
-    //int id = int.Parse(Request["id"]);
-
 
     if (IsPost)
     {
@@ -41,15 +36,6 @@
         }
     }
 }
-
-
-
-@*<div>
-    <label for="login">Почта:</label>
-    <input type="text" id="login" name="login" />
-    <p>используется для входа на сайт</p>
-</div>*@
-
 
 <form class="registration" method="post">
     <input type="hidden" name="From" value="@Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAccountByLogin(User.Identity.Name).Id">
