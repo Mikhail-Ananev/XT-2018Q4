@@ -26,14 +26,18 @@
                         <div class="message-header">
                             @{
                                 var senderAccount = accountLogic.GetAccountById(message.SenderAccountId);
-                                if (senderAccount.ImageId > 0)
-                                {
+
+                                <a href="~/Accounts/Info?Id=@senderAccount.Id">
+                                    @if (senderAccount.ImageId > 0)
+                                    {
                                     <img src="~/ViewImage?id=@senderAccount.ImageId" alt="@senderAccount.FirstName image" class="img-responsive" width="50" height="50">
-                                }
-                                else
-                                {
+                                    }
+                                    else
+                                    {
                                     <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
-                                }
+                                    }
+                                </a>
+
                                 <text>
                                     @senderAccount.FirstName <span class="date">(@message.CreationTime)</span>
                                 </text>

@@ -170,7 +170,7 @@ namespace Epam.MySocialNet.Logic
 
         private bool CheckName(string str)
         {
-            if (str == null)
+            if (string.IsNullOrWhiteSpace(str))
             {
                 Console.WriteLine("Имя или фамилия должны содержать символы!");
                 return false;
@@ -254,6 +254,16 @@ namespace Epam.MySocialNet.Logic
             }
 
             return accountDao.EditAccount(account);
+        }
+
+        public AccountInfo GetAccountInfo(int id)
+        {
+            return accountDao.GetAccountInfo(id);
+        }
+
+        public bool EditAccountInfo(AccountInfo accountInfo)
+        {
+            return accountDao.EditAccountInfo(accountInfo);
         }
     }
 }

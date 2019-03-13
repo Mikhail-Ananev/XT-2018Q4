@@ -30,5 +30,9 @@ namespace Epam.MySocialNet.LogicContracts
         Account GetAccountById(int id);
 
         string GetAccountRole(string login);
+
+        AccountInfo GetAccountInfo(int id);
+
+        bool EditAccountInfo(AccountInfo accountInfo);
     }
 }

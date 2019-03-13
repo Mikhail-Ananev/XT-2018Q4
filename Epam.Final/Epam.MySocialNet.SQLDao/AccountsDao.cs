@@ -396,5 +396,76 @@ namespace Epam.MySocialNet.SQLDao
             }
         }
 
+        public AccountInfo GetAccountInfo(int id)
+        {
+            AccountInfo accountInfo = null;
+
+            using (SqlConnection connect = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = connect.CreateCommand();
+                cmd.CommandText = "SET Sex, City, Language, Family, Education FROM dbo.AccountInfo WHERE AccountId=@id";
+                cmd.Parameters.Add(new SqlParameter("@id", DbType.Int32) { Value = id });
+
+                connect.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    accountInfo = new AccountInfo
+                    {
+                        AccountId = id,
+                        Sex = reader["Sex"] as string,
+                        City = reader["City"] as string,
+                        Language = reader["Language"] as string,
+                        Family = reader["Family"] as string,
+                        Education = reader["Education"] as string,
+                    };
+                }
+            }
+
+            if (accountInfo == null)
+            {
+                using(SqlConnection connect = new SqlConnection(connectString))
+                {
+                    SqlCommand cmd = connect.CreateCommand();
+                    cmd.CommandText = "INSERT INTO dbo.AccountInfo (AccountId) Values (@id)";
+                    cmd.Parameters.Add(new SqlParameter("@id", DbType.Int32) { Value = id });
+
+                    connect.Open();
+
+                    if (cmd.ExecuteNonQuery() != 1)
+                    {
+                        throw new Exception("Данные не были записаны!");
+                    }
+                }
+            }
+
+            return accountInfo;
+        }
+
+        public bool EditAccountInfo(AccountInfo accountInfo)
+        {
+            if (accountInfo == null)
+            {
+                return false;
+            }
+
+            using (SqlConnection connect = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = connect.CreateCommand();
+                cmd.CommandText = "UPDATE dbo.AccountInfo SET Sex=@sex, City=@city, Language=@language, Family=@family, Education=@education WHERE AccountId=@id";
+                cmd.Parameters.Add(new SqlParameter("@Id", DbType.Int32) { Value = accountInfo.AccountId });
+
+                cmd.Parameters.AddWithValue("@sex", accountInfo.Sex);
+                cmd.Parameters.AddWithValue("@city", accountInfo.City);
+                cmd.Parameters.AddWithValue("@language", accountInfo.Language);
+                cmd.Parameters.AddWithValue("@family", accountInfo.Family);
+                cmd.Parameters.AddWithValue("@education", accountInfo.Education);
+
+                connect.Open();
+                return cmd.ExecuteNonQuery() == 1;
+            }
+        }
     }
 }

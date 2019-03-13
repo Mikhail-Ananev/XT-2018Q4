@@ -13,7 +13,7 @@
     bool resultAdr = int.TryParse(adresseeStringId, out adresseeId);
     bool resultSen = int.TryParse(senderStringId, out senderId);
 
-    if (!resultAdr || !resultSen || senderId < 1 ||adresseeId < 1)
+    if (!resultAdr || !resultSen || senderId < 1 || adresseeId < 1)
     {
         Response.SetStatus(HttpStatusCode.BadRequest);
         return;
@@ -71,41 +71,23 @@
                                 }
                                 else
                                 {
-                                    if (adresseeAccount.ImageId > 0)
-                                    {
+
+                                    <a href="~/Accounts/UserPage?Id=@adresseeAccount.Id">
+                                        if (adresseeAccount.ImageId > 0)
+                                        {
                                         <img src="~/ViewImage?id=@adresseeAccount.ImageId" alt="@adresseeAccount.FirstName image" class="img-responsive" width="50" height="50">
-                                    }
-                                    else
-                                    {
+                                        }
+                                        else
+                                        {
                                         <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
-                                    }
+                                        }
+                                    </a>
+
                                     <text>
                                         @adresseeAccount.FirstName <span class="date">(@message.CreationTime)</span>
                                     </text>
                                 }
 
-
-
-
-
-
-
-
-
-
-
-
-                                @*if (senderAccount.ImageId > 0)
-            {
-                <img src="~/ViewImage?id=@senderAccount.ImageId" alt="@senderAccount.FirstName image" class="img-responsive" width="50" height="50">
-            }
-            else
-            {
-                <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
-            }
-            <text>
-                @senderAccount.FirstName <span class="date">(@message.CreationTime)</span>
-            </text>*@
                             }
                         </div>
 

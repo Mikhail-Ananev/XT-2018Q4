@@ -1,66 +1,50 @@
 ﻿@using Epam.MySocialNet.Entities;
 
-
 @if (IsPost)
 {
     string login = Request["login"];
-    //string password = Request["password"];
-    //string password_again = Request["password_again"];
 
-    if (Request["password"] == Request["password_again"])
+    if (!Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.AccountExist(login))
     {
-        if (!Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.AccountExist(login))
+        int imgId = 0;
+
+        if (Request.Files["file"].ContentLength > 0)
         {
-            int imgId = 0;
+            var file = Request.Files["file"];
 
-            if (Request.Files["file"].ContentLength > 0)
+            byte[] data = new byte[file.ContentLength];
+
+            int len = file.InputStream.Read(data, 0, file.ContentLength);
+
+            WebImage imgdata = new WebImage(data);
+
+            imgdata.Resize(700, 700, true, true);
+
+            data = imgdata.GetBytes();
+
+            Image image = new Image()
             {
-                var file = Request.Files["file"];
+                Data = data,
+                Name = file.FileName,
+                ContentType = file.ContentType,
+            };
 
-                byte[] data = new byte[file.ContentLength];
-
-                int len = file.InputStream.Read(data, 0, file.ContentLength);
-
-                WebImage imgdata = new WebImage(data);
-
-                imgdata.Resize(700, 700, true, true);
-
-                data = imgdata.GetBytes();
-
-                Image image = new Image()
-                {
-                    Data = data,
-                    Name = file.FileName,
-                    ContentType = file.ContentType,
-                };
-
-                imgId = Epam.MySocialNet.WebUI.LogicProvider.ImagesLogic.AddUserImage(image);
-            }
-
-            //var account = new Account
-            //{
-            //    EMail = Request["login"],
-            //    FirstName = Request["firstName"],
-            //    LastName = Request["lastName"],
-            //    Role = "User",
-            //    ImageId = imgId,
-            //};
-
-            if (Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.SaveNewAccount(Request["login"].Trim(), Request["firstName"], Request["lastName"],
-                                                                                  Request["password"], "User",Request["date"], imgId))
-            {
-                FormsAuthentication.SetAuthCookie(Request["login"], createPersistentCookie: false);
-                Response.Redirect("~");
-                return;
-            }
-
+            imgId = Epam.MySocialNet.WebUI.LogicProvider.ImagesLogic.AddUserImage(image);
         }
 
+        if (Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.SaveNewAccount(Request["login"].Trim(), Request["firstName"], Request["lastName"],
+                                                                                Request["password"], "User",Request["date"], imgId))
+        {
+            FormsAuthentication.SetAuthCookie(Request["login"], createPersistentCookie: false);
+            Response.Redirect("~");
+            return;
+        }
     }
 }
 
+<script src="~/Scripts/Custom/registrationValidation.js"></script>
 
-<form class="registration" method="post" enctype="multipart/form-data">
+<form class="registration" method="post" enctype="multipart/form-data" name="registration">
     @if (IsPost)
     {
         <div class="alert" style="background-color:forestgreen; color: black">Wrong login or password</div>
@@ -106,7 +90,7 @@
     </div>
 
     <div>
-        <button>Log in</button>
+        <button type="submit" id="reg">Registration</button>
     </div>
 </form>
 
