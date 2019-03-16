@@ -75,26 +75,28 @@ a.header-link {
     text-decoration: none;
 }
 
-    .navigation a:hover {
-        background: linear-gradient(to bottom, #F8DAB2, #F79104);
-    }
+.navigation a:hover {
+    background: linear-gradient(to bottom, #F8DAB2, #F79104);
+}
 
 .content {
     display: flex;
     flex-direction: column;
     /*margin-left: 12.5%;*/
-    max-width: 500px;
+    max-width: 800px;
     min-width: 300px;
     padding: 2px 5px;
     overflow: auto;
     margin: 0;
 }
+
 .message-container{
     display:flex;
     /*flex-direction:column;
     justify-content:center;
     align-items: stretch;*/
 }
+
 .top-message-part {
     display: flex;
     width: 100%;
@@ -103,20 +105,20 @@ a.header-link {
     align-items: center;
 }
 
-    .top-message-part .nav-button {
-        text-align: center;
-        background: linear-gradient(to bottom, #DFDFDF, #828282);
-    }
+.top-message-part .nav-button {
+    text-align: center;
+    background: linear-gradient(to bottom, #DFDFDF, #828282);
+}
 
-    .top-message-part a.nav-button,
-    .top-message-part a.nav-button:active,
-    .top-message-part a.nav-button:hover {
-        text-decoration: none;
-    }
+.top-message-part a.nav-button,
+.top-message-part a.nav-button:active,
+.top-message-part a.nav-button:hover {
+    text-decoration: none;
+}
 
-        .top-message-part a.nav-button:hover {
-            background: linear-gradient(to bottom, #DFDFDF, #999999);
-        }
+.top-message-part a.nav-button:hover {
+    background: linear-gradient(to bottom, #DFDFDF, #999999);
+}
 
 ul.message-list{
     display: flex;
@@ -187,4 +189,40 @@ form p {
 
 .account-link{
     display:block;
+}
+
+.foto-part{
+    display:flex;
+    flex-direction:column;
+    width: 100px;
+}
+
+.foto-part > div,
+.wrap-info,
+.del {
+    display: flex;
+}
+
+.del{
+    text-decoration:none;
+    margin-top:20px;
+    background-color:brown;
+}
+
+.text-info ul,
+.text-info{
+    display: flex;
+    float: left;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.text-info li {
+    padding: 0 0 5px 5px;
+}
+
+.content-link {
+    text-align:center;
+}
+a.content-link {
+    text-decoration: none;
 }

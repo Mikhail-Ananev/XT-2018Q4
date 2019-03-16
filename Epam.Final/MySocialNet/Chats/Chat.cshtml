@@ -73,7 +73,7 @@
                                 {
 
                                     <a href="~/Accounts/UserPage?Id=@adresseeAccount.Id">
-                                        if (adresseeAccount.ImageId > 0)
+                                        @if (adresseeAccount.ImageId > 0)
                                         {
                                         <img src="~/ViewImage?id=@adresseeAccount.ImageId" alt="@adresseeAccount.FirstName image" class="img-responsive" width="50" height="50">
                                         }

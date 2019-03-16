@@ -1,0 +1,19 @@
+﻿@{
+    if (!User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("~");
+    }
+
+    var accountLogic = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
+    var account = accountLogic.GetAccountByLogin(User.Identity.Name);
+    var imageLogic = Epam.MySocialNet.WebUI.LogicProvider.ImagesLogic;
+    if (!imageLogic.DeleteImage(account.ImageId))
+    {
+        Response.SetStatus(HttpStatusCode.BadRequest);
+        return;
+    }
+    else
+    {
+        Response.Redirect("~/Accounts/UserPage");
+    }
+}

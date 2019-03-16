@@ -1,26 +1,37 @@
-﻿@{
+﻿@using Epam.MySocialNet.Entities;
+
+@{
     if (!User.Identity.IsAuthenticated)
     {
         Response.Redirect("~");
     }
 
     string stringId = Request["Id"];
-    int Id;
-    bool resultAdr = int.TryParse(stringId, out Id);
+    int id;
+    bool result = int.TryParse(stringId, out id);
+    var accountLogic = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
+    var account = new Account();
 
-    if (!resultAdr || Id < 1)
+    if (result || id > 0)
+    {
+        account = accountLogic.GetAccountById(id);
+    }
+    else if (id == 0)
+    {
+        account = accountLogic.GetAccountByLogin(User.Identity.Name);
+    }
+    else
     {
         Response.SetStatus(HttpStatusCode.BadRequest);
         return;
     }
 
-    var accountLogic = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
-    var account = accountLogic.GetAccountById(Id);
     var accountInfo = accountLogic.GetAccountInfo(account.Id);
     bool myPage = User.Identity.Name == account.Login;
 
-    <div class="wrap-info">
-        <div class="for foto and button">
+<div class="wrap-info">
+    <div class="foto-part">
+        <div>
             @if (account.ImageId > 0)
             {
                 <img src="~/ViewImage?id=@account.ImageId" alt="@account.FirstName image" width="100" height="100">
@@ -31,11 +42,62 @@
             }
 
         </div>
-        <div class="for text info">
 
-        </div>
+        @if (myPage)
+        {
+            <div>
+                <a class="nav-button content-link" href="~/Accounts/EditImage">
+                    Сменить фото
+                </a>
+            </div>
+        }
+        else
+        {
+            <div>
+                <a class="nav-button content-link" href="~/Message/AddMessage?ToId=@account.Id">
+                    Написать сообщение
+                </a>
+            </div>
+            <div>
+                <a class="nav-button content-link" href="~/Accounts/AddFriend?Id=@account.Id">
+                    Добавить в друзья
+                </a>
+            </div>
+        }
+
+
 
     </div>
+    <div class="text-info">
+        <ul>
+            <li>
+                Пол: @accountInfo.Sex
+            </li>
+            <li>
+                Город проживания: @accountInfo.City
+            </li>
+            <li>
+                Образование: @accountInfo.Education
+            </li>
+            <li>
+                Семейное положение: @accountInfo.Family
+            </li>
+            <li>
+                Родной язык: @accountInfo.Language
+            </li>
+        </ul>
+        @if (myPage)
+        {
+            <a class="nav-button content-link" href="~/Accounts/EditInfo">
+                Редактировать
+            </a>
+        }
+
+    </div>
+
+
+
+</div>
 
     if (myPage)
     {

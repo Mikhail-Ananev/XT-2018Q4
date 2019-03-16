@@ -1,0 +1,97 @@
+﻿@using Epam.MySocialNet.Logic
+@using Epam.MySocialNet.Entities
+
+@{
+    if (!User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("~");
+    }
+
+    var accountLogic = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
+    var account = accountLogic.GetAccountByLogin(User.Identity.Name);
+    var imagesLogic = Epam.MySocialNet.WebUI.LogicProvider.ImagesLogic;
+
+    if (IsPost)
+    {
+        string title = Request["title"];
+
+        if (Request.Files["file"].ContentLength > 0)
+        {
+            var file = Request.Files["file"];
+
+            byte[] data = new byte[file.ContentLength];
+
+            int len = file.InputStream.Read(data, 0, file.ContentLength);
+
+            WebImage imgData = new WebImage(data);
+
+            imgData.Resize(700, 700, true, true);
+
+            data = imgData.GetBytes();
+
+            Image image = new Image()
+            {
+                Id = account.ImageId,
+                Data = data,
+                Name = file.FileName,
+                ContentType = file.ContentType,
+            };
+
+            if (image.Id == 0)
+            {
+                int id = imagesLogic.AddUserImage(image);
+                accountLogic.UpdateImageId(account.Id, id);
+            }
+            else
+            {
+                if (!imagesLogic.EditImage(image))
+                {
+                    Response.SetStatus(HttpStatusCode.BadRequest);
+                    return;
+                }
+            }
+
+        }
+
+        Response.Redirect("~/Accounts/UserPage");
+        return;
+    }
+}
+
+<div class="wrap-info">
+    <div class="foto-part">
+        @if (account.ImageId > 0)
+        {
+            <img src="~/ViewImage?id=@account.ImageId" alt="@account.FirstName image" width="100" height="100">
+        }
+        else
+        {
+            <img src="~/DefaultImages/default_user_image.png" alt="user default image" width="100" height="100">
+        }
+
+        <form method="post" enctype="multipart/form-data">
+
+            <div>
+                <h4>
+                    Выбрать Фото:
+                </h4>
+                <input type="file" name="file">
+
+            </div>
+
+            <div class="panel">
+                <button type="submit" class="header-link">
+                    Edit
+                </button>
+            </div>
+        </form>
+        @if (account.ImageId != 0)
+        {
+            <div>
+                <a class="nav-button del" href="~/Accounts/DeleteImage">
+                    Удалить фото
+                </a>
+            </div>
+        }
+    </div>
+</div>

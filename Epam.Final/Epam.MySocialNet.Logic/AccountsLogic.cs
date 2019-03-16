@@ -265,5 +265,10 @@ namespace Epam.MySocialNet.Logic
         {
             return accountDao.EditAccountInfo(accountInfo);
         }
+
+        public void UpdateImageId(int accountId, int imageId)
+        {
+            accountDao.UpdateImageId(accountId, imageId);
+        }
     }
 }

@@ -36,10 +36,14 @@ namespace Epam.MySocialNet.SQLDao
                 return false;
             }
 
+            int id = 0;
+            bool result = false;
+
             using (var con = new SqlConnection(connectString))
             {
                 SqlCommand cmd = con.CreateCommand();
-                cmd.CommandText = "INSERT INTO dbo.Accounts (Login, FirstName, LastName, BirthDay, Password, Role, ImageId) VALUES (@login, @firstName, @lastName, @birthDay, @password, @role, @imageId)";
+                cmd.CommandText = "INSERT INTO dbo.Accounts (Login, FirstName, LastName, BirthDay, Password, Role, ImageId)" +
+                    " VALUES (@login, @firstName, @lastName, @birthDay, @password, @role, @imageId);SELECT scope_identity()";
                 cmd.Parameters.AddWithValue("@login", account.Login);
                 cmd.Parameters.AddWithValue("@firstName", account.FirstName);
                 cmd.Parameters.AddWithValue("@lastName", account.LastName);
@@ -49,9 +53,26 @@ namespace Epam.MySocialNet.SQLDao
                 cmd.Parameters.Add("@imageId", SqlDbType.Int).Value = account.ImageId;
 
                 con.Open();
+                id = (int)(decimal)cmd.ExecuteScalar();
 
-                return cmd.ExecuteNonQuery() == 1;
+                result = cmd.ExecuteNonQuery() == 1;
             }
+
+            using (SqlConnection connect = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = connect.CreateCommand();
+                cmd.CommandText = "INSERT INTO dbo.AccountInfo AccountId=@id, Sex=@sex, City=@city, Language=@language, Family=@family, Education=@education) Values (@id)";
+                cmd.Parameters.Add(new SqlParameter("@id", DbType.Int32) { Value = id });
+                cmd.Parameters.AddWithValue("@sex", null);
+                cmd.Parameters.AddWithValue("@city", null);
+                cmd.Parameters.AddWithValue("@language", null);
+                cmd.Parameters.AddWithValue("@family", null);
+                cmd.Parameters.AddWithValue("@education", null);
+
+                connect.Open();
+            }
+
+            return result;
         }
 
         public bool AccountExist(string login)
@@ -403,7 +424,7 @@ namespace Epam.MySocialNet.SQLDao
             using (SqlConnection connect = new SqlConnection(connectString))
             {
                 SqlCommand cmd = connect.CreateCommand();
-                cmd.CommandText = "SET Sex, City, Language, Family, Education FROM dbo.AccountInfo WHERE AccountId=@id";
+                cmd.CommandText = "SELECT Sex, City, Language, Family, Education FROM dbo.AccountInfo WHERE AccountId=@id";
                 cmd.Parameters.Add(new SqlParameter("@id", DbType.Int32) { Value = id });
 
                 connect.Open();
@@ -429,8 +450,13 @@ namespace Epam.MySocialNet.SQLDao
                 using(SqlConnection connect = new SqlConnection(connectString))
                 {
                     SqlCommand cmd = connect.CreateCommand();
-                    cmd.CommandText = "INSERT INTO dbo.AccountInfo (AccountId) Values (@id)";
+                    cmd.CommandText = "INSERT INTO dbo.AccountInfo Values (@id, @sex, @city, @language, @family, @education)";
                     cmd.Parameters.Add(new SqlParameter("@id", DbType.Int32) { Value = id });
+                    cmd.Parameters.AddWithValue("@sex", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@city", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@language", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@family", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@education", DBNull.Value);
 
                     connect.Open();
 
@@ -455,7 +481,7 @@ namespace Epam.MySocialNet.SQLDao
             {
                 SqlCommand cmd = connect.CreateCommand();
                 cmd.CommandText = "UPDATE dbo.AccountInfo SET Sex=@sex, City=@city, Language=@language, Family=@family, Education=@education WHERE AccountId=@id";
-                cmd.Parameters.Add(new SqlParameter("@Id", DbType.Int32) { Value = accountInfo.AccountId });
+                cmd.Parameters.Add(new SqlParameter("@id", DbType.Int32) { Value = accountInfo.AccountId });
 
                 cmd.Parameters.AddWithValue("@sex", accountInfo.Sex);
                 cmd.Parameters.AddWithValue("@city", accountInfo.City);
@@ -465,6 +491,20 @@ namespace Epam.MySocialNet.SQLDao
 
                 connect.Open();
                 return cmd.ExecuteNonQuery() == 1;
+            }
+        }
+
+        public void UpdateImageId(int accountId, int imageId)
+        {
+            using (SqlConnection connect = new SqlConnection(connectString))
+            {
+                SqlCommand cmd = connect.CreateCommand();
+                cmd.CommandText = "UPDATE dbo.Accounts SET ImageId=@imageId WHERE Id=@accountId";
+                cmd.Parameters.Add(new SqlParameter("@accountId", DbType.Int32) { Value = accountId });
+                cmd.Parameters.Add(new SqlParameter("@imageId", DbType.Int32) { Value = imageId });
+
+                connect.Open();
+                int result = cmd.ExecuteNonQuery();
             }
         }
     }

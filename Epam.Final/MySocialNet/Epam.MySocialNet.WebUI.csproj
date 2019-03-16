@@ -114,7 +114,8 @@
     <Content Include="Chats\ChatsList.cshtml" />
     <Content Include="Chats\Common.cshtml" />
     <Content Include="Chats\Chat.cshtml" />
-    <Content Include="Accounts\Info.cshtml" />
+    <Content Include="Accounts\EditImage.cshtml" />
+    <Content Include="Accounts\DeleteImage.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

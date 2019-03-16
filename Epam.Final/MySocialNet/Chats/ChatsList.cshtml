@@ -40,19 +40,3 @@
         </ul>
     </div>
 }
-@*<a class="account-link" href="~/Message/AddMessage?ToId=@account.Id">
-
-        @if (account.ImageId > 0)
-        {
-            <img src="~/ViewImage?id=@account.ImageId" alt="@account.FirstName image" class="img-responsive" width="50" height="50">
-        }
-        else
-        {
-            <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
-        }
-
-        <text>@account.FirstName</text>
-    </a>*@
-
-По логину получаем Id пользователя и запрашиваем список всех бесед, выводим в форме:
-фото собеседника, его имя (хорошо бы дату последнего сообщения)

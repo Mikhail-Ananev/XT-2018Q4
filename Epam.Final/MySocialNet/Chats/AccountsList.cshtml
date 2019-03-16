@@ -2,25 +2,26 @@
 @{
     if (User.Identity.IsAuthenticated)
     {
-        <div class="accounts-list">
-            @foreach (var account in Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAllAccounts())
-            {
-                if (User.Identity.Name != account.Login)
+<div class="accounts-list">
+    @foreach (var account in Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAllAccounts())
+    {
+        if (User.Identity.Name != account.Login)
+        {
+            @*<a class="account-link" href="~/Message/AddMessage?ToId=@account.Id">*@
+            <a class="account-link" href="~/Accounts/UserPage?Id=@account.Id">
+
+                @if (account.ImageId > 0)
                 {
-                    <a class="account-link" href="~/Message/AddMessage?ToId=@account.Id">
-
-                        @if (account.ImageId > 0)
-                        {
-                            <img src="~/ViewImage?id=@account.ImageId" alt="@account.FirstName image" class="img-responsive" width="50" height="50">
-                        }
-                        else
-                        {
-                            <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
-                        }
-
-                        <text>@account.FirstName</text>
-                    </a>
+                    <img src="~/ViewImage?id=@account.ImageId" alt="@account.FirstName image" class="img-responsive" width="50" height="50">
                 }
+                else
+                {
+                    <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
+                }
+
+                <text>@account.FirstName</text>
+            </a>
+            }
             }
         </div>
     }

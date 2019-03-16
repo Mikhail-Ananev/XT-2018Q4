@@ -27,7 +27,7 @@
                             @{
                                 var senderAccount = accountLogic.GetAccountById(message.SenderAccountId);
 
-                                <a href="~/Accounts/Info?Id=@senderAccount.Id">
+                                <a href="~/Accounts/UserPage?Id=@senderAccount.Id">
                                     @if (senderAccount.ImageId > 0)
                                     {
                                     <img src="~/ViewImage?id=@senderAccount.ImageId" alt="@senderAccount.FirstName image" class="img-responsive" width="50" height="50">

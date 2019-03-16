@@ -74,6 +74,7 @@ namespace Epam.MySocialNet.SQLDao
                             else
                             {
                                 chatList.Add(chat);
+                                break;
                             }
                         }
                     }

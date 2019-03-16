@@ -34,5 +34,7 @@ namespace Epam.MySocialNet.LogicContracts
         AccountInfo GetAccountInfo(int id);
 
         bool EditAccountInfo(AccountInfo accountInfo);
+
+        void UpdateImageId(int accountId, int imageId);
     }
 }
