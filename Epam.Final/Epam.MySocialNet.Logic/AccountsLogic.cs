@@ -114,12 +114,7 @@ namespace Epam.MySocialNet.Logic
                 return false;
             }
 
-            if (!this.CheckName(firstName))
-            {
-                return false;
-            }
-
-            if (!this.CheckName(lastName))
+            if (!CheckAccountData(login, firstName, lastName, birthDayStr))
             {
                 return false;
             }
@@ -132,19 +127,6 @@ namespace Epam.MySocialNet.Logic
                 return false;
             }
 
-            DateTime birthDay;
-            bool result = DateTime.TryParse(birthDayStr, out birthDay);
-            if (!result)
-            {
-                return false;
-            }
-
-            int age = GetAge(birthDay);
-            if (age < 4 || age > 125)
-            {
-                return false;
-            }
-
             var account = new Account
             {
                 Login = login,
@@ -153,7 +135,7 @@ namespace Epam.MySocialNet.Logic
                 Password = bytePassword,
                 Role = role,
                 ImageId = imgId,
-                BirthDay = birthDay,
+                BirthDay = DateTime.Parse(birthDayStr),
             };
 
             return accountDao.SaveNewAccount(account);
@@ -246,14 +228,82 @@ namespace Epam.MySocialNet.Logic
             }
         }
 
-        public bool EditAccount(Account account)
+        public bool EditAccount(string strId, string newLogin, string newFirstName, string newLastName, string newStrBirthDay, string newPassword, string oldPassword)
         {
-            if (account == null)
+            if (CheckBadInputString(strId) || CheckBadInputString(newLogin) || CheckBadInputString(newFirstName) || CheckBadInputString(newLastName) || CheckBadInputString(newStrBirthDay))
             {
                 return false;
             }
 
-            return accountDao.EditAccount(account);
+            if (!CheckAccountData(newLogin, newFirstName, newLastName, newStrBirthDay))
+            {
+                return false;
+            }
+
+            var newBirthDay = DateTime.Parse(newStrBirthDay);
+
+            int id;
+            bool result = int.TryParse(strId, out id);
+            if (!result)
+            {
+                return false;
+            }
+
+            var oldAccountData = accountDao.GetAccountById(id);
+
+            var newAccountData = new Account
+            {
+                Id = id,
+                Login = newLogin,
+                FirstName = newFirstName,
+                LastName = newLastName,
+                BirthDay = newBirthDay,
+            };
+
+            if (!string.IsNullOrEmpty(oldPassword))
+            {
+                var stringBytes = Encoding.UTF8.GetBytes(oldPassword);
+                var byteOldPassword = shaM.ComputeHash(stringBytes);
+
+                if (byteOldPassword != oldAccountData.Password)
+                {
+                    return false;
+                }
+
+                stringBytes = Encoding.UTF8.GetBytes(newPassword);
+                var byteNewPassword = shaM.ComputeHash(stringBytes);
+
+                newAccountData.Password = byteNewPassword;
+
+            }
+
+
+            GetUpdatedData(oldAccountData, newAccountData);
+
+            return accountDao.EditAccount(newAccountData);
+        }
+
+        private static void GetUpdatedData(Account oldAccountData, Account newAccountData)
+        {
+            if (newAccountData.Login == oldAccountData.Login)
+            {
+                newAccountData.Login = null;
+            }
+
+            if (newAccountData.FirstName == oldAccountData.FirstName)
+            {
+                newAccountData.FirstName = null;
+            }
+
+            if (newAccountData.LastName == oldAccountData.LastName)
+            {
+                newAccountData.LastName = null;
+            }
+
+            if (newAccountData.BirthDay.ToShortDateString() == oldAccountData.BirthDay.ToShortDateString())
+            {
+                newAccountData.BirthDay = DateTime.MinValue;
+            }
         }
 
         public AccountInfo GetAccountInfo(int id)
@@ -269,6 +319,34 @@ namespace Epam.MySocialNet.Logic
         public void UpdateImageId(int accountId, int imageId)
         {
             accountDao.UpdateImageId(accountId, imageId);
+        }
+
+        private bool CheckAccountData(string login, string firstName, string lastName, string birthDayStr)
+        {
+            if (!this.CheckName(firstName))
+            {
+                return false;
+            }
+
+            if (!this.CheckName(lastName))
+            {
+                return false;
+            }
+
+            DateTime birthDay;
+            bool result = DateTime.TryParse(birthDayStr, out birthDay);
+            if (!result)
+            {
+                return false;
+            }
+
+            int age = GetAge(birthDay);
+            if (age < 4 || age > 125)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

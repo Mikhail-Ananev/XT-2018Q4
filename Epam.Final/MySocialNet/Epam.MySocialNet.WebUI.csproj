@@ -92,6 +92,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\MyContent\net.css" />
+    <Content Include="Scripts\Custom\editInfoValidation.js" />
     <Content Include="Scripts\Custom\registrationValidation.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -116,6 +117,7 @@
     <Content Include="Chats\Chat.cshtml" />
     <Content Include="Accounts\EditImage.cshtml" />
     <Content Include="Accounts\DeleteImage.cshtml" />
+    <Content Include="Accounts\EditInfo.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

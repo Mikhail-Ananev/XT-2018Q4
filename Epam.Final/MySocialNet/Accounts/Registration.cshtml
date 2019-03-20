@@ -33,7 +33,7 @@
         }
 
         if (Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.SaveNewAccount(Request["login"].Trim(), Request["firstName"], Request["lastName"],
-                                                                                Request["password"], "User",Request["date"], imgId))
+                                                                                Request["password"], "User", Request["date"], imgId))
         {
             FormsAuthentication.SetAuthCookie(Request["login"], createPersistentCookie: false);
             Response.Redirect("~");

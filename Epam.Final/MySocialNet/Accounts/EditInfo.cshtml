@@ -1,0 +1,203 @@
+﻿@using Epam.MySocialNet.Logic
+@using Epam.MySocialNet.Entities
+
+@{
+    if (!User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("~");
+    }
+
+    var accountLogic = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
+
+    if (IsPost)
+    {
+        int id;
+        bool result = int.TryParse(Request["id"], out id);
+
+        if (!result || id < 1)
+        {
+            Response.SetStatus(HttpStatusCode.BadRequest);
+            return;
+        }
+
+
+        bool changeAccount = false;
+        string oldLogin = Request["oldLogin"];
+        string newLogin = Request["login"];
+
+        if (oldLogin != newLogin)
+        {
+            changeAccount = true;
+        }
+
+        string oldPassword = Request["password"];
+        string newPassword = Request["newPassword"];
+
+        if (!string.IsNullOrWhiteSpace(newPassword))
+        {
+            changeAccount = true;
+        }
+
+        string oldFName = Request["oldFName"];
+        string newFName = Request["firstName"];
+
+        if (oldFName != newFName)
+        {
+            changeAccount = true;
+        }
+
+        string oldLName = Request["oldLName"];
+        string newLName = Request["lastName"];
+
+        if (oldFName != newFName)
+        {
+            changeAccount = true;
+        }
+
+        string oldBDay = Request["oldBDay"];
+        string newBDay = Request["newBDay"];
+
+        if (newBDay != oldBDay)
+        {
+            changeAccount = true;
+        }
+
+        if (changeAccount)
+        {
+            if (accountLogic.EditAccount(Request["id"], newLogin, newFName, newLName, newBDay, newPassword, oldPassword))
+            {
+                Response.Redirect("~/Accounts/UserPage");
+                return;
+
+            }
+        }
+
+        @*
+
+        <div>
+            <label for="sex">Ваш пол: </label>
+            <input type="radio" name="sex" value="муж" /> муж
+            <input type="radio" name="sex" value="жен" /> жен
+        </div>
+
+        <div>
+            <label for="city">Город проживания: </label>
+            <input type="text" id="city" name="city" value="@accountInfo.City" />
+        </div>
+
+        <div>
+            <label for="education">Образование: </label>
+            <input type="text" id="education" name="education" value="@accountInfo.Education" />
+        </div>
+
+        <div>
+            <label for="family">Семейное положение: </label>
+            <input type="text" id="family" name="family" value="@accountInfo.Family" />
+        </div>
+
+        <div>
+            <label for="language">Родной язык: </label>
+            <input type="text" id="language" name="language" value="@accountInfo.Language" />
+        </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    var account = accountLogic.GetAccountByLogin(User.Identity.Name);
+    var accountInfo = accountLogic.GetAccountInfo(account.Id);
+    var accountBDay = dateCorrect(account.BirthDay.ToShortDateString());
+
+    string dateCorrect(string date)
+    {
+        string newDate= date.Substring(6) + "-" + date.Substring(3, 2) + "-" + date.Substring(0, 2);
+        return newDate;
+    };
+
+}
+
+<script src="~/Scripts/Custom/editInfoValidation.js"></script>
+
+
+<form method="post" class="edit-info">
+    <div>
+        <input type="hidden" name="id" value="@account.Id" />
+        <input type="hidden" name="oldLogin" value="@account.Login" />
+        <label for="login">Почта:</label>
+        <input type="email" id="login" name="login" value="@account.Login" required />
+    </div>
+
+    <div>
+        <label for="password">Старый пароль:</label>
+        <input type="password" id="password" name="password" />
+    </div>
+
+    <div>
+        <label for="new_password">Новый пароль:</label>
+        <input type="password" id="new_password" name="new_password" />
+    </div>
+
+    <div>
+        <input type="hidden" name="oldFName" value="@account.FirstName" />
+        <label for="firstName">Имя:</label>
+        <input type="text" id="firstName" name="firstName" value="@account.FirstName" pattern="^[a-zA-Zа-яА-Я'][a-zA-Zа-яА-Я-' ]+[a-zA-Zа-яА-Я']?$" required />
+    </div>
+
+    <div>
+        <input type="hidden" name="oldLName" value="@account.LastName" />
+        <label for="lastName">Фамилия:</label>
+        <input type="text" id="lastName" name="lastName" value="@account.LastName" pattern="^[a-zA-Zа-яА-Я'][a-zA-Zа-яА-Я-' ]+[a-zA-Zа-яА-Я']?$" required />
+    </div>
+
+    <div>
+        <input type="hidden" name="oldBDay" value="@accountBDay" />
+        <label for="newBDay">Дата рождения: </label>
+        <input type="date" id="newBDay" name="newBDay" value="@accountBDay" pattern="(\d{4}-((0[13578]|1[02])-31|(0[13-9]|1[012])-30|(0[1-9]|1[012])-(0[1-9]|1\d|2[0-8])))|(\d\d([02468][048])|([13579][26])-02-29)" />
+    </div>
+
+    <div>
+        <label for="sex">Ваш пол: </label>
+        <input type="radio" name="sex" value="муж" /> муж
+        <input type="radio" name="sex" value="жен" /> жен
+    </div>
+
+    <div>
+        <label for="city">Город проживания: </label>
+        <input type="text" id="city" name="city" value="@accountInfo.City" />
+    </div>
+
+    <div>
+        <label for="education">Образование: </label>
+        <input type="text" id="education" name="education" value="@accountInfo.Education" />
+    </div>
+
+    <div>
+        <label for="family">Семейное положение: </label>
+        <input type="text" id="family" name="family" value="@accountInfo.Family" />
+    </div>
+
+    <div>
+        <label for="language">Родной язык: </label>
+        <input type="text" id="language" name="language" value="@accountInfo.Language" />
+    </div>
+
+    <button type="submit">Save changes</button>
+</form>

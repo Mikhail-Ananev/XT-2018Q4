@@ -158,12 +158,17 @@ ul.message-list{
 }
 
 .login,
-.registration {
+.registration,
+.edit-info{
     margin-top: 20px;
     display: flex;
-    width: 340px;
     flex-direction: column;
     align-items: flex-end;
+}
+
+.login,
+.registration {
+    width: 340px;
 }
 
 form div {
@@ -225,4 +230,11 @@ form p {
 }
 a.content-link {
     text-decoration: none;
+}
+
+.invalid{
+    background:#faa;
+}
+.valid{
+    background:#afa;
 }

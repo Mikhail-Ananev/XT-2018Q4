@@ -211,21 +211,74 @@ namespace Epam.MySocialNet.SQLDao
                 return false;
             }
 
+            string commandParameters = GetUpdateData(account);
+
             using (SqlConnection connect = new SqlConnection(connectString))
             {
                 SqlCommand cmd = connect.CreateCommand();
-                cmd.CommandText = "UPDATE dbo.Accounts SET Login=@login, FirstName=@firstName, LastName=@lastName, Birthday=@birthDay, ImageId=@imageId WHERE Id=@Id";
+                cmd.CommandText = "UPDATE dbo.Accounts SET"+ commandParameters + "WHERE Id=@Id";
                 cmd.Parameters.Add(new SqlParameter("@Id", DbType.Int32) { Value = account.Id });
-
-                cmd.Parameters.AddWithValue("@login", account.Login);
-                cmd.Parameters.AddWithValue("@firstName", account.FirstName);
-                cmd.Parameters.AddWithValue("@lastName", account.LastName);
-                cmd.Parameters.AddWithValue("@birthDay", account.BirthDay);
-                cmd.Parameters.Add("@imageId", SqlDbType.Int).Value = account.ImageId;
+                if (commandParameters.Contains("@login"))
+                {
+                    cmd.Parameters.AddWithValue("@login", account.Login);
+                }
+                if (commandParameters.Contains("@firstName"))
+                {
+                    cmd.Parameters.AddWithValue("@firstName", account.FirstName);
+                }
+                if (commandParameters.Contains("@lastName"))
+                {
+                    cmd.Parameters.AddWithValue("@lastName", account.LastName);
+                }
+                if (commandParameters.Contains("@birthDay"))
+                {
+                    cmd.Parameters.AddWithValue("@birthDay", account.BirthDay);
+                }
+                if (commandParameters.Contains("@password"))
+                {
+                    cmd.Parameters.Add("@password", SqlDbType.VarBinary, 64).Value = account.Password;
+                }
 
                 connect.Open();
                 return cmd.ExecuteNonQuery() == 1;
             }
+        }
+
+        private string GetUpdateData(Account account)
+        {
+            var sb = new StringBuilder();
+
+            if (account.Login != null)
+            {
+                sb.Append(", Login=@login");
+            }
+
+            if (account.Password != null)
+            {
+                sb.Append(", Password=@password");
+            }
+
+            if (account.FirstName != null)
+            {
+                sb.Append(", FirstName=@firstName");
+            }
+
+            if (account.LastName != null)
+            {
+                sb.Append(", LastName=@lastName");
+            }
+
+            if (account.BirthDay != DateTime.MinValue)
+            {
+                sb.Append(", BirthDay=@birthDay");
+            }
+
+            if (sb.Length > 0)
+            {
+                sb.Remove(0, 1).Append(' ');
+            }
+
+            return sb.ToString();
         }
 
         public bool SetAdminRole(int id)
