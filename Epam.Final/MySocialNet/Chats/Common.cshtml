@@ -3,10 +3,13 @@
     var accountLogic = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic;
     var last20Messages = messagesLogic.GetAllSharedMessages();
     var account = accountLogic.GetAccountByLogin(User.Identity.Name);
+    bool isAdmin = false;
 }
 
 @if (User.Identity.IsAuthenticated)
 {
+    isAdmin = accountLogic.CheckAdminRole(User.Identity.Name);
+
     <div class="top-message-part">
         <div>
             <a class="nav-button" href="~/Message/AddMessage?ToId=0">
@@ -30,17 +33,24 @@
                                 <a href="~/Accounts/UserPage?Id=@senderAccount.Id">
                                     @if (senderAccount.ImageId > 0)
                                     {
-                                    <img src="~/ViewImage?id=@senderAccount.ImageId" alt="@senderAccount.FirstName image" class="img-responsive" width="50" height="50">
+                                        <img src="~/ViewImage?id=@senderAccount.ImageId" alt="@senderAccount.FirstName image" class="img-responsive" width="50" height="50">
                                     }
                                     else
                                     {
-                                    <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
+                                        <img src="~/DefaultImages/default_user_image.png" alt="user image" class="img-rounded img-responsive" width="50" height="50">
                                     }
                                 </a>
 
                                 <text>
                                     @senderAccount.FirstName <span class="date">(@message.CreationTime)</span>
                                 </text>
+                            }
+
+                            @if (isAdmin)
+                            {
+                                <div>
+                                    <button>Edit</button>
+                                </div>
                             }
                         </div>
 

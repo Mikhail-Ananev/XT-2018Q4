@@ -31,7 +31,7 @@
         }
 
         string oldPassword = Request["password"];
-        string newPassword = Request["newPassword"];
+        string newPassword = Request["new_password"];
 
         if (!string.IsNullOrWhiteSpace(newPassword))
         {
@@ -64,62 +64,49 @@
 
         if (changeAccount)
         {
-            if (accountLogic.EditAccount(Request["id"], newLogin, newFName, newLName, newBDay, newPassword, oldPassword))
+            if (!accountLogic.EditAccount(Request["id"], newLogin, newFName, newLName, newBDay, newPassword, oldPassword))
             {
-                Response.Redirect("~/Accounts/UserPage");
-                return;
-
+                <text>
+                    alert("Данные не были записаны!")
+                </text>
+            }
+            else
+            {
+                FormsAuthentication.SetAuthCookie(newLogin, createPersistentCookie: false);
             }
         }
 
-        @*
+        string sex = Request["sex"];
+        string city = Request["city"];
+        string education = Request["education"];
+        string family = Request["family"];
+        string language = Request["language"];
 
-        <div>
-            <label for="sex">Ваш пол: </label>
-            <input type="radio" name="sex" value="муж" /> муж
-            <input type="radio" name="sex" value="жен" /> жен
-        </div>
+        bool nullInfo = string.IsNullOrWhiteSpace(sex) && string.IsNullOrWhiteSpace(city) && string.IsNullOrWhiteSpace(education) &&
+                        string.IsNullOrWhiteSpace(family) && string.IsNullOrWhiteSpace(language);
 
-        <div>
-            <label for="city">Город проживания: </label>
-            <input type="text" id="city" name="city" value="@accountInfo.City" />
-        </div>
+        if (!nullInfo)
+        {
+            var newAccountInfo = new AccountInfo
+            {
+                AccountId = id,
+                Sex = sex,
+                City = city,
+                Education = education,
+                Family = family,
+                Language = language,
+            };
 
-        <div>
-            <label for="education">Образование: </label>
-            <input type="text" id="education" name="education" value="@accountInfo.Education" />
-        </div>
+            if (!accountLogic.EditAccountInfo(newAccountInfo))
+            {
+                <text>
+                    alert("Данные не были записаны!")
+                </text>
+            }
+        }
 
-        <div>
-            <label for="family">Семейное положение: </label>
-            <input type="text" id="family" name="family" value="@accountInfo.Family" />
-        </div>
-
-        <div>
-            <label for="language">Родной язык: </label>
-            <input type="text" id="language" name="language" value="@accountInfo.Language" />
-        </div>*@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        Response.Redirect("~/Accounts/UserPage?Id=@id");
+        return;
     }
 
     var account = accountLogic.GetAccountByLogin(User.Identity.Name);
@@ -128,14 +115,11 @@
 
     string dateCorrect(string date)
     {
-        string newDate= date.Substring(6) + "-" + date.Substring(3, 2) + "-" + date.Substring(0, 2);
+        string newDate = date.Substring(6) + "-" + date.Substring(3, 2) + "-" + date.Substring(0, 2);
         return newDate;
     };
 
 }
-
-<script src="~/Scripts/Custom/editInfoValidation.js"></script>
-
 
 <form method="post" class="edit-info">
     <div>
@@ -175,8 +159,16 @@
 
     <div>
         <label for="sex">Ваш пол: </label>
-        <input type="radio" name="sex" value="муж" /> муж
-        <input type="radio" name="sex" value="жен" /> жен
+        @if (accountInfo.Sex == "муж")
+        {
+            <input type="radio" name="sex" value="муж" checked /> <text>муж</text>
+            <input type="radio" name="sex" value="жен" /> <text>жен</text>
+        }
+        else
+        {
+            <input type="radio" name="sex" value="муж" /> <text>муж</text>
+            <input type="radio" name="sex" value="жен" checked /> <text>жен</text>
+        }
     </div>
 
     <div>
@@ -201,3 +193,7 @@
 
     <button type="submit">Save changes</button>
 </form>
+
+@section scripts{
+    <script src="~/Scripts/Custom/editInfoValidation.js"></script>
+}

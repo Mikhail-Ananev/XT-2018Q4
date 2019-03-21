@@ -265,16 +265,15 @@ namespace Epam.MySocialNet.Logic
                 var stringBytes = Encoding.UTF8.GetBytes(oldPassword);
                 var byteOldPassword = shaM.ComputeHash(stringBytes);
 
-                if (byteOldPassword != oldAccountData.Password)
+                if (accountDao.CheckLogin(oldAccountData.Login, byteOldPassword))
+                {
+                    stringBytes = Encoding.UTF8.GetBytes(newPassword);
+                    newAccountData.Password = shaM.ComputeHash(stringBytes);
+                }
+                else
                 {
                     return false;
                 }
-
-                stringBytes = Encoding.UTF8.GetBytes(newPassword);
-                var byteNewPassword = shaM.ComputeHash(stringBytes);
-
-                newAccountData.Password = byteNewPassword;
-
             }
 
 
