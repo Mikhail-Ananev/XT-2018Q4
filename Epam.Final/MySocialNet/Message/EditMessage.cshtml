@@ -1,0 +1,27 @@
+﻿@{ 
+    if (!IsPost)
+    {
+        Response.SetStatus(HttpStatusCode.BadRequest);
+        return;
+
+    }
+    int messageId;
+    bool result = int.TryParse(Request["id"], out messageId);
+
+    if (!result)
+    {
+        Response.SetStatus(HttpStatusCode.BadRequest);
+        return;
+    }
+
+    var account = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAccountByLogin(User.Identity.Name);
+
+    string text = Request["text"];
+
+    if (!Epam.MySocialNet.WebUI.LogicProvider.MessagesLogic.EditMessage(account.Id, messageId, account.Role, text))
+    {
+        //Response.SetStatus(HttpStatusCode.BadRequest);
+        //return;
+    }
+
+}

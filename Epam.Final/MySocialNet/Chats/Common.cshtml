@@ -20,11 +20,11 @@
 }
 
 <div class="message-container">
-    <ul class="message-list">
+    <ul class="message-list" id="message-list">
         @{
             foreach (var message in last20Messages)
             {
-                <li data-id="@message.Id">
+                <li data-id="@message.Id" id="@message.Id">
                     <div class="message">
                         <div class="message-header">
                             @{
@@ -49,7 +49,7 @@
                             @if (isAdmin)
                             {
                                 <div>
-                                    <button>Edit</button>
+                                    <button class="editMessage">Edit</button>
                                 </div>
                             }
                         </div>
@@ -66,3 +66,40 @@
 
     </ul>
 </div>
+
+
+
+<button id="myBtn">Открыть окно</button>
+
+
+<div id="myModal" class="modal">
+
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Шапка модального окна</h2>
+        </div>
+        <div class="modal-body">
+            @*<p>Какой-то текст в теле модального окна</p>
+        <p>Ещё другой текст...</p>*@
+            <textarea name="message" rows="6" cols="40" id="edit"></textarea>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="sendEditMessage"></button>
+            @*<h3>Футер модального окна</h3>*@
+        </div>
+    </div>
+
+</div>
+
+
+
+@section styles{
+    <link href="~/Content/MyContent/modal.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script src="~/Scripts/Custom/editMessage.js"></script>
+}

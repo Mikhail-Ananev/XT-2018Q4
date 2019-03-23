@@ -379,7 +379,7 @@ namespace Epam.MySocialNet.SQLDao
             using (SqlConnection connect = new SqlConnection(connectString))
             {
                 SqlCommand cmd = connect.CreateCommand();
-                cmd.CommandText = "SELECT Id, FirstName, LastName, BirthDay, ImageId FROM dbo.Accounts WHERE Login=@login";
+                cmd.CommandText = "SELECT Id, FirstName, LastName, BirthDay, Role, ImageId FROM dbo.Accounts WHERE Login=@login";
                 cmd.Parameters.AddWithValue("@login", login);
 
                 connect.Open();
@@ -399,6 +399,7 @@ namespace Epam.MySocialNet.SQLDao
                     LastName = (string)reader["LastName"],
                     BirthDay = (DateTime)reader["BirthDay"],
                     ImageId = (int)reader["ImageId"],
+                    Role = (string)reader["Role"],
                 };
             }
         }

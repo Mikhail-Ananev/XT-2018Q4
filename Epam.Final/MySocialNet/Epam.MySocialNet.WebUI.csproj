@@ -91,8 +91,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\MyContent\modal.css" />
     <Content Include="Content\MyContent\net.css" />
     <Content Include="Scripts\Custom\editInfoValidation.js" />
+    <Content Include="Scripts\Custom\editMessage.js" />
     <Content Include="Scripts\Custom\registrationValidation.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -118,6 +120,7 @@
     <Content Include="Accounts\EditImage.cshtml" />
     <Content Include="Accounts\DeleteImage.cshtml" />
     <Content Include="Accounts\EditInfo.cshtml" />
+    <Content Include="Message\EditMessage.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
