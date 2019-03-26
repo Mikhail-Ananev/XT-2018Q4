@@ -48,7 +48,7 @@ namespace Epam.MySocialNet.SQLDao
 
         public bool EditMessage(int messageId, string text)
         {
-            if (CheckBadInputString(text))
+            if (text == null)
             {
                 return false;
             }

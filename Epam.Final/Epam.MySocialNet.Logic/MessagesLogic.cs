@@ -125,11 +125,11 @@ namespace Epam.MySocialNet.Logic
 
             if (accountId != senderId || role != "Admin")
             {
-                return false;
+                return true;
             }
             else
             {
-                return true;
+                return false;
             }
         }
     }

@@ -1,38 +1,28 @@
-﻿var modal = document.getElementById('myModal');
-var btn = document.getElementById("myBtn");
-var span = document.getElementsByClassName("close")[0];
+﻿// <reference path="../jquery-3.3.1.js" />
+var modal = document.getElementById('myModal');
+var errorModal = document.getElementById('errorModal');
+var btn = document.getElementById('myBtn');
+var span = document.getElementsByClassName('close')[0];
 
-//btn.onclick = function () {
-//    modal.style.display = "block";
-//}
-
-
-//span.onclick = function () {
-//    modal.style.display = "none";
-//}
+span.onclick = function () {
+    modal.style.display = "none";
+}
 
 function onDoneHandler() {
-    modal.style.display = "none";
-
     var $editText = $('#edit'),
-     text = $editText[0].value;
+        text = $('#edit')[0].value,
+        $message = $('[data-id="' + id + '"]'),
+        result = $message.find('.main-message');
+
     id = $editText[0].customId;
-
-    var $messageList = $('#message-list');
-
-    var $message = $('#' + id);
-
-
-
-    var result = $message.children('.message').children('.main-message');
     result[0].innerText = text;
-
+    modal.style.display = "none";
 }
 
 function onFailHandler() {
     modal.style.display = "none";
 
-    alert('БЯДА');
+    errorModal.style.display = "block";
 }
 
 
@@ -55,31 +45,20 @@ function sendMessageHandler() {
         .fail(onFailHandler)
 }
 
+(function () {
+    var $messageList = $('#message-list');
 
+    $messageList.on('click', '.editMessage', function (e) {
+        var $target = $(e.target),
+            $message = $target.closest('li'),
+            id = $message.data('id'),
+            text = $message.find('.main-message').text().trim(),
+            $editText = $('#edit'),
+            $sendEditMessage = $('#sendEditMessage');
 
-    /// <reference path="../jquery-3.3.1.js" />
-    (function () {
-        var $messageList = $('#message-list');
-
-        $messageList.on('click', '.editMessage', function (e) {
-            var $target = $(e.target),
-                $message = $target.closest('li'),
-                id = $message.data('id');
-            //$("div").children(".bigBlock")
-            //var $messageText = $('');
-            var result = $message.children('.message').children('.main-message');
-            var text = result[0].innerText;
-
-            modal.style.display = "block";
-
-            var $editText = $('#edit');
-            $editText[0].value = text;
-            $editText[0].customId = id;
-
-
-            var $sendEditMessage = $('#sendEditMessage');
-            $sendEditMessage.on('click', sendMessageHandler)
-
-           
-        });
-    })();
+        $editText.text(text);
+        $editText[0].customId = id;
+        modal.style.display = "block";
+        $sendEditMessage.on('click', sendMessageHandler)
+    });
+})();

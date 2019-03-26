@@ -5,6 +5,10 @@
     margin: auto;
 }
 
+a {
+    text-decoration: none;
+}
+
 header {
     height: 45px;
     /*min-width: 612px;*/
@@ -39,9 +43,9 @@ a.header-link {
     color: black;
 }
 
-    a.header-link:hover {
-        background: linear-gradient(to bottom,#FEFEFE, #028E8F);
-    }
+a.header-link:hover {
+    background: linear-gradient(to bottom,#FEFEFE, #028E8F);
+}
 
 /*@media (min-width:381px) and (max-width: 560px){
     header > ul {
@@ -90,11 +94,12 @@ a.header-link {
     margin: 0;
 }
 
-.message-container{
-    display:flex;
-    /*flex-direction:column;
-    justify-content:center;
-    align-items: stretch;*/
+.message-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    
 }
 
 .top-message-part {
@@ -127,14 +132,14 @@ ul.message-list{
     /*align-items: flex-start;*/
 }
 
-    ul.message-list li {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: stretch;
-        width: 100%;
-        /*align-items: flex-start;*/
-    }
+ul.message-list li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    /*align-items: flex-start;*/
+}
 
 
 .message {

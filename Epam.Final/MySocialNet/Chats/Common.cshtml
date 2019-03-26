@@ -12,6 +12,20 @@
 
     <div class="top-message-part">
         <div>
+            <a class="nav-button" href="#up">
+                Наверх
+            </a>
+
+            @if (isAdmin)
+            {
+                <a class="nav-button" href="~/Accounts/EditUserList">
+                    Ред. польз.
+                </a>
+            }
+
+            <a class="nav-button" href="#down">
+                Вниз
+            </a>
             <a class="nav-button" href="~/Message/AddMessage?ToId=0">
                 Написать сообщение
             </a>
@@ -20,11 +34,28 @@
 }
 
 <div class="message-container">
+    @*<div class="navigation-message">
+            <a class="nav-button" href="#up">
+                Наверх
+            </a>
+
+            @if (isAdmin)
+            {
+                <a class="nav-button" href="~/Accounts/EditUserList">
+                    Ред. польз.
+                </a>
+            }
+
+            <a class="nav-button" href="#down">
+                Вниз
+            </a>
+        </div>*@
+
     <ul class="message-list" id="message-list">
         @{
             foreach (var message in last20Messages)
             {
-                <li data-id="@message.Id" id="@message.Id">
+                <li data-id="@message.Id">
                     <div class="message">
                         <div class="message-header">
                             @{
@@ -57,13 +88,10 @@
                         <div class="main-message">
                             @message.Text
                         </div>
-
                     </div>
-
                 </li>
             }
         }
-
     </ul>
 </div>
 
@@ -73,27 +101,38 @@
 
 
 <div id="myModal" class="modal">
-
-
     <div class="modal-content">
         <div class="modal-header">
             <span class="close">&times;</span>
-            <h2>Шапка модального окна</h2>
+            <h2>Редактор сообщений</h2>
         </div>
-        <div class="modal-body">
-            @*<p>Какой-то текст в теле модального окна</p>
-        <p>Ещё другой текст...</p>*@
-            <textarea name="message" rows="6" cols="40" id="edit"></textarea>
 
+        <div class="modal-body">
+            <textarea name="message" rows="6" cols="40" id="edit"></textarea>
         </div>
+
         <div class="modal-footer">
-            <button type="button" id="sendEditMessage"></button>
-            @*<h3>Футер модального окна</h3>*@
+            <button type="button" id="sendEditMessage">Редактировать</button>
         </div>
     </div>
-
 </div>
 
+<div id="errorModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Ошибка!</h2>
+        </div>
+
+        <div class="modal-body">
+            <p class="error-text"></p>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" id="sendEditMessage">Редактировать</button>
+        </div>
+    </div>
+</div>
 
 
 @section styles{

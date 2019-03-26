@@ -16,7 +16,7 @@
 
     var account = Epam.MySocialNet.WebUI.LogicProvider.AccountsLogic.GetAccountByLogin(User.Identity.Name);
 
-    string text = Request["text"];
+    string text = Request["message"];
 
     if (!Epam.MySocialNet.WebUI.LogicProvider.MessagesLogic.EditMessage(account.Id, messageId, account.Role, text))
     {
